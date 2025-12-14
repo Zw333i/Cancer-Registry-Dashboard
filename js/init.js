@@ -101,11 +101,41 @@ function initParticles() {
 // ==========================================
 async function loadData() {
     try {
-        const response = await fetch('data/data.csv');
-        const text = await response.text();
-        patients = parseCSV(text);
+        const [csvResponse, ageResponse] = await Promise.all([
+            fetch('data/data.csv'),
+            fetch('data/age-data.json').catch(() => null)
+        ]);
+        if (!csvResponse.ok) {
+            throw new Error('Unable to load data.csv');
+        }
+        const text = await csvResponse.text();
+        let ageMap = {};
+        if (ageResponse && ageResponse.ok) {
+            try {
+                ageMap = await ageResponse.json();
+            } catch (ageError) {
+                console.warn('Failed to parse age-data.json:', ageError);
+            }
+        } else {
+            console.warn('Age data file not found. Age charts will be limited.');
+        }
+        patients = parseCSV(text).map(patient => {
+            const ageValue = ageMap[patient.ID];
+            if (typeof ageValue === 'number') {
+                patient.Age = ageValue;
+                patient.Age_Group = getAgeGroupFromValue(ageValue);
+            } else {
+                patient.Age = null;
+                patient.Age_Group = null;
+            }
+            return patient;
+        });
         filteredPatients = [...patients];
-        console.log(`Loaded ${patients.length} patients`);
+        const missingAges = patients.filter(p => p.Age === null).length;
+        console.log(`Loaded ${patients.length} patients (${patients.length - missingAges} with age data)`);
+        if (missingAges > 0) {
+            console.warn(`Age data missing for ${missingAges} patients.`);
+        }
     } catch (error) {
         console.error('Error loading data:', error);
         showToast('error', 'Data Error', 'Failed to load patient data');

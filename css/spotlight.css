@@ -278,6 +278,8 @@
     border-left: 3px solid var(--gradient-start);
     max-height: 120px;
     overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gradient-start) transparent;
 }
 
 .patient-narrative p {
@@ -285,4 +287,17 @@
     color: var(--text-secondary);
     line-height: 1.5;
     margin: 0;
+}
+
+.patient-narrative::-webkit-scrollbar {
+    width: 6px;
+}
+
+.patient-narrative::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.patient-narrative::-webkit-scrollbar-thumb {
+    background: var(--gradient-start);
+    border-radius: 3px;
 }

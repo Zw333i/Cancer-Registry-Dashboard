@@ -32,9 +32,9 @@
                       fill="none" stroke="url(#heartGradient)" stroke-width="3" stroke-linecap="round"/>
                 <defs>
                     <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" style="stop-color:#06b6d4"/>
-                        <stop offset="50%" style="stop-color:#8b5cf6"/>
-                        <stop offset="100%" style="stop-color:#ec4899"/>
+                        <stop offset="0%" style="stop-color: var(--gradient-start)"/>
+                        <stop offset="50%" style="stop-color: var(--gradient-mid)"/>
+                        <stop offset="100%" style="stop-color: var(--gradient-end)"/>
                     </linearGradient>
                 </defs>
             </svg>
@@ -68,8 +68,8 @@
                               fill="none" stroke="url(#logoGradient)" stroke-width="2.5" stroke-linecap="round"/>
                         <defs>
                             <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" style="stop-color:#06b6d4"/>
-                                <stop offset="100%" style="stop-color:#8b5cf6"/>
+                                <stop offset="0%" style="stop-color: var(--gradient-start)"/>
+                                <stop offset="100%" style="stop-color: var(--gradient-mid)"/>
                             </linearGradient>
                         </defs>
                     </svg>
@@ -328,17 +328,33 @@
                 </div>
             </section>
 
-            <!-- Charts Grid -->
+            <!-- Charts Grid - Doughnut & Survival Analysis -->
             <section class="charts-section">
                 <div class="chart-card chart-doughnut">
                     <div class="chart-header">
                         <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>Cancer Distribution</h3>
                         <span class="chart-info-hint" title="Click for explanation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>
                     </div>
-                    <div class="chart-body"><canvas id="doughnutChart"></canvas></div>
+                    <div class="chart-body doughnut-body"><canvas id="doughnutChart"></canvas></div>
                     <p class="chart-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Click a slice to filter</p>
                 </div>
 
+                <div class="chart-card chart-survival-analysis">
+                    <div class="chart-header">
+                        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>Survival Rate by Cancer Type and Stage<span class="chart-info-hint" title="Click for explanation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span></h3>
+                    </div>
+                    <div class="chart-body survival-analysis-body"><canvas id="survivalAnalysisChart"></canvas></div>
+                    <div class="chart-legend-inline stage-legend-inline legend-bottom">
+                        <span class="legend-item"><span class="legend-dot stage-1-dot"></span>Stage I</span>
+                        <span class="legend-item"><span class="legend-dot stage-2-dot"></span>Stage II</span>
+                        <span class="legend-item"><span class="legend-dot stage-3-dot"></span>Stage III</span>
+                        <span class="legend-item"><span class="legend-dot stage-4-dot"></span>Stage IV</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stage at Diagnosis & Age at Diagnosis Row -->
+            <section class="stage-age-section">
                 <div class="chart-card chart-stage">
                     <div class="chart-header">
                         <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>Stage at Diagnosis</h3>
@@ -375,13 +391,54 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="chart-card chart-age-diagnosis">
+                    <div class="chart-header">
+                        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10H12V2z"/><path d="M20 12a8 8 0 1 1-16 0"/><circle cx="12" cy="12" r="2"/></svg>Age at Diagnosis Distribution<span class="chart-info-hint" title="Click for explanation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span></h3>
+                    </div>
+                    <div class="chart-body"><canvas id="ageDiagnosisChart"></canvas></div>
+                    <div class="age-legend legend-bottom">
+                        <div class="age-legend-item">
+                            <span class="legend-dot age-10-30"></span>
+                            <div class="age-legend-labels">
+                                <span class="age-range">10-30</span>
+                                <span class="age-desc">Young adults</span>
+                            </div>
+                            <span class="age-share" id="ageShare10_30">0%</span>
+                        </div>
+                        <div class="age-legend-item">
+                            <span class="legend-dot age-31-50"></span>
+                            <div class="age-legend-labels">
+                                <span class="age-range">31-50</span>
+                                <span class="age-desc">Working age</span>
+                            </div>
+                            <span class="age-share" id="ageShare31_50">0%</span>
+                        </div>
+                        <div class="age-legend-item">
+                            <span class="legend-dot age-51-70"></span>
+                            <div class="age-legend-labels">
+                                <span class="age-range">51-70</span>
+                                <span class="age-desc">Prime diagnosis</span>
+                            </div>
+                            <span class="age-share" id="ageShare51_70">0%</span>
+                        </div>
+                        <div class="age-legend-item">
+                            <span class="legend-dot age-71-90"></span>
+                            <div class="age-legend-labels">
+                                <span class="age-range">71-90</span>
+                                <span class="age-desc">Senior patients</span>
+                            </div>
+                            <span class="age-share" id="ageShare71_90">0%</span>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <!-- Survival Curve -->
             <section class="survival-section">
                 <div class="chart-card full-width">
                     <div class="chart-header">
-                        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Survival Curve Analysis<span class="chart-info-hint" title="Click for explanation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span></h3>
+                        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Survival Curve<span class="chart-info-hint" title="Click for explanation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span></h3>
                         <div class="curve-stats">
                             <div class="curve-stat"><span class="stat-value" id="survival1yr">0%</span><span class="stat-label">1-Year</span></div>
                             <div class="curve-stat"><span class="stat-value" id="survival3yr">0%</span><span class="stat-label">3-Year</span></div>
@@ -603,7 +660,7 @@
     <footer class="dashboard-footer">
         <div class="footer-content">
             <div class="footer-left">
-                <svg class="footer-logo" viewBox="0 0 100 40"><path d="M0,20 L20,20 L30,20 L40,5 L50,35 L60,10 L70,30 L80,20 L100,20" fill="none" stroke="url(#footerGradient)" stroke-width="2" stroke-linecap="round"/><defs><linearGradient id="footerGradient" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#06b6d4"/><stop offset="100%" style="stop-color:#8b5cf6"/></linearGradient></defs></svg>
+                <svg class="footer-logo" viewBox="0 0 100 40"><path d="M0,20 L20,20 L30,20 L40,5 L50,35 L60,10 L70,30 L80,20 L100,20" fill="none" stroke="url(#footerGradient)" stroke-width="2" stroke-linecap="round"/><defs><linearGradient id="footerGradient" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color: var(--gradient-start)"/><stop offset="100%" style="stop-color: var(--gradient-mid)"/></linearGradient></defs></svg>
                 <div class="footer-brand">
                     <span class="brand-name">Cancer Registry Dashboard</span>
                     <span class="brand-tagline">Health Informatics Project</span>

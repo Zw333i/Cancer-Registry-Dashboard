@@ -100,6 +100,15 @@ tbody tr:hover {
     background: rgba(6, 182, 212, 0.08);
 }
 
+tbody tr.active {
+    background: rgba(124, 77, 255, 0.18);
+    box-shadow: inset 3px 0 0 var(--gradient-start);
+}
+
+[data-theme="light"] tbody tr.active {
+    background: rgba(212, 160, 23, 0.18);
+}
+
 .status-alive {
     color: var(--color-alive);
     font-weight: 500;

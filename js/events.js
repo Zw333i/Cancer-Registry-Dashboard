@@ -135,6 +135,8 @@ function initEventListeners() {
     // Chart card click handlers for interpretations (on header or info icon, not the canvas)
     document.querySelector('.chart-doughnut .chart-header')?.addEventListener('click', showDistributionInterpretation);
     document.querySelector('.chart-stage .chart-header')?.addEventListener('click', showStageInterpretation);
+    document.querySelector('.chart-survival-analysis .chart-header')?.addEventListener('click', showSurvivalAnalysisInterpretation);
+    document.querySelector('.chart-age-diagnosis .chart-header')?.addEventListener('click', showAgeDiagnosisInterpretation);
     document.querySelector('.survival-section .chart-header')?.addEventListener('click', showSurvivalInterpretation);
     document.querySelector('.bubble-card .chart-header')?.addEventListener('click', showBubbleInterpretation);
     

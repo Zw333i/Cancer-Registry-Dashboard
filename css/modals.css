@@ -401,6 +401,159 @@
 }
 
 /* ========================================
+   AGE DIAGNOSIS MODAL STYLES
+   ======================================== */
+.peak-age-list {
+    margin-top: 20px;
+}
+
+.peak-age-list h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+}
+
+.interpretation-highlight h4,
+.key-findings h4 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.interpretation-highlight h4 svg,
+.key-findings h4 svg {
+    width: 18px;
+    height: 18px;
+}
+
+.age-reading-list {
+    margin: 8px 0 0;
+    padding-left: 18px;
+    list-style: disc;
+    list-style-position: outside;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.age-reading-list li {
+    margin-bottom: 6px;
+}
+
+.key-findings ul {
+    margin: 10px 0 0;
+    padding-left: 18px;
+    list-style: disc;
+    list-style-position: outside;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.key-findings ul li {
+    margin-bottom: 6px;
+}
+
+.key-findings ul li strong {
+    color: var(--text-primary);
+}
+
+.peak-items {
+    display: grid;
+    gap: 8px;
+}
+
+.peak-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+
+.peak-cancer {
+    flex: 1;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.peak-age {
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.peak-age.age-1030 {
+    background: rgba(139, 92, 246, 0.2);
+    color: #a78bfa;
+}
+
+.peak-age.age-3150 {
+    background: rgba(6, 182, 212, 0.2);
+    color: #22d3ee;
+}
+
+.peak-age.age-5170 {
+    background: rgba(251, 191, 36, 0.2);
+    color: #fbbf24;
+}
+
+.peak-age.age-7190 {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+}
+
+.peak-percent {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-accent);
+    min-width: 40px;
+    text-align: right;
+}
+
+.stat-purple {
+    background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.interpretation-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.stat-item {
+    padding: 12px;
+    border-radius: var(--border-radius-xs);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    background: rgba(15, 23, 42, 0.4);
+}
+
+.stat-number {
+    font-size: 1.2rem;
+    font-weight: 700;
+    background: var(--gradient-main);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.stat-label {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+/* ========================================
    ANIMATIONS & UTILITIES
    ======================================== */
 .fade-in {

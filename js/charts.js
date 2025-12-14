@@ -13,6 +13,8 @@ function initCharts() {
     try {
         initDoughnutChart();
         initStageChart();
+        initAgeDiagnosisChart();
+        initSurvivalAnalysisChart();
         initSurvivalCurve();
         initBubbleChart();
         populateComparisonSelectors();
@@ -156,6 +158,262 @@ function initStageChart() {
                     borderWidth: 1,
                     cornerRadius: 8,
                     padding: 12
+                }
+            }
+        }
+    });
+}
+
+// ==========================================
+// AGE AT DIAGNOSIS DISTRIBUTION CHART (Stacked Area)
+// ==========================================
+function initAgeDiagnosisChart() {
+    const canvas = document.getElementById('ageDiagnosisChart');
+    if (!canvas) {
+        console.error('Age diagnosis chart canvas not found');
+        return;
+    }
+    const ctx = canvas.getContext('2d');
+    
+    // Age group colors matching the legend - with more opacity for stacked effect
+    const ageColors = {
+        '10-30': 'rgba(139, 92, 246, 0.7)',   // Purple
+        '31-50': 'rgba(6, 182, 212, 0.7)',    // Cyan
+        '51-70': 'rgba(251, 191, 36, 0.7)',   // Amber
+        '71-90': 'rgba(239, 68, 68, 0.7)'     // Red
+    };
+    
+    charts.ageDiagnosis = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [], // Cancer types
+            datasets: [
+                {
+                    label: '71-90',
+                    data: [],
+                    backgroundColor: ageColors['71-90'],
+                    borderColor: 'rgba(239, 68, 68, 1)',
+                    borderWidth: 2,
+                    fill: 'origin',
+                    tension: 0.4,
+                    pointRadius: 3,
+                    pointHoverRadius: 5,
+                    pointBackgroundColor: 'rgba(239, 68, 68, 1)'
+                },
+                {
+                    label: '51-70',
+                    data: [],
+                    backgroundColor: ageColors['51-70'],
+                    borderColor: 'rgba(251, 191, 36, 1)',
+                    borderWidth: 2,
+                    fill: '-1',
+                    tension: 0.4,
+                    pointRadius: 3,
+                    pointHoverRadius: 5,
+                    pointBackgroundColor: 'rgba(251, 191, 36, 1)'
+                },
+                {
+                    label: '31-50',
+                    data: [],
+                    backgroundColor: ageColors['31-50'],
+                    borderColor: 'rgba(6, 182, 212, 1)',
+                    borderWidth: 2,
+                    fill: '-1',
+                    tension: 0.4,
+                    pointRadius: 3,
+                    pointHoverRadius: 5,
+                    pointBackgroundColor: 'rgba(6, 182, 212, 1)'
+                },
+                {
+                    label: '10-30',
+                    data: [],
+                    backgroundColor: ageColors['10-30'],
+                    borderColor: 'rgba(139, 92, 246, 1)',
+                    borderWidth: 2,
+                    fill: '-1',
+                    tension: 0.4,
+                    pointRadius: 3,
+                    pointHoverRadius: 5,
+                    pointBackgroundColor: 'rgba(139, 92, 246, 1)'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    grid: { display: false },
+                    ticks: { 
+                        font: { size: 11, weight: '500' },
+                        maxRotation: 45,
+                        minRotation: 0
+                    }
+                },
+                y: {
+                    stacked: true,
+                    beginAtZero: true,
+                    grid: { 
+                        color: 'rgba(148, 163, 184, 0.1)',
+                        drawBorder: false
+                    },
+                    ticks: { 
+                        font: { size: 11 },
+                        stepSize: 10
+                    },
+                    title: {
+                        display: true,
+                        text: 'Number of Patients',
+                        font: { size: 12, weight: '500' },
+                        color: '#94a3b8'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false // Using custom legend in HTML
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(17, 24, 39, 0.95)',
+                    titleColor: '#f1f5f9',
+                    bodyColor: '#94a3b8',
+                    borderColor: 'rgba(6, 182, 212, 0.3)',
+                    borderWidth: 1,
+                    cornerRadius: 8,
+                    padding: 12,
+                    mode: 'index',
+                    intersect: false,
+                    callbacks: {
+                        label: (context) => {
+                            return `Age ${context.dataset.label}: ${context.raw} patients`;
+                        }
+                    }
+                }
+            },
+            interaction: {
+                mode: 'index',
+                intersect: false
+            }
+        }
+    });
+}
+
+// ==========================================
+// SURVIVAL RATE BY CANCER TYPE & STAGE CHART
+// ==========================================
+function initSurvivalAnalysisChart() {
+    const canvas = document.getElementById('survivalAnalysisChart');
+    if (!canvas) {
+        console.error('Survival analysis chart canvas not found');
+        return;
+    }
+    const ctx = canvas.getContext('2d');
+    
+    // Stage colors matching the legend
+    const stageChartColors = {
+        'Stage I': 'rgba(16, 185, 129, 0.85)',    // Green
+        'Stage II': 'rgba(251, 191, 36, 0.85)',   // Yellow/Amber
+        'Stage III': 'rgba(251, 146, 60, 0.85)',  // Orange
+        'Stage IV': 'rgba(239, 68, 68, 0.85)'     // Red
+    };
+    
+    charts.survivalAnalysis = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [], // Cancer types
+            datasets: [
+                {
+                    label: 'Stage I',
+                    data: [],
+                    backgroundColor: stageChartColors['Stage I'],
+                    borderRadius: 4,
+                    barPercentage: 0.85,
+                    categoryPercentage: 0.8
+                },
+                {
+                    label: 'Stage II',
+                    data: [],
+                    backgroundColor: stageChartColors['Stage II'],
+                    borderRadius: 4,
+                    barPercentage: 0.85,
+                    categoryPercentage: 0.8
+                },
+                {
+                    label: 'Stage III',
+                    data: [],
+                    backgroundColor: stageChartColors['Stage III'],
+                    borderRadius: 4,
+                    barPercentage: 0.85,
+                    categoryPercentage: 0.8
+                },
+                {
+                    label: 'Stage IV',
+                    data: [],
+                    backgroundColor: stageChartColors['Stage IV'],
+                    borderRadius: 4,
+                    barPercentage: 0.85,
+                    categoryPercentage: 0.8
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    grid: { display: false },
+                    ticks: { 
+                        font: { size: 11, weight: '500' },
+                        maxRotation: 45,
+                        minRotation: 0
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    grid: { 
+                        color: 'rgba(148, 163, 184, 0.1)',
+                        drawBorder: false
+                    },
+                    ticks: { 
+                        font: { size: 11 },
+                        callback: (value) => value + '%'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Survival Rate (%)',
+                        font: { size: 12, weight: '500' },
+                        color: '#94a3b8'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false // Using custom legend in HTML
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(17, 24, 39, 0.95)',
+                    titleColor: '#f1f5f9',
+                    bodyColor: '#94a3b8',
+                    borderColor: 'rgba(6, 182, 212, 0.3)',
+                    borderWidth: 1,
+                    cornerRadius: 8,
+                    padding: 12,
+                    callbacks: {
+                        title: (context) => {
+                            return context[0].label + ' Cancer';
+                        },
+                        label: (context) => {
+                            const stage = context.dataset.label;
+                            const displayValue = context.raw;
+                            // Check if this was a 0% shown as 2
+                            const actualRate = displayValue === 2 ? 0 : displayValue;
+                            if (actualRate === null || actualRate === undefined) {
+                                return `${stage}: No data`;
+                            }
+                            return `${stage}: ${actualRate.toFixed(1)}% survival`;
+                        }
+                    }
                 }
             }
         }
@@ -502,37 +760,156 @@ function updateCharts() {
     charts.stage.data.datasets[1].data = Object.values(stageData).map(s => s.deceased);
     charts.stage.update();
     
-    // Update survival curve - Kaplan-Meier style
-    const timePoints = [0, 12, 24, 36, 48, 60, 72, 84, 96, 108, 120];
-    const survivalData = timePoints.map(months => {
-        if (filteredPatients.length === 0) return 100;
-        
-        // Count patients who either:
-        // 1. Are alive and have survival >= months, OR
-        // 2. Are deceased but survived at least this many months
-        const atRisk = filteredPatients.filter(p => {
-            const survivalMonths = parseFloat(p.Survival_Months) || 0;
-            return survivalMonths >= months || (p.Status === 'Alive' && survivalMonths >= months);
+    // Update survival curve - adjust axis to filter range and observed max
+    const survivalMonths = filteredPatients.map(p => parseFloat(p.Survival_Months) || 0);
+    const observedMax = survivalMonths.length > 0 ? Math.max(...survivalMonths) : 0;
+    const paddedMax = Math.max(120, Math.ceil(observedMax / 12) * 12);
+    const basePoints = [];
+    for (let month = 0; month <= paddedMax; month += 12) {
+        basePoints.push(month);
+    }
+    if (!basePoints.includes(currentSurvivalMin)) {
+        basePoints.push(currentSurvivalMin);
+    }
+    basePoints.sort((a, b) => a - b);
+
+    const survivalSeries = basePoints.map(months => {
+        if (filteredPatients.length === 0) return 0;
+        const survivors = filteredPatients.filter(p => {
+            const monthsSurvived = parseFloat(p.Survival_Months) || 0;
+            return monthsSurvived >= months;
         }).length;
-        
-        // For month 0, everyone is at 100%
-        if (months === 0) return 100;
-        
-        // Calculate what percentage made it to this time point
-        const survived = filteredPatients.filter(p => {
-            const survivalMonths = parseFloat(p.Survival_Months) || 0;
-            // Patient is still being followed at this time point
-            return survivalMonths >= months;
-        }).length;
-        
-        return (survived / filteredPatients.length) * 100;
+        return (survivors / filteredPatients.length) * 100;
     });
-    
-    charts.survival.data.datasets[0].data = survivalData;
+
+    const visiblePoints = basePoints.filter(month => month >= currentSurvivalMin);
+    const visibleSeries = survivalSeries.filter((_, index) => basePoints[index] >= currentSurvivalMin);
+
+    charts.survival.data.labels = (visiblePoints.length ? visiblePoints : [0]).map(value => `${value}`);
+    charts.survival.data.datasets[0].data = visibleSeries.length ? visibleSeries : [0];
     charts.survival.update();
+    
+    // Update survival analysis chart (cancer type x stage)
+    updateSurvivalAnalysisChart();
+    
+    // Update age at diagnosis chart
+    updateAgeDiagnosisChart();
     
     // Update bubble chart
     updateBubbleChart();
+}
+
+// ==========================================
+// SURVIVAL ANALYSIS CHART UPDATE
+// ==========================================
+function updateSurvivalAnalysisChart() {
+    if (!charts.survivalAnalysis) return;
+    
+    // Get unique cancer types from filtered data
+    const cancerTypes = [...new Set(filteredPatients.map(p => p.Cancer_Type))].sort();
+    const stages = ['Stage I', 'Stage II', 'Stage III', 'Stage IV'];
+    
+    // Calculate survival rate for each cancer type and stage combination
+    const survivalRates = {};
+    
+    cancerTypes.forEach(cancer => {
+        survivalRates[cancer] = {};
+        stages.forEach(stage => {
+            const patients = filteredPatients.filter(p => 
+                p.Cancer_Type === cancer && p.Stage === stage
+            );
+            
+            if (patients.length > 0) {
+                const alive = patients.filter(p => p.Status === 'Alive').length;
+                survivalRates[cancer][stage] = (alive / patients.length) * 100;
+            } else {
+                survivalRates[cancer][stage] = null; // No data
+            }
+        });
+    });
+    
+    // Update chart data - show 0% as small visible bar (2) for visibility
+    charts.survivalAnalysis.data.labels = cancerTypes;
+    
+    // Store original rates for tooltip
+    charts.survivalAnalysis.originalRates = survivalRates;
+    
+    stages.forEach((stage, index) => {
+        charts.survivalAnalysis.data.datasets[index].data = cancerTypes.map(cancer => {
+            const rate = survivalRates[cancer][stage];
+            if (rate === null) return null;
+            // Show 0% as small bar (2) for visibility, but store actual value
+            return rate === 0 ? 2 : rate;
+        });
+    });
+    
+    charts.survivalAnalysis.update();
+}
+
+// ==========================================
+// AGE AT DIAGNOSIS CHART UPDATE
+// ==========================================
+function updateAgeDiagnosisChart() {
+    if (!charts.ageDiagnosis) return;
+    
+    // Get unique cancer types from filtered data
+    const cancerTypes = [...new Set(filteredPatients.map(p => p.Cancer_Type))].sort();
+    
+    const ageGroups = AGE_GROUPS || ['10-30', '31-50', '51-70', '71-90'];
+    const groupTotals = ageGroups.reduce((acc, group) => ({ ...acc, [group]: 0 }), {});
+    let grandTotal = 0;
+    
+    // Calculate count for each cancer type and age group
+    const ageData = {};
+    cancerTypes.forEach(cancer => {
+        ageData[cancer] = {
+            '10-30': 0,
+            '31-50': 0,
+            '51-70': 0,
+            '71-90': 0
+        };
+    });
+    
+    filteredPatients.forEach(patient => {
+        const cancer = patient.Cancer_Type;
+        const ageGroup = getAgeGroupFromValue(patient.Age);
+        if (!ageGroup || !ageData[cancer]) return;
+        ageData[cancer][ageGroup]++;
+        groupTotals[ageGroup]++;
+        grandTotal++;
+    });
+    
+    // Update chart data
+    charts.ageDiagnosis.data.labels = cancerTypes;
+    
+    // Dataset order: 71-90, 51-70, 31-50, 10-30 (for proper stacking)
+    const reversedAgeGroups = [...ageGroups].reverse();
+    reversedAgeGroups.forEach((group, index) => {
+        charts.ageDiagnosis.data.datasets[index].data = cancerTypes.map(cancer => {
+            return ageData[cancer] ? ageData[cancer][group] : 0;
+        });
+    });
+    
+    // Update legend share badges
+    const shareElements = {
+        '10-30': document.getElementById('ageShare10_30'),
+        '31-50': document.getElementById('ageShare31_50'),
+        '51-70': document.getElementById('ageShare51_70'),
+        '71-90': document.getElementById('ageShare71_90')
+    };
+    ageGroups.forEach(group => {
+        if (!shareElements[group]) return;
+        if (grandTotal === 0) {
+            shareElements[group].textContent = '0%';
+            shareElements[group].setAttribute('title', '0 patients');
+            return;
+        }
+        const share = Math.round((groupTotals[group] / grandTotal) * 100);
+        shareElements[group].textContent = `${share}%`;
+        shareElements[group].setAttribute('title', `${groupTotals[group]} patients`);
+    });
+
+    charts.ageDiagnosis.update();
 }
 
 function updateBubbleChart() {
@@ -541,6 +918,8 @@ function updateBubbleChart() {
     const cancerTypes = ['Breast', 'Lung', 'Colon', 'Prostate', 'Liver', 'Stomach', 'Pancreas', 'Ovarian'];
     const stages = ['Stage I', 'Stage II', 'Stage III', 'Stage IV'];
     const stageMap = { 'Stage I': 1, 'Stage II': 2, 'Stage III': 3, 'Stage IV': 4 };
+    let maxAvgSurvival = 0;
+    let chartHasData = false;
     
     // Update each dataset (one per cancer type)
     cancerTypes.forEach((cancer, datasetIndex) => {
@@ -557,9 +936,12 @@ function updateBubbleChart() {
                     const avgSurvival = stagePatients.reduce((sum, p) => 
                         sum + (parseFloat(p.Survival_Months) || 0), 0
                     ) / stagePatients.length;
-                    
+                    chartHasData = true;
+                    if (avgSurvival > maxAvgSurvival) {
+                        maxAvgSurvival = avgSurvival;
+                    }
                     dataPoints.push({
-                        x: Math.min(avgSurvival, 120), // Cap at 120 months
+                        x: avgSurvival,
                         y: stageMap[stage],
                         count: stagePatients.length
                     });
@@ -570,6 +952,16 @@ function updateBubbleChart() {
         charts.bubble.data.datasets[datasetIndex].data = dataPoints;
         charts.bubble.data.datasets[datasetIndex].hidden = !isSelected;
     });
+    
+    const xScale = charts.bubble.options?.scales?.x;
+    if (xScale) {
+        const paddedMax = chartHasData
+            ? Math.max(120, Math.ceil((maxAvgSurvival + 6) / 6) * 6)
+            : 120;
+        const minRange = currentSurvivalMin > 0 ? currentSurvivalMin : 0;
+        xScale.max = Math.max(paddedMax, minRange + 6);
+        xScale.min = minRange;
+    }
     
     charts.bubble.update();
 }

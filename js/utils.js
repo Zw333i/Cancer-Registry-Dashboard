@@ -46,53 +46,27 @@ function showWelcomeToast() {
 // ==========================================
 // EXPORT CSV
 // ==========================================
-function exportToCSV() {
-    if (filteredPatients.length === 0) {
-        showToast('warning', 'No Data', 'No patients to export');
-        return;
+async function exportToCSV() {
+    try {
+        const response = await fetch('data/data.csv', { cache: 'no-cache' });
+        if (!response.ok) {
+            throw new Error('Unable to fetch data.csv');
+        }
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        const timestamp = new Date().toISOString().split('T')[0];
+        link.href = url;
+        link.download = `cancer_registry_data_${timestamp}.csv`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        showToast('success', 'Export Complete', 'Downloaded data.csv from the data folder');
+    } catch (error) {
+        console.error('CSV export failed:', error);
+        showToast('error', 'Export Failed', 'Unable to download data.csv');
     }
-    
-    // Headers
-    const headers = ['ID', 'Cancer_Type', 'Lung_Subtype', 'Stage', 'Status', 'Survival_Months'];
-    
-    // Build CSV content
-    let csvContent = headers.join(',') + '\n';
-    
-    filteredPatients.forEach(patient => {
-        const row = headers.map(header => {
-            let value = patient[header] || '';
-            // Escape quotes and wrap in quotes if contains comma
-            if (value.includes(',') || value.includes('"')) {
-                value = `"${value.replace(/"/g, '""')}"`;
-            }
-            return value;
-        });
-        csvContent += row.join(',') + '\n';
-    });
-    
-    // Create download link
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    const url = URL.createObjectURL(blob);
-    
-    // Generate filename with current filter info
-    let filename = 'cancer_registry';
-    if (currentCancerFilter !== 'all') {
-        filename += `_${currentCancerFilter.toLowerCase()}`;
-    }
-    if (currentStatusFilter !== 'all') {
-        filename += `_${currentStatusFilter.toLowerCase()}`;
-    }
-    filename += `_${filteredPatients.length}_patients.csv`;
-    
-    link.setAttribute('href', url);
-    link.setAttribute('download', filename);
-    link.style.visibility = 'hidden';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    
-    showToast('success', 'Export Complete', `Downloaded ${filteredPatients.length} patient records`);
 }
 
 // ==========================================

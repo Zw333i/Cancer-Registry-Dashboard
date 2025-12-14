@@ -38,6 +38,23 @@ const stageColors = {
     'Unknown': '#64748b'
 };
 
+const AGE_GROUPS = ['10-30', '31-50', '51-70', '71-90'];
+const ageGroupDescriptions = {
+    '10-30': 'Young adults',
+    '31-50': 'Working age',
+    '51-70': 'Prime diagnosis',
+    '71-90': 'Senior patients'
+};
+
+function getAgeGroupFromValue(ageValue) {
+    const numericAge = typeof ageValue === 'number' ? ageValue : parseFloat(ageValue);
+    if (Number.isNaN(numericAge)) return null;
+    if (numericAge <= 30) return '10-30';
+    if (numericAge <= 50) return '31-50';
+    if (numericAge <= 70) return '51-70';
+    return '71-90';
+}
+
 // Cancer type colors and icons for bubble chart
 const bubbleCancerIcons = {
     'Breast': { color: '#ec4899' },

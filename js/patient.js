@@ -7,6 +7,9 @@
 // PATIENT SPOTLIGHT
 // ==========================================
 function displayPatientSpotlight() {
+    const currentCounter = document.getElementById('currentPatientNum');
+    const totalCounter = document.getElementById('totalPatientNum');
+
     if (filteredPatients.length === 0) {
         document.getElementById('patientId').textContent = 'No patients';
         document.getElementById('patientCancerTag').textContent = '--';
@@ -15,10 +18,22 @@ function displayPatientSpotlight() {
         document.getElementById('patientDuration').textContent = '--';
         document.getElementById('patientPrognosis').textContent = '--';
         document.getElementById('patientNarrative').textContent = 'No matching patients found. Try adjusting your filters.';
+        if (currentCounter) currentCounter.textContent = '0';
+        if (totalCounter) totalCounter.textContent = '0';
+        highlightPatientRow(null);
         return;
     }
     
+    if (currentPatientIndex >= filteredPatients.length) {
+        currentPatientIndex = filteredPatients.length - 1;
+    }
+    if (currentPatientIndex < 0) {
+        currentPatientIndex = 0;
+    }
+
     const patient = filteredPatients[currentPatientIndex];
+    if (totalCounter) totalCounter.textContent = filteredPatients.length;
+    if (currentCounter) currentCounter.textContent = currentPatientIndex + 1;
     
     // Update ID
     document.getElementById('patientId').textContent = patient.ID;
@@ -41,6 +56,11 @@ function displayPatientSpotlight() {
     
     statusTag.textContent = patient.Status;
     statusTag.style.setProperty('--status-color', patient.Status === 'Alive' ? '#34d399' : '#f87171');
+    const avatarStatus = document.getElementById('avatarStatus');
+    if (avatarStatus) {
+        avatarStatus.classList.remove('alive', 'deceased');
+        avatarStatus.classList.add(patient.Status === 'Alive' ? 'alive' : 'deceased');
+    }
     
     // Update stats
     const months = parseInt(patient.Survival_Months) || 0;
@@ -76,6 +96,8 @@ function displayPatientSpotlight() {
     // Make tags clickable - update their title attributes
     cancerTag.title = `Click to filter by ${patient.Cancer_Type}`;
     stageTag.title = `Click to filter by ${patient.Stage}`;
+
+    highlightPatientRow(patient.ID);
 }
 
 function generatePatientNarrative(patient) {
@@ -135,4 +157,12 @@ function shufflePatient() {
     currentPatientIndex = newIndex;
     displayPatientSpotlight();
     showToast('info', 'Random Patient', `Viewing patient ${filteredPatients[currentPatientIndex].ID}`);
+}
+
+function highlightPatientRow(patientId) {
+    const rows = document.querySelectorAll('#tableBody tr');
+    rows.forEach(row => {
+        const isActive = patientId && row.dataset.patientId === patientId;
+        row.classList.toggle('active', Boolean(isActive));
+    });
 }

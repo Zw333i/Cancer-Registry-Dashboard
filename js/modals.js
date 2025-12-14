@@ -427,6 +427,106 @@ function showStageInterpretation(e) {
     openModal('Stage at Diagnosis', content);
 }
 
+function showSurvivalAnalysisInterpretation(e) {
+    // Calculate survival rates for all cancer type + stage combinations
+    const cancerTypes = [...new Set(filteredPatients.map(p => p.Cancer_Type))].sort();
+    const stages = ['Stage I', 'Stage II', 'Stage III', 'Stage IV'];
+    
+    // Collect all combinations with their rates
+    const allCombinations = [];
+    
+    cancerTypes.forEach(cancer => {
+        stages.forEach(stage => {
+            const patients = filteredPatients.filter(p => 
+                p.Cancer_Type === cancer && p.Stage === stage
+            );
+            
+            if (patients.length > 0) {
+                const alive = patients.filter(p => p.Status === 'Alive').length;
+                const rate = (alive / patients.length) * 100;
+                allCombinations.push({
+                    cancer,
+                    stage,
+                    rate,
+                    alive,
+                    total: patients.length
+                });
+            }
+        });
+    });
+    
+    // Sort for top 5 highest and top 5 lowest
+    const sortedByRate = [...allCombinations].sort((a, b) => b.rate - a.rate);
+    const top5Highest = sortedByRate.slice(0, 5);
+    const top5Lowest = sortedByRate.slice(-5).reverse();
+    
+    const stageColors = {
+        'Stage I': '#10b981',
+        'Stage II': '#fbbf24',
+        'Stage III': '#fb923c',
+        'Stage IV': '#ef4444'
+    };
+    
+    const content = `
+        <div class="interpretation-content">
+            <div class="interpretation-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+            </div>
+            
+            <div class="interpretation-highlight">
+                <h4>How to read this chart</h4>
+                <p>This chart shows the <strong>survival rate</strong> for each cancer type, broken down by stage at diagnosis. Each group of bars represents a cancer type, with 4 bars showing survival rates for Stages I through IV.</p>
+            </div>
+            
+            <div class="interpretation-highlight" style="border-left-color: #10b981;">
+                <h4 style="color: #10b981;">Top 5 Highest Survival Rates</h4>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                        <th style="text-align: left; padding: 8px; color: var(--text-muted);">Cancer Type</th>
+                        <th style="text-align: center; padding: 8px; color: var(--text-muted);">Stage</th>
+                        <th style="text-align: center; padding: 8px; color: var(--text-muted);">Alive/Total</th>
+                        <th style="text-align: right; padding: 8px; color: #10b981;">Rate</th>
+                    </tr>
+                    ${top5Highest.map((item, i) => `
+                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                            <td style="padding: 8px;"><strong>${i + 1}. ${item.cancer}</strong></td>
+                            <td style="text-align: center; padding: 8px; color: ${stageColors[item.stage]};">${item.stage}</td>
+                            <td style="text-align: center; padding: 8px;">${item.alive}/${item.total}</td>
+                            <td style="text-align: right; padding: 8px; color: #10b981;"><strong>${item.rate.toFixed(1)}%</strong></td>
+                        </tr>
+                    `).join('')}
+                </table>
+            </div>
+            
+            <div class="interpretation-highlight" style="border-left-color: #ef4444;">
+                <h4 style="color: #ef4444;">Top 5 Lowest Survival Rates</h4>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                        <th style="text-align: left; padding: 8px; color: var(--text-muted);">Cancer Type</th>
+                        <th style="text-align: center; padding: 8px; color: var(--text-muted);">Stage</th>
+                        <th style="text-align: center; padding: 8px; color: var(--text-muted);">Alive/Total</th>
+                        <th style="text-align: right; padding: 8px; color: #ef4444;">Rate</th>
+                    </tr>
+                    ${top5Lowest.map((item, i) => `
+                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                            <td style="padding: 8px;"><strong>${i + 1}. ${item.cancer}</strong></td>
+                            <td style="text-align: center; padding: 8px; color: ${stageColors[item.stage]};">${item.stage}</td>
+                            <td style="text-align: center; padding: 8px;">${item.alive}/${item.total}</td>
+                            <td style="text-align: right; padding: 8px; color: #ef4444;"><strong>${item.rate.toFixed(1)}%</strong></td>
+                        </tr>
+                    `).join('')}
+                </table>
+            </div>
+            
+            <div class="tip-box">
+                <strong>Key Insight:</strong> Early-stage cancers (Stage I & II) generally have higher survival rates across all cancer types. Stage IV typically shows the lowest survival rates, emphasizing the importance of early detection.
+            </div>
+        </div>
+    `;
+    
+    openModal('Survival Rate by Cancer Type and Stage', content);
+}
+
 function showSurvivalInterpretation(e) {
     // Don't trigger if clicking on curve stats
     if (e.target.closest('.curve-stat')) return;
@@ -497,6 +597,114 @@ function showSurvivalInterpretation(e) {
     `;
     
     openModal('Survival Curve', content);
+}
+
+function showAgeDiagnosisInterpretation(e) {
+    // Filter patients with actual age data
+    const patientsWithAge = filteredPatients.filter(p => typeof p.Age === 'number' && !Number.isNaN(p.Age));
+    if (patientsWithAge.length === 0) {
+        const noDataContent = `
+            <div class="interpretation-content">
+                <div class="interpretation-highlight">
+                    <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>No age data available</h4>
+                    <p>Age information is missing for the current selection, so this analysis cannot be generated.</p>
+                </div>
+            </div>`;
+        openModal('Age at Diagnosis Distribution', noDataContent);
+        return;
+    }
+    
+    const cancerTypes = [...new Set(patientsWithAge.map(p => p.Cancer_Type))].sort();
+    const ageGroups = AGE_GROUPS || ['10-30', '31-50', '51-70', '71-90'];
+    const ageLabels = ageGroupDescriptions || {
+        '10-30': 'Young adults',
+        '31-50': 'Working age',
+        '51-70': 'Prime diagnosis',
+        '71-90': 'Senior patients'
+    };
+    
+    const ageTotals = ageGroups.reduce((acc, group) => ({ ...acc, [group]: 0 }), {});
+    patientsWithAge.forEach(p => {
+        const group = getAgeGroupFromValue(p.Age);
+        if (group) {
+            ageTotals[group]++;
+        }
+    });
+    const totalPatients = patientsWithAge.length;
+    const getShare = (group) => totalPatients ? Math.round((ageTotals[group] / totalPatients) * 100) : 0;
+    const midBandShare = totalPatients ? Math.round(((ageTotals['31-50'] + ageTotals['51-70']) / totalPatients) * 100) : 0;
+    
+    // Find peak age group per cancer type
+    const cancerPeaks = [];
+    cancerTypes.forEach(cancer => {
+        const cancerPatients = patientsWithAge.filter(p => p.Cancer_Type === cancer);
+        if (cancerPatients.length === 0) return;
+        const counts = ageGroups.reduce((acc, group) => ({ ...acc, [group]: 0 }), {});
+        cancerPatients.forEach(p => {
+            const group = getAgeGroupFromValue(p.Age);
+            if (group) counts[group]++;
+        });
+        const peakEntry = Object.entries(counts).reduce((max, entry) => entry[1] > max[1] ? entry : max, ['10-30', 0]);
+        const peakGroup = peakEntry[0];
+        const peakCount = peakEntry[1];
+        if (peakCount === 0) return;
+        cancerPeaks.push({ cancer, peakGroup, count: peakCount, total: cancerPatients.length });
+    });
+    
+    // Sort by youngest peak group first
+    const groupOrder = { '10-30': 0, '31-50': 1, '51-70': 2, '71-90': 3 };
+    cancerPeaks.sort((a, b) => groupOrder[a.peakGroup] - groupOrder[b.peakGroup]);
+    
+    const youngestPeak = cancerPeaks.filter(c => c.peakGroup === '10-30' || c.peakGroup === '31-50');
+    const oldestPeak = cancerPeaks.filter(c => c.peakGroup === '71-90');
+    
+    const content = `
+        <div class="interpretation-content">
+            <div class="interpretation-highlight">
+                <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10H12V2z"/></svg>How to read this chart</h4>
+                <ul class="age-reading-list">
+                    <li><strong>Horizontal axis:</strong> each cancer type from left to right.</li>
+                    <li><strong>Stacked colors:</strong> show how many patients in every age band.
+                        Taller colors mean more patients for that cancer-age combination.</li>
+                    <li><strong>Legend shares:</strong> numbers beside each color show that age group's share of total diagnoses.</li>
+                </ul>
+            </div>
+
+            <div class="interpretation-stats">
+                ${ageGroups.map(group => `
+                    <div class="stat-item">
+                        <span class="stat-number">${getShare(group)}%</span>
+                        <span class="stat-label">${ageLabels[group]}<br>${ageTotals[group]} patients</span>
+                    </div>
+                `).join('')}
+            </div>
+            
+            <div class="key-findings">
+                <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h10M4 18h6"/></svg>Age patterns by cancer type</h4>
+                <ul>
+                    ${youngestPeak.length > 0 ? `<li><strong>Younger onset:</strong> ${youngestPeak.map(c => c.cancer).join(', ')} peak before age 50.</li>` : ''}
+                    <li><strong>Prime diagnosis (51-70):</strong> Most cancers reach their highest counts in this band.</li>
+                    ${oldestPeak.length > 0 ? `<li><strong>Senior-heavy:</strong> ${oldestPeak.map(c => c.cancer).join(', ')} are dominated by ages 71-90.</li>` : ''}
+                    <li><strong>Screening tip:</strong> targeting ages 31-70 captures ${midBandShare}% of cases.</li>
+                </ul>
+            </div>
+            
+            <div class="peak-age-list">
+                <h4>Peak age group by cancer type</h4>
+                <div class="peak-items">
+                    ${cancerPeaks.map(c => `
+                        <div class="peak-item">
+                            <span class="peak-cancer">${c.cancer}</span>
+                            <span class="peak-age age-${c.peakGroup.replace('-', '')}">${c.peakGroup}</span>
+                            <span class="peak-percent">${c.total ? Math.round((c.count / c.total) * 100) : 0}%</span>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        </div>
+    `;
+    
+    openModal('Age at Diagnosis Distribution', content);
 }
 
 function showBubbleInterpretation(e) {
