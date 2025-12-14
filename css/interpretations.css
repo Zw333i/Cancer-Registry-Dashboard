@@ -1,0 +1,369 @@
+/* ===== INTERPRETATION MODAL STYLES ===== */
+.interpretation-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.interpretation-icon {
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.interpretation-icon svg {
+    width: 32px;
+    height: 32px;
+    color: var(--color-cyan);
+}
+
+.interpretation-content > p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+}
+
+.interpretation-highlight {
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(139, 92, 246, 0.1));
+    border: 1px solid rgba(6, 182, 212, 0.2);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 8px 0;
+}
+
+.interpretation-highlight h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-cyan);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.interpretation-highlight p,
+.interpretation-highlight ul {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+.interpretation-highlight ul {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0 0;
+}
+
+.interpretation-highlight li {
+    padding: 6px 0 6px 24px;
+    position: relative;
+}
+
+.interpretation-highlight li::before {
+    content: "•";
+    position: absolute;
+    left: 8px;
+    color: var(--color-cyan);
+    font-weight: bold;
+}
+
+/* Stage Explanation Grid */
+.stage-explanation {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 12px 0;
+}
+
+.stage-item {
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 14px;
+    transition: all 0.2s ease;
+}
+
+.stage-item:hover {
+    border-color: rgba(6, 182, 212, 0.3);
+    transform: translateY(-2px);
+}
+
+.stage-item h5 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+}
+
+.stage-item p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.stage-item.stage-1 {
+    border-left: 3px solid #10b981;
+}
+
+.stage-item.stage-2 {
+    border-left: 3px solid #06b6d4;
+}
+
+.stage-item.stage-3 {
+    border-left: 3px solid #f59e0b;
+}
+
+.stage-item.stage-4 {
+    border-left: 3px solid #ef4444;
+}
+
+/* Axis Explanation */
+.axis-explanation {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 12px 0;
+}
+
+.axis-item {
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 16px;
+}
+
+.axis-item h5 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-cyan);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.axis-item p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+/* Survival Stats in Modal */
+.survival-stats-modal {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+}
+
+.stat-box {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.stat-box:hover {
+    border-color: rgba(6, 182, 212, 0.3);
+    transform: translateY(-2px);
+}
+
+.stat-box .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--color-cyan), var(--color-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.stat-box .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Survival Breakdown */
+.survival-breakdown {
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+    margin: 12px 0;
+}
+
+.survival-breakdown h4 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+}
+
+.survival-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    transition: all 0.2s ease;
+}
+
+.survival-row:last-child {
+    margin-bottom: 0;
+}
+
+.survival-row:hover {
+    background: rgba(6, 182, 212, 0.05);
+}
+
+.survival-row .type-name {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.survival-row .type-rate {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.survival-row .type-rate.high {
+    color: #10b981;
+}
+
+.survival-row .type-rate.medium {
+    color: #f59e0b;
+}
+
+.survival-row .type-rate.low {
+    color: #ef4444;
+}
+
+/* Bubble Size Legend */
+.bubble-size-legend {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 16px 0;
+}
+
+.bubble-demo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.bubble-demo .bubble {
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.6), rgba(139, 92, 246, 0.6));
+    border: 2px solid rgba(6, 182, 212, 0.8);
+}
+
+.bubble-demo .bubble.small {
+    width: 16px;
+    height: 16px;
+}
+
+.bubble-demo .bubble.medium {
+    width: 28px;
+    height: 28px;
+}
+
+.bubble-demo .bubble.large {
+    width: 44px;
+    height: 44px;
+}
+
+.bubble-demo span {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* Organ Grid in Modal */
+.organ-grid-modal {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 16px 0;
+}
+
+.organ-item {
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 12px 10px;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.organ-item:hover {
+    border-color: rgba(6, 182, 212, 0.4);
+    transform: translateY(-2px);
+}
+
+.organ-item .organ-icon {
+    font-size: 1.5rem;
+    margin-bottom: 6px;
+}
+
+.organ-item .organ-name {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    line-height: 1.3;
+}
+
+/* Tip Box */
+.tip-box {
+    background: rgba(251, 191, 36, 0.1);
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-top: 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.tip-box .tip-icon {
+    font-size: 1.2rem;
+}
+
+.tip-box p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.tip-box strong {
+    color: #fbbf24;
+}
+
+/* Responsive for interpretation modals */
+@media (max-width: 768px) {
+    .stage-explanation {
+        grid-template-columns: 1fr;
+    }
+    
+    .axis-explanation {
+        grid-template-columns: 1fr;
+    }
+    
+    .survival-stats-modal {
+        grid-template-columns: 1fr;
+    }
+    
+    .organ-grid-modal {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .bubble-size-legend {
+        flex-direction: column;
+        gap: 12px;
+    }
+}

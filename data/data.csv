@@ -1,0 +1,357 @@
+ID,Cancer_Type,Lung_Subtype,Stage,Status,Survival_Months
+TCGA-A2-A0CX,Breast,,Stage II,Alive,57.6
+TCGA-BH-A0DV,Breast,,Stage III,Alive,68.8
+TCGA-A2-A0EQ,Breast,,Stage II,Alive,80.9
+TCGA-BH-A1F5,Breast,,Stage II,Deceased,90.4
+TCGA-B6-A0RL,Breast,,Stage II,Deceased,82.3
+TCGA-A2-A1G1,Breast,,Stage II,Alive,19.5
+TCGA-D8-A1XK,Breast,,Stage II,Alive,14.7
+TCGA-A2-A0D4,Breast,,Stage II,Alive,25.6
+TCGA-A2-A3KD,Breast,,Stage III,Alive,40.2
+TCGA-BH-A6R9,Breast,,Stage II,Alive,5.3
+TCGA-BH-A1EW,Breast,,Stage II,Deceased,56.5
+TCGA-AC-A3OD,Breast,,Stage II,Alive,15.0
+TCGA-BH-A0BQ,Breast,,Stage I,Alive,75.2
+TCGA-E2-A1B4,Breast,,Stage III,Deceased,33.5
+TCGA-GM-A5PV,Breast,,Stage II,Alive,13.7
+TCGA-E2-A1LH,Breast,,Stage I,Alive,108.2
+TCGA-BH-A0DS,Breast,,Stage III,Alive,2.6
+TCGA-B6-A402,Breast,,Stage I,Alive,76.0
+TCGA-AR-A2LE,Breast,,Stage I,Alive,168.7
+TCGA-C8-A8HQ,Breast,,Stage II,Alive,12.7
+TCGA-GM-A2DO,Breast,,Stage I,Alive,86.5
+TCGA-A8-A09I,Breast,,Stage II,Alive,45.7
+TCGA-AN-A0XN,Breast,,Stage III,Alive,0.3
+TCGA-AR-A5QQ,Breast,,Stage III,Deceased,10.7
+TCGA-A2-A0YJ,Breast,,Stage III,Alive,18.9
+TCGA-A8-A08P,Breast,,Stage III,Alive,31.4
+TCGA-OL-A5D6,Breast,,Stage II,Deceased,36.8
+TCGA-B6-A0IN,Breast,,Unknown,Deceased,85.8
+TCGA-AC-A7VB,Breast,,Stage II,Alive,8.3
+TCGA-D8-A1JG,Breast,,Stage II,Alive,53.7
+TCGA-A2-A0SY,Breast,,Stage III,Alive,44.9
+TCGA-AO-A0JF,Breast,,Stage II,Alive,66.0
+TCGA-A2-A0YL,Breast,,Stage III,Alive,49.1
+TCGA-A8-A0A9,Breast,,Stage II,Alive,27.4
+TCGA-JL-A3YX,Breast,,Stage II,Alive,11.7
+TCGA-E2-A105,Breast,,Stage II,Alive,43.6
+TCGA-A7-A56D,Breast,,Stage II,Alive,14.9
+TCGA-E2-A1B0,Breast,,Stage III,Alive,54.4
+TCGA-C8-A3M7,Breast,,Stage III,Deceased,34.5
+TCGA-C8-A12T,Breast,,Stage II,Alive,0.0
+TCGA-E2-A15F,Breast,,Stage I,Alive,21.9
+TCGA-A8-A079,Breast,,Stage III,Alive,9.1
+TCGA-A7-A26H,Breast,,Stage II,Alive,24.1
+TCGA-OL-A66O,Breast,,Stage II,Alive,17.6
+TCGA-B6-A0WY,Breast,,Stage III,Deceased,115.4
+TCGA-95-7562,Lung,Adenocarcinoma,Stage II,Deceased,2.9
+TCGA-95-8494,Lung,Adenocarcinoma,Stage II,Alive,2.8
+TCGA-05-4389,Lung,Adenocarcinoma,Stage I,Alive,45.6
+TCGA-55-6984,Lung,Adenocarcinoma,Stage II,Deceased,25.3
+TCGA-44-6778,Lung,Adenocarcinoma,Stage I,Alive,62.1
+TCGA-69-7974,Lung,Adenocarcinoma,Stage III,Alive,6.1
+TCGA-S2-AA1A,Lung,Adenocarcinoma,Stage I,Alive,17.1
+TCGA-L9-A50W,Lung,Adenocarcinoma,Stage II,Deceased,14.7
+TCGA-49-AAQV,Lung,Adenocarcinoma,Stage II,Deceased,22.6
+TCGA-50-5930,Lung,Adenocarcinoma,Stage III,Deceased,9.4
+TCGA-05-4397,Lung,Adenocarcinoma,Stage II,Deceased,24.4
+TCGA-MP-A4TJ,Lung,Adenocarcinoma,Stage I,Deceased,11.3
+TCGA-44-6775,Lung,Adenocarcinoma,Stage I,Alive,23.5
+TCGA-95-7944,Lung,Adenocarcinoma,Stage I,Alive,12.6
+TCGA-J2-8194,Lung,Adenocarcinoma,Stage II,Alive,24.1
+TCGA-50-5933,Lung,Adenocarcinoma,Stage III,Deceased,79.8
+TCGA-05-4249,Lung,Adenocarcinoma,Stage I,Alive,50.8
+TCGA-50-6673,Lung,Adenocarcinoma,Stage I,Deceased,0.7
+TCGA-80-5611,Lung,Adenocarcinoma,Stage I,Alive,86.5
+TCGA-50-5049,Lung,Adenocarcinoma,Stage I,Alive,103.1
+TCGA-69-A59K,Lung,Adenocarcinoma,Stage II,Alive,19.7
+TCGA-MP-A4T8,Lung,Adenocarcinoma,Stage III,Deceased,5.4
+TCGA-67-6215,Lung,Adenocarcinoma,Stage I,Alive,5.8
+TCGA-64-5779,Lung,Adenocarcinoma,Stage III,Alive,28.8
+TCGA-NJ-A4YG,Lung,Adenocarcinoma,Stage I,Alive,75.4
+TCGA-67-3773,Lung,Adenocarcinoma,Stage I,Alive,14.2
+TCGA-55-A493,Lung,Adenocarcinoma,Stage I,Alive,0.9
+TCGA-97-A4LX,Lung,Adenocarcinoma,Stage I,Alive,20.5
+TCGA-95-7043,Lung,Adenocarcinoma,Stage I,Deceased,16.8
+TCGA-MP-A4TE,Lung,Adenocarcinoma,Stage II,Deceased,29.9
+TCGA-NJ-A55O,Lung,Adenocarcinoma,Stage II,Alive,0.4
+TCGA-44-2662,Lung,Adenocarcinoma,Stage I,Alive,42.7
+TCGA-80-5607,Lung,Adenocarcinoma,Stage II,Alive,0.0
+TCGA-75-7027,Lung,Adenocarcinoma,Stage I,Alive,102.0
+TCGA-05-5423,Lung,Adenocarcinoma,Stage II,Alive,5.0
+TCGA-44-6148,Lung,Adenocarcinoma,Stage I,Alive,23.5
+TCGA-75-6206,Lung,Adenocarcinoma,Stage I,Alive,86.3
+TCGA-44-5645,Lung,Adenocarcinoma,Stage I,Alive,28.4
+TCGA-05-4396,Lung,Adenocarcinoma,Stage III,Deceased,10.1
+TCGA-44-6779,Lung,Adenocarcinoma,Stage II,Deceased,16.7
+TCGA-51-4079,Lung,Squamous Cell,Stage I,Deceased,0.4
+TCGA-63-A5MM,Lung,Squamous Cell,Stage II,Deceased,15.2
+TCGA-NC-A5HQ,Lung,Squamous Cell,Stage III,Deceased,14.9
+TCGA-22-A5C4,Lung,Squamous Cell,Stage II,Alive,22.4
+TCGA-66-2777,Lung,Squamous Cell,Stage I,Alive,2.0
+TCGA-33-4547,Lung,Squamous Cell,Stage I,Alive,80.6
+TCGA-MF-A522,Lung,Squamous Cell,Stage I,Deceased,12.0
+TCGA-39-5036,Lung,Squamous Cell,Stage I,Alive,72.2
+TCGA-98-A53J,Lung,Squamous Cell,Stage I,Alive,21.0
+TCGA-O2-A52Q,Lung,Squamous Cell,Stage III,Deceased,3.8
+TCGA-56-A4ZJ,Lung,Squamous Cell,Stage I,Alive,21.3
+TCGA-18-3416,Lung,Squamous Cell,Stage II,Deceased,32.4
+TCGA-NC-A5HG,Lung,Squamous Cell,Stage III,Alive,65.4
+TCGA-33-4582,Lung,Squamous Cell,Stage I,Deceased,105.0
+TCGA-66-2800,Lung,Squamous Cell,Stage III,Alive,49.7
+TCGA-66-2786,Lung,Squamous Cell,Stage I,Alive,26.3
+TCGA-37-A5EL,Lung,Squamous Cell,Stage II,Deceased,38.1
+TCGA-85-7698,Lung,Squamous Cell,Stage I,Alive,31.7
+TCGA-56-7822,Lung,Squamous Cell,Stage II,Deceased,17.7
+TCGA-94-A4VJ,Lung,Squamous Cell,Stage I,Alive,14.3
+TCGA-63-A5MI,Lung,Squamous Cell,Stage III,Alive,59.5
+TCGA-63-A5MS,Lung,Squamous Cell,Stage I,Alive,79.4
+TCGA-21-5782,Lung,Squamous Cell,Stage I,Deceased,32.1
+TCGA-O2-A52S,Lung,Squamous Cell,Stage III,Deceased,12.9
+TCGA-85-A50M,Lung,Squamous Cell,Stage II,Deceased,27.5
+TCGA-94-8035,Lung,Squamous Cell,Stage II,Alive,4.1
+TCGA-33-4583,Lung,Squamous Cell,Stage I,Deceased,153.4
+TCGA-66-2792,Lung,Squamous Cell,Stage II,Alive,30.4
+TCGA-56-8625,Lung,Squamous Cell,Stage III,Deceased,10.5
+TCGA-NK-A5D1,Lung,Squamous Cell,Stage II,Alive,17.0
+TCGA-46-6026,Lung,Squamous Cell,Stage II,Alive,14.1
+TCGA-96-8170,Lung,Squamous Cell,Stage II,Alive,17.7
+TCGA-77-A5GB,Lung,Squamous Cell,Stage I,Deceased,31.2
+TCGA-77-8143,Lung,Squamous Cell,Stage III,Deceased,26.8
+TCGA-98-A53C,Lung,Squamous Cell,Stage I,Alive,27.4
+TCGA-43-6770,Lung,Squamous Cell,Stage I,Alive,21.8
+TCGA-18-3408,Lung,Squamous Cell,Stage I,Deceased,76.8
+TCGA-77-6844,Lung,Squamous Cell,Stage III,Deceased,76.1
+TCGA-56-8623,Lung,Squamous Cell,Stage I,Deceased,23.1
+TCGA-33-4532,Lung,Squamous Cell,Stage I,Deceased,130.8
+TCGA-AA-3712,Colon,,Stage III,Alive,0.0
+TCGA-A6-5659,Colon,,Stage I,Alive,30.9
+TCGA-AA-A00U,Colon,,Stage III,Alive,17.3
+TCGA-G4-6627,Colon,,Stage II,Alive,75.8
+TCGA-AA-3866,Colon,,Stage I,Alive,17.3
+TCGA-AA-A02K,Colon,,Stage IV,Deceased,14.2
+TCGA-F4-6805,Colon,,Stage II,Alive,34.9
+TCGA-CK-5913,Colon,,Stage II,Alive,52.0
+TCGA-AA-A02F,Colon,,Stage IV,Alive,40.5
+TCGA-AA-3521,Colon,,Stage II,Alive,0.0
+TCGA-QG-A5YW,Colon,,Stage III,Alive,29.9
+TCGA-D5-5538,Colon,,Stage III,Deceased,55.4
+TCGA-AA-3525,Colon,,Stage III,Alive,8.2
+TCGA-CM-6171,Colon,,Stage I,Alive,14.2
+TCGA-AM-5820,Colon,,Stage IV,Alive,0.5
+TCGA-G4-6297,Colon,,Stage IV,Alive,83.5
+TCGA-AA-A01P,Colon,,Stage III,Deceased,38.6
+TCGA-AU-6004,Colon,,Stage I,Alive,27.5
+TCGA-NH-A6GC,Colon,,Stage IV,Alive,13.0
+TCGA-3L-AA1B,Colon,,Stage I,Alive,15.8
+TCGA-AA-3516,Colon,,Stage III,Deceased,13.2
+TCGA-AZ-4323,Colon,,Stage IV,Deceased,1.4
+TCGA-T9-A92H,Colon,,Stage II,Alive,12.1
+TCGA-A6-6138,Colon,,Stage I,Alive,22.8
+TCGA-AA-A01I,Colon,,Stage I,Alive,31.4
+TCGA-CM-4744,Colon,,Stage I,Alive,20.3
+TCGA-AA-3518,Colon,,Stage II,Alive,1.0
+TCGA-AA-3530,Colon,,Stage I,Alive,19.3
+TCGA-AA-3715,Colon,,Stage II,Deceased,19.3
+TCGA-A6-2674,Colon,,Stage IV,Alive,44.4
+TCGA-A6-A567,Colon,,Stage IV,Deceased,62.7
+TCGA-AA-A03J,Colon,,Stage I,Alive,41.5
+TCGA-QG-A5Z2,Colon,,Stage I,Alive,31.7
+TCGA-CK-4952,Colon,,Stage III,Alive,15.8
+TCGA-DM-A1D8,Colon,,Unknown,Deceased,12.8
+TCGA-CM-5868,Colon,,Stage IV,Alive,17.3
+TCGA-F4-6808,Colon,,Stage I,Alive,34.1
+TCGA-AY-4070,Colon,,Stage III,Deceased,16.5
+TCGA-AA-3524,Colon,,Stage II,Alive,36.5
+TCGA-CM-6162,Colon,,Stage III,Alive,12.2
+TCGA-G4-6315,Colon,,Stage IV,Alive,62.8
+TCGA-DM-A28A,Colon,,Stage III,Deceased,26.8
+TCGA-AA-3955,Colon,,Stage III,Alive,21.3
+TCGA-AA-3526,Colon,,Stage I,Alive,19.3
+TCGA-AZ-6601,Colon,,Stage II,Deceased,101.4
+TCGA-QU-A6IM,Prostate,,Stage I,Alive,41.6
+TCGA-EJ-5530,Prostate,,Stage I,Alive,61.1
+TCGA-V1-A8MM,Prostate,,Stage I,Alive,39.8
+TCGA-G9-6347,Prostate,,Stage I,Alive,69.6
+TCGA-EJ-7797,Prostate,,Stage I,Alive,32.8
+TCGA-V1-A9Z8,Prostate,,Stage I,Alive,27.6
+TCGA-V1-A8WN,Prostate,,Stage I,Alive,30.8
+TCGA-EJ-A6RA,Prostate,,Stage I,Alive,11.8
+TCGA-EJ-5522,Prostate,,Stage I,Alive,69.3
+TCGA-YL-A8HK,Prostate,,Stage I,Alive,49.7
+TCGA-2A-AAYU,Prostate,,Stage I,Alive,20.5
+TCGA-HC-7075,Prostate,,Stage I,Alive,20.0
+TCGA-VN-A88P,Prostate,,Stage I,Alive,42.0
+TCGA-EJ-7317,Prostate,,Stage I,Alive,25.7
+TCGA-V1-A8MJ,Prostate,,Stage I,Alive,59.7
+TCGA-V1-A9OL,Prostate,,Stage I,Alive,63.8
+TCGA-ZG-A9M4,Prostate,,Stage I,Alive,18.2
+TCGA-CH-5765,Prostate,,Stage I,Alive,23.3
+TCGA-KK-A6E4,Prostate,,Stage I,Deceased,116.7
+TCGA-VN-A88R,Prostate,,Stage I,Alive,26.1
+TCGA-ZG-A9LN,Prostate,,Stage I,Alive,3.8
+TCGA-ZG-A9LS,Prostate,,Stage I,Alive,17.2
+TCGA-J4-A83L,Prostate,,Stage I,Alive,24.0
+TCGA-M7-A723,Prostate,,Stage I,Alive,25.4
+TCGA-EJ-5542,Prostate,,Stage I,Alive,50.4
+TCGA-YL-A8SI,Prostate,,Stage I,Alive,53.8
+TCGA-ZG-A9N3,Prostate,,Stage I,Alive,11.6
+TCGA-HC-7738,Prostate,,Stage I,Alive,32.1
+TCGA-EJ-7792,Prostate,,Stage I,Alive,46.5
+TCGA-KK-A8I5,Prostate,,Stage I,Alive,103.2
+TCGA-YL-A9WY,Prostate,,Stage I,Alive,36.6
+TCGA-KK-A8I7,Prostate,,Stage I,Alive,66.7
+TCGA-XK-AAJR,Prostate,,Stage I,Alive,37.5
+TCGA-G9-6378,Prostate,,Stage I,Alive,38.5
+TCGA-2A-A8VT,Prostate,,Stage I,Alive,45.8
+TCGA-KK-A8I4,Prostate,,Stage I,Alive,75.3
+TCGA-VN-A943,Prostate,,Stage I,Alive,16.5
+TCGA-EJ-5525,Prostate,,Stage I,Alive,37.2
+TCGA-HC-7736,Prostate,,Stage I,Alive,36.8
+TCGA-EJ-5516,Prostate,,Stage I,Alive,63.0
+TCGA-V1-A9O9,Prostate,,Stage I,Alive,95.7
+TCGA-EJ-7782,Prostate,,Stage I,Alive,38.9
+TCGA-ZG-A9L5,Prostate,,Stage I,Alive,30.3
+TCGA-G9-7522,Prostate,,Stage I,Alive,35.9
+TCGA-CH-5768,Prostate,,Stage I,Alive,24.4
+TCGA-G3-A3CK,Liver,,Stage I,Alive,19.5
+TCGA-EP-A2KC,Liver,,Stage I,Deceased,0.6
+TCGA-ES-A2HT,Liver,,Stage I,Deceased,14.6
+TCGA-DD-A73B,Liver,,Stage I,Deceased,9.4
+TCGA-BW-A5NQ,Liver,,Stage I,Alive,0.0
+TCGA-DD-A119,Liver,,Stage IV,Deceased,7.4
+TCGA-RC-A7S9,Liver,,Stage I,Alive,21.3
+TCGA-CC-A8HU,Liver,,Stage III,Deceased,11.5
+TCGA-XR-A8TG,Liver,,Stage I,Alive,29.9
+TCGA-DD-A73E,Liver,,Stage I,Alive,1.5
+TCGA-G3-A5SM,Liver,,Stage II,Alive,17.3
+TCGA-G3-AAV0,Liver,,Stage I,Alive,15.9
+TCGA-BC-A10S,Liver,,Unknown,Deceased,47.4
+TCGA-DD-A115,Liver,,Stage III,Deceased,84.7
+TCGA-YA-A8S7,Liver,,Stage III,Deceased,13.7
+TCGA-ZP-A9D2,Liver,,Unknown,Deceased,25.5
+TCGA-ED-A459,Liver,,Stage II,Alive,30.3
+TCGA-DD-A39X,Liver,,Stage I,Deceased,56.5
+TCGA-KR-A7K7,Liver,,Stage II,Alive,31.7
+TCGA-DD-A1EJ,Liver,,Stage III,Deceased,33.5
+TCGA-2Y-A9H6,Liver,,Stage I,Alive,11.9
+TCGA-DD-A4NR,Liver,,Stage I,Deceased,0.3
+TCGA-DD-AACT,Liver,,Stage I,Alive,52.1
+TCGA-2V-A95S,Liver,,Stage II,Alive,0.0
+TCGA-CC-A7II,Liver,,Stage III,Alive,13.3
+TCGA-WQ-A9G7,Liver,,Unknown,Alive,1.0
+TCGA-5C-AAPD,Liver,,Stage II,Alive,0.7
+TCGA-XR-A8TC,Liver,,Stage I,Alive,44.6
+TCGA-2Y-A9H0,Liver,,Stage III,Alive,122.5
+TCGA-DD-A3A0,Liver,,Stage I,Deceased,26.2
+TCGA-ED-A7PZ,Liver,,Stage II,Alive,0.2
+TCGA-DD-A4NQ,Liver,,Stage II,Deceased,12.4
+TCGA-DD-AADS,Liver,,Stage I,Alive,15.8
+TCGA-BC-A216,Liver,,Stage III,Alive,45.0
+TCGA-CC-A7IK,Liver,,Stage III,Deceased,8.7
+TCGA-BC-A10Z,Liver,,Stage I,Deceased,1.1
+TCGA-BC-A5W4,Liver,,Stage III,Deceased,18.2
+TCGA-ZS-A9CD,Liver,,Stage II,Deceased,46.2
+TCGA-DD-A1EF,Liver,,Stage I,Deceased,13.1
+TCGA-DD-A3A8,Liver,,Stage II,Deceased,0.4
+TCGA-DD-AAVW,Liver,,Stage I,Alive,77.2
+TCGA-4R-AA8I,Liver,,Stage II,Deceased,8.7
+TCGA-BC-A10Q,Liver,,Unknown,Deceased,37.8
+TCGA-CC-A7IF,Liver,,Stage III,Deceased,21.6
+TCGA-UB-A7MD,Liver,,Stage I,Deceased,1.7
+TCGA-IN-A6RP,Stomach,,Unknown,Alive,6.5
+TCGA-BR-A4J7,Stomach,,Stage II,Alive,33.0
+TCGA-BR-8078,Stomach,,Stage II,Alive,30.0
+TCGA-RD-A8N0,Stomach,,Stage III,Alive,41.2
+TCGA-BR-8080,Stomach,,Stage III,Deceased,9.7
+TCGA-HU-8602,Stomach,,Stage II,Alive,22.6
+TCGA-VQ-A91Z,Stomach,,Stage III,Alive,56.3
+TCGA-D7-5579,Stomach,,Stage III,Alive,21.2
+TCGA-BR-A4PD,Stomach,,Stage II,Alive,20.9
+TCGA-VQ-A92D,Stomach,,Stage I,Alive,67.7
+TCGA-VQ-AA64,Stomach,,Stage III,Deceased,18.7
+TCGA-BR-8289,Stomach,,Stage IV,Deceased,2.7
+TCGA-VQ-A91Y,Stomach,,Stage III,Deceased,9.9
+TCGA-RD-A8N1,Stomach,,Stage III,Alive,117.3
+TCGA-VQ-AA68,Stomach,,Stage III,Alive,44.3
+TCGA-VQ-A91W,Stomach,,Stage III,Alive,61.7
+TCGA-R5-A7ZR,Stomach,,Stage III,Deceased,6.2
+TCGA-BR-8682,Stomach,,Stage II,Alive,33.0
+TCGA-BR-8285,Stomach,,Stage III,Deceased,0.6
+TCGA-VQ-A8PU,Stomach,,Stage III,Deceased,27.7
+TCGA-BR-4184,Stomach,,Stage III,Deceased,7.1
+TCGA-D7-6815,Stomach,,Stage II,Alive,16.2
+TCGA-BR-7703,Stomach,,Stage I,Alive,36.7
+TCGA-VQ-A8PT,Stomach,,Stage III,Alive,30.0
+TCGA-BR-4369,Stomach,,Unknown,Alive,0.0
+TCGA-FP-8209,Stomach,,Stage I,Deceased,60.4
+TCGA-KB-A6F5,Stomach,,Stage III,Alive,5.6
+TCGA-CG-5725,Stomach,,Stage I,Deceased,15.2
+TCGA-VQ-AA6G,Stomach,,Stage II,Deceased,26.4
+TCGA-BR-A453,Stomach,,Stage IV,Deceased,6.2
+TCGA-VQ-A91K,Stomach,,Stage III,Alive,62.1
+TCGA-BR-8291,Stomach,,Stage II,Deceased,20.2
+TCGA-BR-6458,Stomach,,Stage II,Deceased,19.6
+TCGA-BR-8683,Stomach,,Stage III,Deceased,10.0
+TCGA-HU-A4GU,Stomach,,Stage II,Alive,6.7
+TCGA-HF-A5NB,Stomach,,Stage III,Alive,30.9
+TCGA-BR-8284,Stomach,,Stage III,Deceased,8.2
+TCGA-RD-A8NB,Stomach,,Stage III,Deceased,17.1
+TCGA-VQ-AA6A,Stomach,,Stage III,Alive,39.5
+TCGA-FP-A8CX,Stomach,,Stage III,Alive,0.2
+TCGA-BR-8060,Stomach,,Stage II,Deceased,11.6
+TCGA-CD-A4MH,Stomach,,Stage II,Alive,12.4
+TCGA-HU-A4G3,Stomach,,Stage II,Alive,5.7
+TCGA-CD-8524,Stomach,,Stage II,Alive,12.9
+TCGA-CG-4476,Stomach,,Stage III,Alive,0.0
+TCGA-2L-AAQI,Pancreas,,Stage II,Deceased,3.4
+TCGA-F2-6879,Pancreas,,Stage II,Deceased,11.1
+TCGA-LB-A8F3,Pancreas,,Stage II,Alive,12.6
+TCGA-HZ-A77Q,Pancreas,,Stage II,Alive,1.1
+TCGA-IB-AAUR,Pancreas,,Stage II,Alive,11.3
+TCGA-2J-AABU,Pancreas,,Stage II,Deceased,9.2
+TCGA-3A-A9I7,Pancreas,,Stage II,Alive,44.1
+TCGA-FZ-5920,Pancreas,,Stage II,Deceased,2.0
+TCGA-IB-7646,Pancreas,,Stage II,Deceased,4.8
+TCGA-HZ-8315,Pancreas,,Stage II,Deceased,10.0
+TCGA-HZ-8005,Pancreas,,Stage II,Deceased,4.0
+TCGA-RB-A7B8,Pancreas,,Stage II,Deceased,15.5
+TCGA-FZ-5921,Pancreas,,Stage II,Deceased,5.2
+TCGA-XD-AAUG,Pancreas,,Stage IV,Alive,14.0
+TCGA-F2-7276,Pancreas,,Stage II,Deceased,7.2
+TCGA-2J-AABV,Pancreas,,Stage II,Deceased,21.7
+TCGA-FB-A4P6,Pancreas,,Stage II,Alive,25.6
+TCGA-3A-A9IU,Pancreas,,Stage II,Deceased,15.3
+TCGA-HV-A7OP,Pancreas,,Stage II,Alive,32.6
+TCGA-FB-AAPP,Pancreas,,Stage II,Deceased,16.2
+TCGA-RL-AAAS,Pancreas,,Stage I,Alive,0.3
+TCGA-IB-7886,Pancreas,,Stage II,Deceased,4.1
+TCGA-IB-AAUP,Pancreas,,Stage II,Alive,14.4
+TCGA-3A-A9IL,Pancreas,,Stage I,Alive,91.4
+TCGA-2J-AABI,Pancreas,,Stage II,Alive,32.3
+TCGA-IB-7888,Pancreas,,Stage II,Deceased,44.4
+TCGA-61-1721,Ovarian,,Stage I,Alive,11.3
+TCGA-24-1549,Ovarian,,Stage I,Deceased,57.4
+TCGA-59-2351,Ovarian,,Stage I,Alive,117.7
+TCGA-24-2260,Ovarian,,Stage I,Deceased,36.7
+TCGA-23-1024,Ovarian,,Stage I,Alive,15.6
+TCGA-13-0724,Ovarian,,Stage I,Deceased,2.8
+TCGA-24-1603,Ovarian,,Stage I,Deceased,91.4
+TCGA-13-1507,Ovarian,,Stage I,Deceased,66.4
+TCGA-61-1911,Ovarian,,Stage I,Alive,43.1
+TCGA-13-0905,Ovarian,,Stage I,Alive,124.9
+TCGA-61-1913,Ovarian,,Stage I,Alive,49.6
+TCGA-09-2053,Ovarian,,Stage I,Alive,40.3
+TCGA-29-1692,Ovarian,,Stage I,Deceased,95.7
+TCGA-23-2072,Ovarian,,Stage I,Deceased,25.3
+TCGA-29-1777,Ovarian,,Stage I,Alive,12.5
+TCGA-13-1409,Ovarian,,Stage I,Deceased,58.1
+TCGA-23-1023,Ovarian,,Stage I,Alive,41.1
+TCGA-25-1634,Ovarian,,Stage I,Deceased,36.4
+TCGA-57-1583,Ovarian,,Stage I,Deceased,11.5
+TCGA-13-1509,Ovarian,,Stage I,Alive,81.3
+TCGA-24-1544,Ovarian,,Stage I,Deceased,27.3
+TCGA-23-1119,Ovarian,,Stage I,Alive,131.8
+TCGA-04-1335,Ovarian,,Stage I,Deceased,1.8
+TCGA-61-2009,Ovarian,,Stage I,Alive,40.4
+TCGA-20-0991,Ovarian,,Stage I,Alive,26.6

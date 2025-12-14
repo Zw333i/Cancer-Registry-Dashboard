@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cancer Registry Dashboard | Survival Rate Analysis</title>
+    <link rel="icon" href="https://icon-library.com/images/charity-icon-png/charity-icon-png-12.jpg">
+    <!-- CSS Files (Split from styles.css) -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/intro.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/cards.css">
+    <link rel="stylesheet" href="css/charts.css">
+    <link rel="stylesheet" href="css/spotlight.css">
+    <link rel="stylesheet" href="css/table.css">
+    <link rel="stylesheet" href="css/comparison.css">
+    <link rel="stylesheet" href="css/modals.css">
+    <link rel="stylesheet" href="css/interpretations.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Intro Animation Overlay -->
+    <div class="intro-overlay" id="introOverlay">
+        <div class="intro-content">
+            <svg class="intro-heartbeat" viewBox="0 0 400 100" preserveAspectRatio="xMidYMid meet">
+                <path class="heartbeat-line" d="M0,50 L80,50 L100,50 L120,20 L140,80 L160,30 L180,70 L200,50 L220,50 L400,50" 
+                      fill="none" stroke="url(#heartGradient)" stroke-width="3" stroke-linecap="round"/>
+                <defs>
+                    <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#06b6d4"/>
+                        <stop offset="50%" style="stop-color:#8b5cf6"/>
+                        <stop offset="100%" style="stop-color:#ec4899"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+            <h1 class="intro-title">Cancer Registry Dashboard</h1>
+            <p class="intro-subtitle">Survival Rate Analysis</p>
+            <div class="intro-loader">
+                <div class="loader-progress"></div>
+            </div>
+            <p class="intro-message">Loading patient data...</p>
+        </div>
+    </div>
+
+    <!-- Floating Particles Background -->
+    <div class="particles" id="particles"></div>
+
+    <div class="dashboard-container">
+        <!-- Sidebar Toggle Button -->
+        <button class="sidebar-toggle" id="sidebarToggle" title="Toggle Sidebar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path class="toggle-open" d="M15 18l-6-6 6-6"/>
+                <path class="toggle-close" d="M9 18l6-6-6-6"/>
+            </svg>
+        </button>
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <svg class="logo-icon" viewBox="0 0 100 40" preserveAspectRatio="xMidYMid meet">
+                        <path class="logo-heartbeat" d="M0,20 L20,20 L30,20 L40,5 L50,35 L60,10 L70,30 L80,20 L100,20" 
+                              fill="none" stroke="url(#logoGradient)" stroke-width="2.5" stroke-linecap="round"/>
+                        <defs>
+                            <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#06b6d4"/>
+                                <stop offset="100%" style="stop-color:#8b5cf6"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <div class="logo-text">
+                        <h2>Cancer Registry</h2>
+                        <p class="subtitle">Survival Analysis</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-section body-filter-section">
+                <h3>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+                    Cancer Type
+                </h3>
+                <div class="body-diagram-container">
+                    <svg class="body-diagram" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Human body silhouette -->
+                        <defs>
+                            <linearGradient id="bodyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="rgba(148, 163, 184, 0.3)"/>
+                                <stop offset="100%" stop-color="rgba(148, 163, 184, 0.1)"/>
+                            </linearGradient>
+                            <filter id="organGlow" x="-50%" y="-50%" width="200%" height="200%">
+                                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                        </defs>
+                        
+                        <!-- Body outline -->
+                        <path class="body-outline" d="
+                            M100 20 
+                            C120 20 135 35 135 55 C135 75 120 90 100 90 C80 90 65 75 65 55 C65 35 80 20 100 20
+                            M100 90 L100 100
+                            M60 110 C40 115 35 130 40 160 L50 200 L55 200 L65 160 L65 240
+                            M140 110 C160 115 165 130 160 160 L150 200 L145 200 L135 160 L135 240
+                            M65 100 C75 95 85 92 100 92 C115 92 125 95 135 100
+                            L140 110 L145 130 L145 180 L140 240 L135 290 L130 340 L125 380 L115 385 L110 340 L100 290
+                            L90 340 L85 385 L75 380 L70 340 L65 290 L60 240 L55 180 L55 130 L60 110 L65 100
+                        " fill="url(#bodyGradient)" stroke="rgba(148, 163, 184, 0.4)" stroke-width="1"/>
+                        
+                        <!-- Clickable organ regions -->
+                        <!-- Breast (chest area) -->
+                        <ellipse class="organ-region" data-cancer="Breast" cx="82" cy="130" rx="18" ry="15"/>
+                        <ellipse class="organ-region" data-cancer="Breast" cx="118" cy="130" rx="18" ry="15"/>
+                        
+                        <!-- Lungs -->
+                        <path class="organ-region" data-cancer="Lung" d="M70 110 Q60 130 65 155 Q75 165 85 155 L90 120 Q85 105 70 110"/>
+                        <path class="organ-region" data-cancer="Lung" d="M130 110 Q140 130 135 155 Q125 165 115 155 L110 120 Q115 105 130 110"/>
+                        
+                        <!-- Liver (right upper abdomen) -->
+                        <path class="organ-region" data-cancer="Liver" d="M105 165 Q130 160 140 175 Q140 195 125 200 Q110 200 105 190 Q100 175 105 165"/>
+                        
+                        <!-- Stomach (center upper abdomen) -->
+                        <ellipse class="organ-region" data-cancer="Stomach" cx="90" cy="185" rx="18" ry="14"/>
+                        
+                        <!-- Pancreas (behind stomach) -->
+                        <ellipse class="organ-region" data-cancer="Pancreas" cx="100" cy="210" rx="25" ry="8"/>
+                        
+                        <!-- Colon (large intestine) -->
+                        <path class="organ-region" data-cancer="Colon" d="M65 220 Q55 235 60 260 Q70 275 100 275 Q130 275 140 260 Q145 235 135 220 Q125 240 100 245 Q75 240 65 220"/>
+                        
+                        <!-- Prostate (male - lower pelvis) -->
+                        <ellipse class="organ-region" data-cancer="Prostate" cx="100" cy="295" rx="12" ry="10"/>
+                        
+                        <!-- Ovarian (female - lower pelvis sides) -->
+                        <ellipse class="organ-region" data-cancer="Ovarian" cx="80" cy="280" rx="10" ry="8"/>
+                        <ellipse class="organ-region" data-cancer="Ovarian" cx="120" cy="280" rx="10" ry="8"/>
+                    </svg>
+                    
+                    <!-- Organ tooltip -->
+                    <div class="organ-tooltip" id="organTooltip"></div>
+                    
+                    <!-- Organ labels/legend -->
+                    <div class="organ-legend">
+                        <button class="organ-btn active" data-cancer="all">
+                            <span class="organ-dot all"></span>
+                            <span>All Types</span>
+                            <span class="organ-count" id="countAll">356</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Active organ indicator -->
+                    <div class="active-organ-display">
+                        <span class="active-label">Selected:</span>
+                        <span class="active-value" id="activeOrgan">All Types</span>
+                    </div>
+                </div>
+                
+                <!-- Lung subfilter (appears when lung is selected) -->
+                <div class="subfilter-menu" id="lungSubfilter">
+                    <button class="subfilter-btn active" data-subtype="all">All Lung Types</button>
+                    <button class="subfilter-btn" data-subtype="Adenocarcinoma"><span class="subtype-dot adeno"></span>Adenocarcinoma</button>
+                    <button class="subfilter-btn" data-subtype="Squamous Cell"><span class="subtype-dot squamous"></span>Squamous Cell</button>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h3>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    Survival Duration
+                </h3>
+                <div class="slider-container">
+                    <div class="slider-track"><div class="slider-fill" id="sliderFill"></div></div>
+                    <input type="range" id="survivalSlider" min="0" max="120" value="0" step="6">
+                    <div class="slider-labels">
+                        <span>0 mo</span>
+                        <span class="slider-value" id="sliderValue">All patients</span>
+                        <span>10 yrs</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h3>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    Stage Filter
+                </h3>
+                <div class="stage-toggles">
+                    <label class="toggle-label"><input type="checkbox" class="stage-checkbox" value="Stage I" checked><span class="toggle-switch stage-1"></span><span class="toggle-text">Stage I</span><span class="toggle-count" id="stageICount">0</span></label>
+                    <label class="toggle-label"><input type="checkbox" class="stage-checkbox" value="Stage II" checked><span class="toggle-switch stage-2"></span><span class="toggle-text">Stage II</span><span class="toggle-count" id="stageIICount">0</span></label>
+                    <label class="toggle-label"><input type="checkbox" class="stage-checkbox" value="Stage III" checked><span class="toggle-switch stage-3"></span><span class="toggle-text">Stage III</span><span class="toggle-count" id="stageIIICount">0</span></label>
+                    <label class="toggle-label"><input type="checkbox" class="stage-checkbox" value="Stage IV" checked><span class="toggle-switch stage-4"></span><span class="toggle-text">Stage IV</span><span class="toggle-count" id="stageIVCount">0</span></label>
+                    <label class="toggle-label"><input type="checkbox" class="stage-checkbox" value="Unknown" checked><span class="toggle-switch stage-unknown"></span><span class="toggle-text">Unknown</span><span class="toggle-count" id="stageUnknownCount">0</span></label>
+                </div>
+            </div>
+
+            <!-- Comparison Mode -->
+            <div class="filter-section comparison-section">
+                <h3>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                    Comparison Mode
+                </h3>
+                <div class="comparison-toggle-wrapper">
+                    <label class="comparison-main-toggle">
+                        <input type="checkbox" id="comparisonModeToggle">
+                        <span class="toggle-slider"></span>
+                        <span class="toggle-label-text">Enable Comparison</span>
+                    </label>
+                </div>
+                <div class="comparison-selectors" id="comparisonSelectors" style="display: none;">
+                    <div class="comparison-select-group">
+                        <label>Compare</label>
+                        <select id="compareType1" class="comparison-select">
+                            <option value="">Select Cancer Type</option>
+                        </select>
+                    </div>
+                    <div class="comparison-vs">VS</div>
+                    <div class="comparison-select-group">
+                        <label>With</label>
+                        <select id="compareType2" class="comparison-select">
+                            <option value="">Select Cancer Type</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-actions">
+                <button class="action-btn reset-btn" id="resetFilters">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                    Reset Filters
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content" id="mainContent">
+            <!-- Header -->
+            <header class="main-header">
+                <div class="header-left">
+                    <div class="breadcrumb">
+                        <span class="crumb active">Dashboard</span>
+                        <span class="separator">/</span>
+                        <span class="crumb" id="currentFilter">All Patients</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="header-stats">
+                        <div class="stat-pill alive-pill" id="alivePill" title="Click to filter by Alive patients"><span class="pulse-dot"></span><span id="headerAlive">0</span> Alive</div>
+                        <div class="stat-pill deceased-pill" id="deceasedPill" title="Click to filter by Deceased patients"><span id="headerDeceased">0</span> Deceased</div>
+                    </div>
+                    <button class="theme-toggle" id="themeToggle" title="Toggle Light/Dark Mode">
+                        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"/>
+                            <line x1="12" y1="1" x2="12" y2="3"/>
+                            <line x1="12" y1="21" x2="12" y2="23"/>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                            <line x1="1" y1="12" x2="3" y2="12"/>
+                            <line x1="21" y1="12" x2="23" y2="12"/>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                        </svg>
+                        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Hero Cards -->
+            <section class="hero-cards">
+                <div class="hero-card card-patients">
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+                        <div class="card-info">
+                            <span class="card-label">Total Patients</span>
+                            <span class="card-value" id="totalPatients">0</span>
+                        </div>
+                    </div>
+                    <div class="card-footer"><span class="trend">From TCGA Pan-Cancer Atlas</span></div>
+                </div>
+
+                <div class="hero-card card-survival">
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+                        <div class="card-info">
+                            <span class="card-label">Rate</span>
+                            <span class="card-value" id="survivalRate">0%</span>
+                        </div>
+                        <div class="card-ring">
+                            <svg viewBox="0 0 100 100"><circle class="ring-bg" cx="50" cy="50" r="40"/><circle class="ring-fill" cx="50" cy="50" r="40" id="survivalRing"/></svg>
+                            <span class="ring-label" id="ringLabel">0%</span>
+                        </div>
+                    </div>
+                    <div class="card-footer"><span class="trend" id="survivalTrend">Hope Indicator</span></div>
+                </div>
+
+                <div class="hero-card card-time">
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                        <div class="card-info">
+                            <span class="card-label">Avg Survival</span>
+                            <span class="card-value"><span id="avgSurvival">0</span><small>mo</small></span>
+                        </div>
+                    </div>
+                    <div class="card-footer"><span class="trend"><span id="avgYears"></span>Life Expectancy</span></div>
+                </div>
+
+                <div class="hero-card card-critical">
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+                        <div class="card-info">
+                            <span class="card-label">Critical Watch</span>
+                            <span class="card-value critical" id="criticalCancer">--</span>
+                        </div>
+                    </div>
+                    <div class="card-footer"><span class="trend warning" id="criticalRate">Lowest survival rate</span></div>
+                </div>
+            </section>
+
+            <!-- Charts Grid -->
+            <section class="charts-section">
+                <div class="chart-card chart-doughnut">
+                    <div class="chart-header">
+                        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>Cancer Distribution</h3>
+                        <span class="chart-info-hint" title="Click for explanation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>
+                    </div>
+                    <div class="chart-body"><canvas id="doughnutChart"></canvas></div>
+                    <p class="chart-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Click a slice to filter</p>
+                </div>
+
+                <div class="chart-card chart-stage">
+                    <div class="chart-header">
+                        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>Stage at Diagnosis</h3>
+                        <span class="chart-info-hint" title="Click for explanation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>
+                    </div>
+                    <div class="chart-body"><canvas id="stageChart"></canvas></div>
+                    <div class="stage-survival-legend">
+                        <div class="stage-legend-title">Survival Rate (Alive / Total)</div>
+                        <div class="stage-survival-items">
+                            <div class="stage-survival-item stage-1">
+                                <span class="ssl-dot"></span>
+                                <span class="ssl-label">Stage I</span>
+                                <span class="ssl-counts" id="stageCounts1">0/0</span>
+                                <span class="ssl-value" id="stageSurvival1">0%</span>
+                            </div>
+                            <div class="stage-survival-item stage-2">
+                                <span class="ssl-dot"></span>
+                                <span class="ssl-label">Stage II</span>
+                                <span class="ssl-counts" id="stageCounts2">0/0</span>
+                                <span class="ssl-value" id="stageSurvival2">0%</span>
+                            </div>
+                            <div class="stage-survival-item stage-3">
+                                <span class="ssl-dot"></span>
+                                <span class="ssl-label">Stage III</span>
+                                <span class="ssl-counts" id="stageCounts3">0/0</span>
+                                <span class="ssl-value" id="stageSurvival3">0%</span>
+                            </div>
+                            <div class="stage-survival-item stage-4">
+                                <span class="ssl-dot"></span>
+                                <span class="ssl-label">Stage IV</span>
+                                <span class="ssl-counts" id="stageCounts4">0/0</span>
+                                <span class="ssl-value" id="stageSurvival4">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Survival Curve -->
+            <section class="survival-section">
+                <div class="chart-card full-width">
+                    <div class="chart-header">
+                        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Survival Curve Analysis<span class="chart-info-hint" title="Click for explanation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span></h3>
+                        <div class="curve-stats">
+                            <div class="curve-stat"><span class="stat-value" id="survival1yr">0%</span><span class="stat-label">1-Year</span></div>
+                            <div class="curve-stat"><span class="stat-value" id="survival3yr">0%</span><span class="stat-label">3-Year</span></div>
+                            <div class="curve-stat"><span class="stat-value" id="survival5yr">0%</span><span class="stat-label">5-Year</span></div>
+                        </div>
+                    </div>
+                    <div class="chart-body survival-body"><canvas id="survivalCurve"></canvas></div>
+                </div>
+            </section>
+
+            <!-- Bubble Chart & Patient Spotlight Row -->
+            <section class="spotlight-row">
+                <!-- Bubble Chart -->
+                <div class="chart-card bubble-card">
+                    <div class="chart-header">
+                        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7.5" cy="7.5" r="3.5"/><circle cx="16" cy="16" r="4"/><circle cx="18" cy="6" r="2"/></svg>Stage vs Survival Analysis<span class="chart-info-hint" title="Click for explanation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span></h3>
+                        <div class="bubble-filter-dropdown">
+                            <button class="dropdown-toggle" id="bubbleFilterToggle">
+                                <span>All Types</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                            </button>
+                            <div class="dropdown-menu" id="bubbleFilterMenu">
+                                <label class="dropdown-item">
+                                    <input type="checkbox" class="bubble-type-checkbox" value="Breast" checked>
+                                    <span class="checkbox-icon breast"></span>
+                                    <span>Breast</span>
+                                </label>
+                                <label class="dropdown-item">
+                                    <input type="checkbox" class="bubble-type-checkbox" value="Lung" checked>
+                                    <span class="checkbox-icon lung"></span>
+                                    <span>Lung</span>
+                                </label>
+                                <label class="dropdown-item">
+                                    <input type="checkbox" class="bubble-type-checkbox" value="Colon" checked>
+                                    <span class="checkbox-icon colon"></span>
+                                    <span>Colon</span>
+                                </label>
+                                <label class="dropdown-item">
+                                    <input type="checkbox" class="bubble-type-checkbox" value="Prostate" checked>
+                                    <span class="checkbox-icon prostate"></span>
+                                    <span>Prostate</span>
+                                </label>
+                                <label class="dropdown-item">
+                                    <input type="checkbox" class="bubble-type-checkbox" value="Liver" checked>
+                                    <span class="checkbox-icon liver"></span>
+                                    <span>Liver</span>
+                                </label>
+                                <label class="dropdown-item">
+                                    <input type="checkbox" class="bubble-type-checkbox" value="Stomach" checked>
+                                    <span class="checkbox-icon stomach"></span>
+                                    <span>Stomach</span>
+                                </label>
+                                <label class="dropdown-item">
+                                    <input type="checkbox" class="bubble-type-checkbox" value="Pancreas" checked>
+                                    <span class="checkbox-icon pancreas"></span>
+                                    <span>Pancreas</span>
+                                </label>
+                                <label class="dropdown-item">
+                                    <input type="checkbox" class="bubble-type-checkbox" value="Ovarian" checked>
+                                    <span class="checkbox-icon ovarian"></span>
+                                    <span>Ovarian</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-body bubble-body">
+                        <div class="bubble-y-axis">
+                            <span class="stage-title">STAGES</span>
+                            <span class="stage-label">IV</span>
+                            <span class="stage-label">III</span>
+                            <span class="stage-label">II</span>
+                            <span class="stage-label">I</span>
+                        </div>
+                        <div class="bubble-chart-wrapper">
+                            <canvas id="bubbleChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="bubble-legend-grid">
+                        <span class="bubble-legend-item"><svg class="bubble-icon-svg" viewBox="0 0 24 24" style="background:#ec4899"><path d="M12 4c-2 0-4 2-4 4s2 6 4 8c2-2 4-6 4-8s-2-4-4-4z" fill="none" stroke="white" stroke-width="1.5"/></svg>Breast</span>
+                        <span class="bubble-legend-item"><svg class="bubble-icon-svg" viewBox="0 0 24 24" style="background:#3b82f6"><path d="M7 8c-2 0-3 2-3 5s1 6 3 7c1 0 2-1 2-2V9c0-1-1-1-2-1z M17 8c2 0 3 2 3 5s-1 6-3 7c-1 0-2-1-2-2V9c0-1 1-1 2-1z" fill="none" stroke="white" stroke-width="1.5"/></svg>Lung</span>
+                        <span class="bubble-legend-item"><svg class="bubble-icon-svg" viewBox="0 0 24 24" style="background:#22c55e"><path d="M6 6c0 2 1 3 3 3h6c2 0 3 1 3 3s-1 3-3 3H9c-2 0-3 1-3 3s1 3 3 3h6" fill="none" stroke="white" stroke-width="1.5"/></svg>Colon</span>
+                        <span class="bubble-legend-item"><svg class="bubble-icon-svg" viewBox="0 0 24 24" style="background:#a855f7"><path d="M12 8c-3 0-5 2-5 4s2 4 5 4 5-2 5-4-2-4-5-4z M12 4v4 M12 16v4" fill="none" stroke="white" stroke-width="1.5"/></svg>Prostate</span>
+                        <span class="bubble-legend-item"><svg class="bubble-icon-svg" viewBox="0 0 24 24" style="background:#f97316"><path d="M6 8c0 6 2 10 6 10s8-4 8-8c0-3-2-5-5-5H9c-2 0-3 1-3 3z" fill="none" stroke="white" stroke-width="1.5"/></svg>Liver</span>
+                        <span class="bubble-legend-item"><svg class="bubble-icon-svg" viewBox="0 0 24 24" style="background:#eab308"><path d="M8 6c-2 0-3 2-3 4v4c0 3 2 5 5 5h4c3 0 5-2 5-5v-2c0-2-1-4-3-4h-2c-1 0-2-1-2-2z" fill="none" stroke="white" stroke-width="1.5"/></svg>Stomach</span>
+                        <span class="bubble-legend-item"><svg class="bubble-icon-svg" viewBox="0 0 24 24" style="background:#14b8a6"><path d="M4 12h4c1 0 2 1 3 1h6c2 0 3-1 3-2s-1-2-3-2h-2c-1 0-2-1-2-2s1-2 2-2h5" fill="none" stroke="white" stroke-width="1.5"/></svg>Pancreas</span>
+                        <span class="bubble-legend-item"><svg class="bubble-icon-svg" viewBox="0 0 24 24" style="background:#f43f5e"><circle cx="8" cy="12" r="3" fill="none" stroke="white" stroke-width="1.5"/><circle cx="16" cy="12" r="3" fill="none" stroke="white" stroke-width="1.5"/><path d="M11 12h2" fill="none" stroke="white" stroke-width="1.5"/></svg>Ovarian</span>
+                    </div>
+                    <div class="bubble-hint">
+                        <span>Click icon to filter • Hover for details</span>
+                    </div>
+                </div>
+
+                <!-- Patient Spotlight -->
+                <div class="spotlight-card">
+                    <div class="spotlight-header">
+                        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Patient Spotlight</h3>
+                        <div class="spotlight-controls">
+                            <button class="control-btn" id="prevPatient"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+                            <span class="patient-counter"><span id="currentPatientNum">1</span> / <span id="totalPatientNum">356</span></span>
+                            <button class="control-btn" id="nextPatient"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+                            <button class="control-btn shuffle-btn" id="shufflePatient"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg></button>
+                        </div>
+                    </div>
+                    <div class="spotlight-body" id="spotlightContent">
+                        <div class="patient-avatar" id="patientAvatar">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            <span class="avatar-status alive" id="avatarStatus"></span>
+                        </div>
+                        <div class="patient-main">
+                            <div class="patient-id-display"><span class="id-label">Patient ID</span><span class="id-value" id="patientId">--</span></div>
+                            <div class="patient-tags">
+                                <span class="tag cancer-tag" id="patientCancerTag">--</span>
+                                <span class="tag stage-tag" id="patientStageTag">--</span>
+                                <span class="tag status-tag" id="patientStatusTag">--</span>
+                            </div>
+                        </div>
+                        <div class="patient-stats">
+                            <div class="patient-stat clickable-stat" data-stat="duration">
+                                <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                                <div class="stat-info"><span class="stat-value" id="patientDuration">--</span><span class="stat-label">Survival</span></div>
+                            </div>
+                            <div class="patient-stat clickable-stat" data-stat="prognosis">
+                                <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+                                <div class="stat-info"><span class="stat-value" id="patientPrognosis">--</span><span class="stat-label">vs Average</span></div>
+                            </div>
+                        </div>
+                        <div class="patient-narrative" id="patientNarrative"><p>Select a patient to view their journey...</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Comparison Section (Hidden by default) -->
+            <section class="comparison-section-charts" id="comparisonSection" style="display: none;">
+                <div class="chart-card full-width comparison-chart-card">
+                    <div class="chart-header">
+                        <h3>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                            Survival Comparison: <span id="comparisonTitle">--</span>
+                        </h3>
+                        <button class="close-comparison-btn" id="closeComparison">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                            Close Comparison
+                        </button>
+                    </div>
+                    <div class="comparison-grid">
+                        <div class="comparison-side">
+                            <div class="comparison-type-header" id="compareHeader1">
+                                <span class="type-badge">Type A</span>
+                            </div>
+                            <div class="comparison-stats-grid">
+                                <div class="comp-stat">
+                                    <span class="comp-stat-value" id="comp1Patients">0</span>
+                                    <span class="comp-stat-label">Patients</span>
+                                </div>
+                                <div class="comp-stat">
+                                    <span class="comp-stat-value" id="comp1Survival">0%</span>
+                                    <span class="comp-stat-label">Survival Rate</span>
+                                </div>
+                                <div class="comp-stat">
+                                    <span class="comp-stat-value" id="comp1AvgMonths">0</span>
+                                    <span class="comp-stat-label">Avg Months</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comparison-vs-center">
+                            <span class="vs-badge">VS</span>
+                        </div>
+                        <div class="comparison-side">
+                            <div class="comparison-type-header" id="compareHeader2">
+                                <span class="type-badge">Type B</span>
+                            </div>
+                            <div class="comparison-stats-grid">
+                                <div class="comp-stat">
+                                    <span class="comp-stat-value" id="comp2Patients">0</span>
+                                    <span class="comp-stat-label">Patients</span>
+                                </div>
+                                <div class="comp-stat">
+                                    <span class="comp-stat-value" id="comp2Survival">0%</span>
+                                    <span class="comp-stat-label">Survival Rate</span>
+                                </div>
+                                <div class="comp-stat">
+                                    <span class="comp-stat-value" id="comp2AvgMonths">0</span>
+                                    <span class="comp-stat-label">Avg Months</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comparison-chart-body">
+                        <canvas id="comparisonChart"></canvas>
+                    </div>
+                    <div class="comparison-insights" id="comparisonInsights">
+                        <div class="insight-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                            <span id="insightText">Select two cancer types to compare</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data Table -->
+            <section class="table-section">
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Patient Records</h3>
+                        <span class="table-count">Showing <span id="tableCount">0</span> patients</span>
+                    </div>
+                    <div class="table-wrapper">
+                        <table id="patientTable">
+                            <thead><tr><th>Patient ID</th><th>Cancer Type</th><th>Stage</th><th>Status</th><th>Survival</th></tr></thead>
+                            <tbody id="tableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="dashboard-footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <svg class="footer-logo" viewBox="0 0 100 40"><path d="M0,20 L20,20 L30,20 L40,5 L50,35 L60,10 L70,30 L80,20 L100,20" fill="none" stroke="url(#footerGradient)" stroke-width="2" stroke-linecap="round"/><defs><linearGradient id="footerGradient" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#06b6d4"/><stop offset="100%" style="stop-color:#8b5cf6"/></linearGradient></defs></svg>
+                <div class="footer-brand">
+                    <span class="brand-name">Cancer Registry Dashboard</span>
+                    <span class="brand-tagline">Health Informatics Project</span>
+                </div>
+            </div>
+            <div class="footer-center">
+                <div class="footer-actions">
+                    <button class="footer-btn" id="exportCSV">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Export CSV
+                    </button>
+                    <a href="https://github.com/Zw333i" target="_blank" rel="noopener noreferrer" class="footer-btn github-btn">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        GitHub
+                    </a>
+                </div>
+                <p class="footer-source">Data: <a href="https://gdc.cancer.gov/about-data/publications/pancanatlas" target="_blank" rel="noopener noreferrer">NCI GDC Pan-Cancer Atlas</a> • TCGA-CDR</p>
+            </div>
+            <div class="footer-right">
+                <span>© 2025 Zw333i</span>
+                <span class="footer-divider">•</span>
+                <span>Health Informatics Project</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" id="modal">
+            <div class="modal-header">
+                <h3 id="modalTitle">Modal Title</h3>
+                <button class="modal-close" id="modalClose">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Dynamic content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- JavaScript Files (Split from app.js) -->
+    <script src="js/state.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/modals.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/patient.js"></script>
+    <script src="js/table.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/comparison.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/events.js"></script>
+    <script src="js/init.js"></script>
+</body>
+</html>

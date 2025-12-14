@@ -1,0 +1,111 @@
+/* ========================================
+   TABLE SECTION
+   ======================================== */
+.table-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 24px;
+    box-shadow: var(--shadow-soft);
+    transition: background-color 0.4s ease, border-color 0.4s ease;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-color);
+    transition: border-color 0.4s ease;
+}
+
+.table-header h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: color 0.4s ease;
+}
+
+.table-header h3 svg {
+    width: 20px;
+    height: 20px;
+    color: var(--gradient-mid);
+    transition: color 0.4s ease;
+}
+
+.table-count {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    transition: color 0.4s ease;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.table-wrapper::-webkit-scrollbar {
+    width: 6px;
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+    background: rgba(6, 182, 212, 0.3);
+    border-radius: 3px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    position: sticky;
+    top: 0;
+    background: var(--bg-card);
+    z-index: 10;
+}
+
+th {
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+td {
+    padding: 14px 16px;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+tr {
+    transition: background var(--transition-fast);
+}
+
+tbody tr:hover {
+    background: rgba(6, 182, 212, 0.08);
+}
+
+.status-alive {
+    color: var(--color-alive);
+    font-weight: 500;
+}
+
+.status-deceased {
+    color: var(--color-deceased);
+    font-weight: 500;
+}

@@ -1,0 +1,157 @@
+/* ========================================
+   HERO CARDS
+   ======================================== */
+.hero-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.hero-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-smooth), background-color 0.4s ease, border-color 0.4s ease;
+    cursor: pointer;
+}
+
+.hero-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-medium);
+}
+
+.card-glow {
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    opacity: 0.15;
+    transition: opacity var(--transition-smooth);
+}
+
+.hero-card:hover .card-glow {
+    opacity: 0.25;
+}
+
+.card-patients .card-glow { background: radial-gradient(circle, var(--gradient-start), transparent); }
+.card-survival .card-glow { background: radial-gradient(circle, var(--color-alive), transparent); }
+.card-time .card-glow { background: radial-gradient(circle, var(--gradient-mid), transparent); }
+.card-critical .card-glow { background: radial-gradient(circle, var(--gradient-end), transparent); }
+
+.card-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+}
+
+.card-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: var(--border-radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.card-icon svg {
+    width: 24px;
+    height: 24px;
+    color: white;
+}
+
+.card-patients .card-icon { background: var(--gradient-main); }
+.card-survival .card-icon { background: linear-gradient(135deg, #10b981, #34d399); }
+.card-time .card-icon { background: linear-gradient(135deg, #38bdf8, #67e8f9); }
+.card-critical .card-icon { background: linear-gradient(135deg, #f472b6, #f9a8d4); }
+
+.card-info {
+    flex: 1;
+}
+
+.card-label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+}
+
+.card-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+.card-value small {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    margin-left: 2px;
+}
+
+.card-value.critical {
+    font-size: 1.3rem;
+    color: var(--color-deceased);
+}
+
+.card-ring {
+    position: relative;
+    width: 60px;
+    height: 60px;
+}
+
+.card-ring svg {
+    transform: rotate(-90deg);
+}
+
+.ring-bg {
+    fill: none;
+    stroke: rgba(16, 185, 129, 0.15);
+    stroke-width: 8;
+}
+
+.ring-fill {
+    fill: none;
+    stroke: var(--color-alive);
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 251.2;
+    stroke-dashoffset: 251.2;
+    transition: stroke-dashoffset 1s ease;
+}
+
+.ring-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-alive);
+}
+
+.card-footer {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-color);
+    position: relative;
+    z-index: 1;
+}
+
+.trend {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.trend.warning {
+    color: var(--color-deceased);
+}

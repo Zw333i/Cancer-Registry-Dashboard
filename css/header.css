@@ -1,0 +1,230 @@
+/* ========================================
+   MAIN CONTENT
+   ======================================== */
+.main-content {
+    margin-left: var(--sidebar-width);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    transition: margin-left 0.3s ease;
+    min-width: 0;
+}
+
+/* Header */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-soft);
+    transition: background-color 0.4s ease, border-color 0.4s ease;
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.crumb {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.crumb.active {
+    color: var(--text-accent);
+    font-weight: 500;
+}
+
+.separator {
+    color: var(--text-muted);
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 25px;
+    transition: all var(--transition-smooth);
+}
+
+.search-box:focus-within {
+    border-color: var(--gradient-start);
+    box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.15);
+}
+
+.search-box svg {
+    width: 18px;
+    height: 18px;
+    color: var(--text-muted);
+}
+
+.search-box input {
+    border: none;
+    background: none;
+    outline: none;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    width: 180px;
+}
+
+.search-box input::placeholder {
+    color: var(--text-muted);
+}
+
+.header-stats {
+    display: flex;
+    gap: 10px;
+}
+
+.stat-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.stat-pill:hover {
+    transform: scale(1.05);
+}
+
+.stat-pill:active {
+    transform: scale(0.98);
+}
+
+.alive-pill {
+    background: var(--color-alive-bg);
+    color: var(--color-alive);
+}
+
+.deceased-pill {
+    background: var(--color-deceased-bg);
+    color: var(--color-deceased);
+}
+
+/* Active state - pill is being filtered */
+.stat-pill.active {
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+    transform: scale(1.08);
+}
+
+.alive-pill.active {
+    background: rgba(16, 185, 129, 0.35);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+}
+
+.deceased-pill.active {
+    background: rgba(239, 68, 68, 0.35);
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
+}
+
+/* Dimmed state - the other pill when one is filtered */
+.stat-pill.dimmed {
+    opacity: 0.4;
+    filter: grayscale(50%);
+    transform: scale(0.95);
+}
+
+.stat-pill.dimmed:hover {
+    opacity: 0.7;
+    transform: scale(1);
+}
+
+.pulse-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--color-alive);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.2); }
+}
+
+/* ========================================
+   THEME TOGGLE
+   ======================================== */
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 50%;
+    background: var(--gradient-main);
+    cursor: pointer;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1) rotate(15deg);
+    box-shadow: var(--shadow-glow);
+}
+
+.theme-toggle:active {
+    transform: scale(0.95);
+}
+
+.theme-toggle svg {
+    width: 22px;
+    height: 22px;
+    color: #fff;
+    position: absolute;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Dark mode - show sun (to switch to light) */
+.theme-toggle .sun-icon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+.theme-toggle .moon-icon {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.5);
+}
+
+/* Light mode - show moon (to switch to dark) */
+[data-theme="light"] .theme-toggle .sun-icon {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.5);
+}
+
+[data-theme="light"] .theme-toggle .moon-icon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+[data-theme="light"] .theme-toggle {
+    background: linear-gradient(135deg, #5f7161 0%, #efc050 100%);
+}
+
+[data-theme="light"] .theme-toggle svg {
+    color: #fffef7;
+}

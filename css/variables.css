@@ -1,0 +1,155 @@
+/* ========================================
+   VARIABLES & BASE STYLES
+   CSS Custom Properties and Reset
+   ======================================== */
+
+:root {
+    /* ===== DARK THEME (Deep Sunset Palette) ===== */
+    /* Background Colors - Very Deep Purple/Navy */
+    --bg-primary: #0d0a1a;
+    --bg-secondary: #150f26;
+    --bg-card: rgba(21, 15, 38, 0.9);
+    --bg-glass: rgba(13, 10, 26, 0.85);
+    
+    /* Accent Gradient Colors - Sunset Warm */
+    --gradient-start: #7c4dff;
+    --gradient-mid: #e040fb;
+    --gradient-end: #ff5722;
+    --gradient-main: linear-gradient(135deg, #7c4dff 0%, #e040fb 40%, #ff4081 70%, #ff5722 100%);
+    --gradient-warm: linear-gradient(135deg, #ff4081 0%, #ff5722 100%);
+    --gradient-cool: linear-gradient(135deg, #7c4dff 0%, #b388ff 100%);
+    --gradient-soft: linear-gradient(135deg, rgba(124, 77, 255, 0.2) 0%, rgba(224, 64, 251, 0.2) 100%);
+    
+    /* Text Colors */
+    --text-primary: #f5f0ff;
+    --text-secondary: #c9b8e8;
+    --text-muted: #8b7aab;
+    --text-accent: #ff80ab;
+    
+    /* Status Colors */
+    --color-alive: #69f0ae;
+    --color-alive-bg: rgba(105, 240, 174, 0.2);
+    --color-deceased: #ff5252;
+    --color-deceased-bg: rgba(255, 82, 82, 0.2);
+    --color-warning: #ffab40;
+    --color-warning-bg: rgba(255, 171, 64, 0.2);
+    --color-cyan: #7c4dff;
+    
+    /* Glass morphism */
+    --glass-bg: rgba(21, 15, 38, 0.7);
+    --glass-border: rgba(124, 77, 255, 0.2);
+    
+    /* Stage Colors - Vibrant */
+    --stage-1: #69f0ae;
+    --stage-2: #7c4dff;
+    --stage-3: #ffab40;
+    --stage-4: #ff5252;
+    --stage-unknown: #8b7aab;
+    
+    /* Cancer Type Colors - Sunset Inspired */
+    --cancer-breast: #ff4081;
+    --cancer-lung: #7c4dff;
+    --cancer-colon: #e040fb;
+    --cancer-prostate: #40c4ff;
+    --cancer-liver: #ff5722;
+    --cancer-stomach: #ff5252;
+    --cancer-pancreas: #b2ff59;
+    --cancer-ovarian: #ea80fc;
+    
+    /* UI Colors */
+    --border-color: rgba(255, 171, 145, 0.12);
+    --shadow-soft: 0 4px 20px rgba(26, 16, 51, 0.4);
+    --shadow-medium: 0 8px 30px rgba(26, 16, 51, 0.5);
+    --shadow-glow: 0 0 40px rgba(171, 71, 188, 0.2);
+    
+    /* Sizes */
+    --sidebar-width: 340px;
+    --header-height: 70px;
+    --border-radius: 16px;
+    --border-radius-sm: 12px;
+    --border-radius-xs: 8px;
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* ===== LIGHT THEME (Rich Golden/Cream Palette) ===== */
+[data-theme="light"] {
+    /* Background Colors - Rich Cream/Golden */
+    --bg-primary: #fdf6e3;
+    --bg-secondary: #f5edd6;
+    --bg-card: rgba(253, 246, 227, 0.98);
+    --bg-glass: rgba(245, 237, 214, 0.9);
+    
+    /* Accent Gradient Colors - Rich Gold */
+    --gradient-start: #d4a017;
+    --gradient-mid: #b8860b;
+    --gradient-end: #3d5a3d;
+    --gradient-main: linear-gradient(135deg, #f0c040 0%, #d4a017 40%, #b8860b 70%, #3d5a3d 100%);
+    --gradient-warm: linear-gradient(135deg, #d4a017 0%, #b8860b 100%);
+    --gradient-cool: linear-gradient(135deg, #3d5a3d 0%, #556b55 100%);
+    --gradient-soft: linear-gradient(135deg, rgba(212, 160, 23, 0.25) 0%, rgba(61, 90, 61, 0.2) 100%);
+    
+    /* Text Colors */
+    --text-primary: #1a2e1a;
+    --text-secondary: #3d5a3d;
+    --text-muted: #6b8a6b;
+    --text-accent: #b8860b;
+    
+    /* Status Colors */
+    --color-alive: #3d5a3d;
+    --color-alive-bg: rgba(61, 90, 61, 0.2);
+    --color-deceased: #a52a2a;
+    --color-deceased-bg: rgba(165, 42, 42, 0.2);
+    --color-warning: #d4a017;
+    --color-warning-bg: rgba(212, 160, 23, 0.25);
+    --color-cyan: #3d5a3d;
+    
+    /* Glass morphism */
+    --glass-bg: rgba(245, 237, 214, 0.85);
+    --glass-border: rgba(61, 90, 61, 0.25);
+    
+    /* Stage Colors - Nature Inspired */
+    --stage-1: #3d5a3d;
+    --stage-2: #d4a017;
+    --stage-3: #b8860b;
+    --stage-4: #a52a2a;
+    --stage-unknown: #6b8a6b;
+    
+    /* Cancer Type Colors - Golden/Green */
+    --cancer-breast: #c47a3d;
+    --cancer-lung: #3d5a3d;
+    --cancer-colon: #b8860b;
+    --cancer-prostate: #556b55;
+    --cancer-liver: #d4a017;
+    --cancer-stomach: #a52a2a;
+    --cancer-pancreas: #6b8a6b;
+    --cancer-ovarian: #c47a3d;
+    
+    /* UI Colors */
+    --border-color: rgba(61, 90, 61, 0.2);
+    --shadow-soft: 0 4px 20px rgba(26, 46, 26, 0.1);
+    --shadow-medium: 0 8px 30px rgba(26, 46, 26, 0.15);
+    --shadow-glow: 0 0 40px rgba(212, 160, 23, 0.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}

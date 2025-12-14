@@ -1,0 +1,756 @@
+/* ========================================
+   CHARTS SECTION
+   ======================================== */
+.charts-section {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 20px;
+    min-width: 0;
+}
+
+.charts-section > * {
+    min-width: 0;
+}
+
+.chart-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 24px;
+    box-shadow: var(--shadow-soft);
+    transition: all 0.3s ease, background-color 0.4s ease, border-color 0.4s ease;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.chart-card:hover {
+    border-color: var(--glass-border);
+    box-shadow: var(--shadow-soft), var(--shadow-glow);
+}
+
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    cursor: pointer;
+    padding: 4px 8px;
+    margin: -4px -8px 16px -8px;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+}
+
+.chart-header:hover {
+    background: var(--gradient-soft);
+}
+
+.chart-header h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.chart-header h3 svg {
+    width: 20px;
+    height: 20px;
+    color: var(--gradient-mid);
+}
+
+/* Chart Info Hint Icon */
+.chart-info-hint {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 8px;
+    opacity: 0.5;
+    transition: all 0.2s ease;
+}
+
+.chart-info-hint svg {
+    width: 16px;
+    height: 16px;
+    color: var(--color-cyan);
+}
+
+.chart-card:hover .chart-info-hint {
+    opacity: 1;
+}
+
+.chart-body {
+    position: relative;
+    height: 280px;
+    overflow: hidden;
+    min-width: 0;
+}
+
+.chart-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 16px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.chart-hint svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* ========================================
+   SURVIVAL SECTION
+   ======================================== */
+.survival-section .full-width {
+    width: 100%;
+}
+
+.curve-stats {
+    display: flex;
+    gap: 24px;
+}
+
+.curve-stat {
+    text-align: center;
+    padding: 8px 16px;
+    background: var(--gradient-soft);
+    border-radius: var(--border-radius-xs);
+    cursor: pointer;
+    transition: all var(--transition-smooth);
+}
+
+.curve-stat:hover {
+    background: rgba(6, 182, 212, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(6, 182, 212, 0.2);
+}
+
+.curve-stat.active {
+    background: linear-gradient(135deg, var(--color-cyan), var(--color-teal));
+    box-shadow: 0 4px 20px rgba(6, 182, 212, 0.4);
+    transform: translateY(-2px);
+}
+
+.curve-stat.active .stat-value {
+    background: white;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.curve-stat.active .stat-label {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.curve-stat:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.curve-stat .stat-value {
+    font-size: 1.2rem;
+    font-weight: 700;
+    background: var(--gradient-main);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.curve-stat .stat-label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.survival-body {
+    height: 220px;
+}
+
+.drill-down {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+    margin-top: 16px;
+    background: var(--gradient-soft);
+    border-radius: var(--border-radius-xs);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.drill-down svg {
+    width: 16px;
+    height: 16px;
+    color: var(--gradient-mid);
+}
+
+/* ========================================
+   SPOTLIGHT ROW (Bubble Chart + Patient Spotlight)
+   ======================================== */
+.spotlight-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.spotlight-row .bubble-card,
+.spotlight-row .spotlight-card {
+    min-height: 380px;
+    max-height: 420px;
+    overflow: hidden;
+}
+
+.bubble-card {
+    min-height: 380px;
+}
+
+.bubble-body {
+    height: 260px;
+    display: flex;
+    gap: 8px;
+}
+
+.bubble-y-axis {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 0 28px 0;
+    min-width: 50px;
+}
+
+.stage-title {
+    font-size: 0.6rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.stage-label {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-cyan);
+    text-align: center;
+}
+
+.bubble-chart-wrapper {
+    flex: 1;
+    height: 100%;
+}
+
+.bubble-legend {
+    display: flex;
+    gap: 16px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.legend-dot.alive {
+    background: var(--color-alive);
+}
+
+.legend-dot.deceased {
+    background: var(--color-deceased);
+}
+
+.bubble-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.hint-divider {
+    opacity: 0.5;
+}
+
+/* Bubble Chart Filter Dropdown */
+.bubble-filter-dropdown {
+    position: relative;
+}
+
+.dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: rgba(6, 182, 212, 0.1);
+    border: 1px solid rgba(6, 182, 212, 0.3);
+    border-radius: 6px;
+    color: var(--color-cyan);
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dropdown-toggle:hover {
+    background: rgba(6, 182, 212, 0.2);
+    border-color: var(--color-cyan);
+}
+
+.dropdown-toggle svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.3s ease;
+}
+
+.dropdown-toggle.active svg {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 180px;
+    background: rgba(15, 23, 42, 0.98);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 8px 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 100;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    max-height: 280px;
+    overflow-y: auto;
+}
+
+/* Dropdown scrollbar matching sidebar */
+.dropdown-menu::-webkit-scrollbar {
+    width: 6px;
+}
+
+.dropdown-menu::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.dropdown-menu::-webkit-scrollbar-thumb {
+    background: rgba(6, 182, 212, 0.3);
+    border-radius: 3px;
+}
+
+.dropdown-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.dropdown-item:hover {
+    background: rgba(6, 182, 212, 0.1);
+}
+
+.dropdown-item input[type="checkbox"] {
+    display: none;
+}
+
+.checkbox-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.dropdown-item input[type="checkbox"]:checked + .checkbox-icon {
+    border-color: transparent;
+}
+
+.dropdown-item input[type="checkbox"]:checked + .checkbox-icon::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Checkbox colors per cancer type */
+.checkbox-icon.breast {
+    background: rgba(236, 72, 153, 0.2);
+}
+.dropdown-item input[type="checkbox"]:checked + .checkbox-icon.breast {
+    background: #ec4899;
+}
+
+.checkbox-icon.lung {
+    background: rgba(59, 130, 246, 0.2);
+}
+.dropdown-item input[type="checkbox"]:checked + .checkbox-icon.lung {
+    background: #3b82f6;
+}
+
+.checkbox-icon.colon {
+    background: rgba(34, 197, 94, 0.2);
+}
+.dropdown-item input[type="checkbox"]:checked + .checkbox-icon.colon {
+    background: #22c55e;
+}
+
+.checkbox-icon.prostate {
+    background: rgba(168, 85, 247, 0.2);
+}
+.dropdown-item input[type="checkbox"]:checked + .checkbox-icon.prostate {
+    background: #a855f7;
+}
+
+.checkbox-icon.liver {
+    background: rgba(249, 115, 22, 0.2);
+}
+.dropdown-item input[type="checkbox"]:checked + .checkbox-icon.liver {
+    background: #f97316;
+}
+
+.checkbox-icon.stomach {
+    background: rgba(234, 179, 8, 0.2);
+}
+.dropdown-item input[type="checkbox"]:checked + .checkbox-icon.stomach {
+    background: #eab308;
+}
+
+.checkbox-icon.pancreas {
+    background: rgba(20, 184, 166, 0.2);
+}
+.dropdown-item input[type="checkbox"]:checked + .checkbox-icon.pancreas {
+    background: #14b8a6;
+}
+
+.checkbox-icon.ovarian {
+    background: rgba(244, 63, 94, 0.2);
+}
+.dropdown-item input[type="checkbox"]:checked + .checkbox-icon.ovarian {
+    background: #f43f5e;
+}
+
+/* Bubble Chart Legend Grid */
+.bubble-legend-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px 12px;
+    margin-top: 12px;
+    padding: 10px;
+    background: rgba(6, 182, 212, 0.05);
+    border-radius: 8px;
+}
+
+.bubble-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.bubble-icon {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+}
+
+.bubble-icon-svg {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* ========================================
+   GENDER ANALYSIS CHART
+   ======================================== */
+.analysis-row {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.gender-card .chart-body {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.gender-chart-wrapper {
+    height: 180px;
+    position: relative;
+}
+
+.gender-stats-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.gender-stat {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background: var(--glass-bg);
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    transition: all var(--transition-fast);
+}
+
+.gender-stat:hover {
+    transform: translateX(4px);
+}
+
+.gender-stat.male {
+    border-left: 3px solid #3b82f6;
+}
+
+.gender-stat.female {
+    border-left: 3px solid #ec4899;
+}
+
+.gender-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+}
+
+.gender-stat.male .gender-icon {
+    background: rgba(59, 130, 246, 0.15);
+}
+
+.gender-stat.female .gender-icon {
+    background: rgba(236, 72, 153, 0.15);
+}
+
+.gender-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.gender-stat.male .gender-icon svg {
+    color: #3b82f6;
+}
+
+.gender-stat.female .gender-icon svg {
+    color: #ec4899;
+}
+
+.gender-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.gender-count {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.gender-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.gender-survival {
+    font-size: 11px;
+    color: var(--color-cyan);
+    font-weight: 500;
+}
+
+/* ========================================
+   STAGE SURVIVAL LEGEND (Stage at Diagnosis Chart)
+   ======================================== */
+.stage-survival-legend {
+    padding: 12px 0 0;
+    margin-top: 12px;
+    border-top: 1px solid var(--glass-border);
+}
+
+.stage-legend-title {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stage-survival-items {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.stage-survival-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 8px;
+    background: var(--glass-bg);
+    border-radius: 8px;
+    border: 1px solid var(--glass-border);
+    transition: all var(--transition-fast);
+}
+
+.stage-survival-item:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-cyan);
+}
+
+.stage-survival-item .ssl-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.stage-survival-item.stage-1 .ssl-dot {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+}
+
+.stage-survival-item.stage-2 .ssl-dot {
+    background: linear-gradient(135deg, #60a5fa, #3b82f6);
+    box-shadow: 0 0 8px rgba(96, 165, 250, 0.5);
+}
+
+.stage-survival-item.stage-3 .ssl-dot {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    box-shadow: 0 0 8px rgba(251, 191, 36, 0.5);
+}
+
+.stage-survival-item.stage-4 .ssl-dot {
+    background: linear-gradient(135deg, #f472b6, #ec4899);
+    box-shadow: 0 0 8px rgba(244, 114, 182, 0.5);
+}
+
+.stage-survival-item .ssl-label {
+    font-size: 10px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+.stage-survival-item .ssl-counts {
+    font-size: 11px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.stage-survival-item .ssl-value {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-cyan);
+}
+
+/* ========================================
+   STAGE PROGRESSION CHART
+   ======================================== */
+.progression-card .chart-body {
+    height: 220px;
+}
+
+.progression-legend {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--glass-border);
+}
+
+.progression-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: var(--glass-bg);
+    border-radius: 8px;
+    border: 1px solid var(--glass-border);
+}
+
+.progression-item .prog-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.progression-item.stage-1 .prog-dot {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+}
+
+.progression-item.stage-2 .prog-dot {
+    background: linear-gradient(135deg, #eab308, #ca8a04);
+    box-shadow: 0 0 10px rgba(234, 179, 8, 0.5);
+}
+
+.progression-item.stage-3 .prog-dot {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    box-shadow: 0 0 10px rgba(249, 115, 22, 0.5);
+}
+
+.progression-item.stage-4 .prog-dot {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+}
+
+.progression-item .prog-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    flex: 1;
+}
+
+.progression-item .prog-value {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
