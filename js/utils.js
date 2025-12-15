@@ -3,38 +3,59 @@
    Utility Functions
    ======================================== */
 
-// ==========================================
+// ========================================
 // TOAST NOTIFICATIONS
-// ==========================================
-function showToast(type, title, message) {
+// ========================================
+let activeToastTimeout = null;
+
+function showToast(type, title, message, options = {}) {
     const container = document.getElementById('toastContainer');
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    
+    if (!container) return;
+
+    if (activeToastTimeout) {
+        clearTimeout(activeToastTimeout);
+        activeToastTimeout = null;
+    }
+    Array.from(container.children).forEach(node => node.remove());
+
     const icons = {
         success: '✓',
         error: '✕',
         info: 'ℹ',
         warning: '⚠'
     };
-    
+
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
     toast.innerHTML = `
-        <span class="toast-icon">${icons[type]}</span>
+        <span class="toast-icon">${icons[type] || 'ℹ'}</span>
         <div class="toast-content">
             <div class="toast-title">${title}</div>
             <div class="toast-message">${message}</div>
         </div>
-        <button class="toast-close" onclick="this.parentElement.remove()">×</button>
+        <button class="toast-close" aria-label="Close notification">×</button>
     `;
-    
+
     container.appendChild(toast);
-    
-    // Auto remove after 4 seconds
-    setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateX(100%)';
-        setTimeout(() => toast.remove(), 300);
-    }, 4000);
+
+    const removeToast = () => {
+        activeToastTimeout = null;
+        toast.classList.add('toast-hide');
+        toast.addEventListener('transitionend', () => {
+            if (toast.parentElement) {
+                toast.remove();
+            }
+        }, { once: true });
+    };
+
+    const duration = options.duration ?? 4000;
+    activeToastTimeout = window.setTimeout(removeToast, duration);
+
+    const closeBtn = toast.querySelector('.toast-close');
+    closeBtn.addEventListener('click', () => {
+        clearTimeout(activeToastTimeout);
+        removeToast();
+    });
 }
 
 function showWelcomeToast() {
@@ -73,7 +94,7 @@ async function exportToCSV() {
 // BUBBLE CHART CHECKBOXES
 // ==========================================
 function updateBubbleCheckboxes() {
-    document.querySelectorAll('.bubble-checkbox').forEach(cb => {
+    document.querySelectorAll('.bubble-type-checkbox, .bubble-checkbox').forEach(cb => {
         cb.checked = selectedBubbleTypes.includes(cb.value);
     });
 }
@@ -97,7 +118,7 @@ function handleBubbleFilterChange(e) {
 }
 
 function bubbleSelectAll() {
-    selectedBubbleTypes = ['Breast', 'Lung', 'Colon', 'Prostate', 'Liver', 'Stomach', 'Pancreas', 'Ovarian'];
+    selectedBubbleTypes = [...CANCER_TYPES];
     updateBubbleCheckboxes();
     updateBubbleChart();
 }

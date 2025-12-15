@@ -8,7 +8,7 @@
 // ==========================================
 let patients = [];
 let filteredPatients = [];
-let currentCancerFilter = 'all';
+let selectedCancerTypes = [];
 let currentLungSubtype = 'all';
 let currentSurvivalMin = 0;
 let currentSurvivalYearFilter = null; // Track which year filter is active (12, 36, 60 or null)
@@ -17,6 +17,10 @@ let selectedStages = ['Stage I', 'Stage II', 'Stage III', 'Stage IV', 'Unknown']
 let isComparisonMode = false;
 let currentPatientIndex = 0;
 let charts = {};
+let hasAgeData = true;
+let tablePage = 1;
+const ROWS_PER_PAGE = 50;
+const SURVIVAL_SLIDER_MAX = 168;
 
 // Cancer type colors
 const cancerColors = {
@@ -29,6 +33,8 @@ const cancerColors = {
     'Pancreas': '#84cc16',
     'Ovarian': '#d946ef'
 };
+
+const CANCER_TYPES = Object.keys(cancerColors);
 
 const stageColors = {
     'Stage I': '#34d399',
@@ -44,6 +50,14 @@ const ageGroupDescriptions = {
     '31-50': 'Working age',
     '51-70': 'Prime diagnosis',
     '71-90': 'Senior patients'
+};
+
+// Controls the draw order of age diagnosis datasets (higher value draws in front)
+const AGE_LAYER_ORDER = {
+    '51-70': 4, // back
+    '71-90': 3,
+    '31-50': 2,
+    '10-30': 1  // front
 };
 
 function getAgeGroupFromValue(ageValue) {
@@ -79,4 +93,4 @@ const organSVGPaths = {
     'Ovarian': 'M8 12a3 3 0 1 0 0-1 3 3 0 0 0 0 1z M16 12a3 3 0 1 0 0-1 3 3 0 0 0 0 1z M11 12h2'
 };
 
-let selectedBubbleTypes = ['Breast', 'Lung', 'Colon', 'Prostate', 'Liver', 'Stomach', 'Pancreas', 'Ovarian'];
+let selectedBubbleTypes = [...CANCER_TYPES];

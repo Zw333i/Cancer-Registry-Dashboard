@@ -3,6 +3,92 @@
    Filter Handlers
    ======================================== */
 
+function getCancerSelectionSummary() {
+    if (selectedCancerTypes.length === 0) {
+        return 'All Patients';
+    }
+    if (selectedCancerTypes.length === 1) {
+        return `${selectedCancerTypes[0]} Patients`;
+    }
+    return `${selectedCancerTypes.length} Cancer Types`;
+}
+
+function getActiveOrganSummary() {
+    if (selectedCancerTypes.length === 0) {
+        return 'All Types';
+    }
+    if (selectedCancerTypes.length === 1) {
+        return selectedCancerTypes[0];
+    }
+    if (selectedCancerTypes.length === 2) {
+        return selectedCancerTypes.join(', ');
+    }
+    return `${selectedCancerTypes[0]}, ${selectedCancerTypes[1]} +${selectedCancerTypes.length - 2} more`;
+}
+
+function selectionsMatch(a, b) {
+    if (a.length !== b.length) return false;
+    return a.every((value, index) => value === b[index]);
+}
+
+function refreshCancerBreadcrumb() {
+    let label;
+    if (currentStatusFilter === 'all') {
+        label = getCancerSelectionSummary();
+    } else if (selectedCancerTypes.length === 0) {
+        label = `${currentStatusFilter} Patients`;
+    } else if (selectedCancerTypes.length === 1) {
+        label = `${currentStatusFilter} ${selectedCancerTypes[0]} Patients`;
+    } else {
+        label = `${currentStatusFilter} • ${selectedCancerTypes.length} Cancer Types`;
+    }
+    updateBreadcrumb(label);
+}
+
+function syncOrganSelectionUI() {
+    const active = new Set(selectedCancerTypes);
+    document.querySelectorAll('.organ-region').forEach(region => {
+        region.classList.toggle('active', active.has(region.dataset.cancer));
+    });
+    const allBtn = document.querySelector('.organ-btn[data-cancer="all"]');
+    if (allBtn) {
+        allBtn.classList.toggle('active', selectedCancerTypes.length === 0);
+    }
+    const indicator = document.getElementById('activeOrgan');
+    if (indicator) {
+        indicator.textContent = getActiveOrganSummary();
+    }
+}
+
+function syncBubbleSelectionFromCancerFilters() {
+    if (selectedCancerTypes.length === 0) {
+        selectedBubbleTypes = [...CANCER_TYPES];
+    } else {
+        selectedBubbleTypes = [...selectedCancerTypes];
+    }
+    updateBubbleCheckboxes();
+}
+
+function updateLungSubfilterVisibility() {
+    const lungSubfilter = document.getElementById('lungSubfilter');
+    if (!lungSubfilter) return;
+    const singleLungSelected = selectedCancerTypes.length === 1 && selectedCancerTypes[0] === 'Lung';
+    if (singleLungSelected) {
+        lungSubfilter.classList.add('visible');
+    } else {
+        lungSubfilter.classList.remove('visible');
+        if (currentLungSubtype !== 'all') {
+            currentLungSubtype = 'all';
+            document.querySelectorAll('.subfilter-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector('.subfilter-btn[data-subtype="all"]')?.classList.add('active');
+        }
+    }
+}
+
+function isLungSubtypeFilterActive() {
+    return selectedCancerTypes.length === 1 && selectedCancerTypes[0] === 'Lung' && currentLungSubtype !== 'all';
+}
+
 // ==========================================
 // STATUS FILTER TOGGLE
 // ==========================================
@@ -18,7 +104,6 @@ function toggleStatusFilter(status) {
         currentStatusFilter = 'all';
         alivePill.classList.remove('active', 'dimmed');
         deceasedPill.classList.remove('active', 'dimmed');
-        showToast('info', 'Filter Cleared', 'Showing all patients');
     } else {
         currentStatusFilter = status;
         
@@ -28,39 +113,25 @@ function toggleStatusFilter(status) {
             alivePill.classList.remove('dimmed');
             deceasedPill.classList.add('dimmed');
             deceasedPill.classList.remove('active');
-            showToast('success', 'Filtered', 'Showing only Alive patients');
         } else {
             deceasedPill.classList.add('active');
             deceasedPill.classList.remove('dimmed');
             alivePill.classList.add('dimmed');
             alivePill.classList.remove('active');
-            showToast('warning', 'Filtered', 'Showing only Deceased patients');
         }
     }
     
     console.log('Current filter after:', currentStatusFilter);
     
-    // Update breadcrumb display
-    if (currentStatusFilter === 'all') {
-        if (currentCancerFilter === 'all') {
-            updateBreadcrumb('All Patients');
-        } else {
-            updateBreadcrumb(currentCancerFilter + ' Cancer');
-        }
-    } else {
-        if (currentCancerFilter === 'all') {
-            updateBreadcrumb(currentStatusFilter + ' Patients');
-        } else {
-            updateBreadcrumb(currentStatusFilter + ' ' + currentCancerFilter + ' Patients');
-        }
-    }
+    refreshCancerBreadcrumb();
     
     applyFilters();
     
-    // Scroll to patient records table after filter is applied
-    setTimeout(() => {
-        document.querySelector('.table-card')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 300);
+    if (currentStatusFilter !== 'all') {
+        setTimeout(() => {
+            document.querySelector('.table-card')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 300);
+    }
 }
 
 // ==========================================
@@ -69,62 +140,52 @@ function toggleStatusFilter(status) {
 function handleOrganClick(e) {
     const region = e.currentTarget;
     const cancer = region.dataset.cancer;
-    
-    // Toggle: if clicking same cancer, reset to all
-    if (currentCancerFilter === cancer) {
-        selectCancerType('all');
-    } else {
-        selectCancerType(cancer);
-    }
+    selectCancerType(cancer);
 }
 
 function handleOrganBtnClick(e) {
     const btn = e.currentTarget;
     const cancer = btn.dataset.cancer;
-    selectCancerType(cancer);
+    if (cancer === 'all') {
+        selectCancerType('all');
+    } else {
+        selectCancerType(cancer, { replace: true });
+    }
 }
 
-function selectCancerType(cancer) {
-    // Update organ region active states
-    document.querySelectorAll('.organ-region').forEach(r => r.classList.remove('active'));
-    if (cancer !== 'all') {
-        document.querySelectorAll(`.organ-region[data-cancer="${cancer}"]`).forEach(r => {
-            r.classList.add('active');
-        });
-    }
+function selectCancerType(cancer, options = {}) {
+    const previousSelection = [...selectedCancerTypes];
+    const previousLungSubtype = currentLungSubtype;
     
-    // Update organ button active state
-    document.querySelectorAll('.organ-btn').forEach(b => b.classList.remove('active'));
     if (cancer === 'all') {
-        document.querySelector('.organ-btn[data-cancer="all"]')?.classList.add('active');
-    }
-    
-    // Update active organ display
-    const displayText = cancer === 'all' ? 'All Types' : cancer;
-    document.getElementById('activeOrgan').textContent = displayText;
-    
-    // Handle lung subfilter visibility
-    const lungSubfilter = document.getElementById('lungSubfilter');
-    if (cancer === 'Lung') {
-        lungSubfilter.classList.add('visible');
+        selectedCancerTypes = [];
+    } else if (options.replace) {
+        selectedCancerTypes = [cancer];
+    } else if (selectedCancerTypes.includes(cancer)) {
+        selectedCancerTypes = selectedCancerTypes.filter(type => type !== cancer);
     } else {
-        lungSubfilter.classList.remove('visible');
-        currentLungSubtype = 'all';
+        selectedCancerTypes = [...selectedCancerTypes, cancer];
     }
-    
-    // Sync bubble chart checkboxes
-    if (cancer === 'all') {
-        selectedBubbleTypes = ['Breast', 'Lung', 'Colon', 'Prostate', 'Liver', 'Stomach', 'Pancreas', 'Ovarian'];
-    } else {
-        selectedBubbleTypes = [cancer];
+
+    syncOrganSelectionUI();
+    updateLungSubfilterVisibility();
+    syncBubbleSelectionFromCancerFilters();
+    refreshCancerBreadcrumb();
+    const selectionChanged = !selectionsMatch(previousSelection, selectedCancerTypes);
+    const lungChanged = previousLungSubtype !== currentLungSubtype;
+    if (!options.silent && (selectionChanged || lungChanged || options.force)) {
+        applyFilters();
     }
-    updateBubbleCheckboxes();
-    
-    currentCancerFilter = cancer;
-    updateBreadcrumb(cancer === 'all' ? 'All Patients' : cancer);
-    applyFilters();
-    
-    showToast('info', 'Filter Applied', `Showing ${cancer === 'all' ? 'all cancer types' : cancer + ' cancer'}`);
+}
+
+function resetCancerSelection() {
+    const alreadyAll = selectedCancerTypes.length === 0 && currentLungSubtype === 'all';
+    if (alreadyAll) {
+        showToast('info', 'Cancer Filters', 'Already showing all cancer types');
+        return;
+    }
+    selectCancerType('all', { force: true });
+    showToast('success', 'Cancer Filters Reset', 'All cancer types restored');
 }
 
 function handleCancerFilter(e) {
@@ -145,11 +206,7 @@ function handleCancerFilter(e) {
         currentLungSubtype = 'all';
     }
     
-    currentCancerFilter = cancer;
-    updateBreadcrumb(cancer === 'all' ? 'All Patients' : cancer);
-    applyFilters();
-    
-    showToast('info', 'Filter Applied', `Showing ${cancer === 'all' ? 'all cancer types' : cancer + ' cancer'}`);
+    selectCancerType(cancer, { replace: true });
 }
 
 function handleLungSubfilter(e) {
@@ -169,7 +226,7 @@ function handleSliderChange(e) {
     
     // Update fill
     const fill = document.getElementById('sliderFill');
-    const percentage = (value / 120) * 100;
+    const percentage = (value / SURVIVAL_SLIDER_MAX) * 100;
     fill.style.width = `${percentage}%`;
     
     // Update label
@@ -192,23 +249,16 @@ function handleStageFilter() {
 
 function resetFilters() {
     // Reset cancer filter
-    currentCancerFilter = 'all';
     currentLungSubtype = 'all';
+    selectedCancerTypes = [];
+    syncOrganSelectionUI();
+    updateLungSubfilterVisibility();
+    syncBubbleSelectionFromCancerFilters();
     
     // Reset status filter
     currentStatusFilter = 'all';
     document.getElementById('alivePill')?.classList.remove('active', 'dimmed');
     document.getElementById('deceasedPill')?.classList.remove('active', 'dimmed');
-    
-    // Reset body diagram
-    document.querySelectorAll('.organ-region').forEach(r => r.classList.remove('active'));
-    document.querySelectorAll('.organ-btn').forEach(b => b.classList.remove('active'));
-    document.querySelector('.organ-btn[data-cancer="all"]')?.classList.add('active');
-    document.getElementById('activeOrgan').textContent = 'All Types';
-    
-    document.getElementById('lungSubfilter').classList.remove('visible');
-    document.querySelectorAll('.subfilter-btn').forEach(b => b.classList.remove('active'));
-    document.querySelector('.subfilter-btn[data-subtype="all"]').classList.add('active');
     
     // Reset slider
     currentSurvivalMin = 0;
@@ -224,7 +274,7 @@ function resetFilters() {
     selectedStages = ['Stage I', 'Stage II', 'Stage III', 'Stage IV', 'Unknown'];
     document.querySelectorAll('.stage-checkbox').forEach(cb => cb.checked = true);
     
-    updateBreadcrumb('All Patients');
+    refreshCancerBreadcrumb();
     applyFilters();
     
     showToast('success', 'Filters Reset', 'All filters have been cleared');
@@ -241,20 +291,19 @@ function hideSkeletonLoading() {
 function applyFilters() {
     // Show skeleton loading
     showSkeletonLoading();
+    tablePage = 1;
     
     // Use setTimeout to allow UI to update before heavy processing
     setTimeout(() => {
+        const hasCancerSelection = selectedCancerTypes.length > 0;
+        const lungSubtypeActive = isLungSubtypeFilterActive();
         filteredPatients = patients.filter(p => {
-            // Cancer type filter
-            if (currentCancerFilter !== 'all' && p.Cancer_Type !== currentCancerFilter) {
+            if (hasCancerSelection && !selectedCancerTypes.includes(p.Cancer_Type)) {
                 return false;
             }
-            
-            // Lung subtype filter
-            if (currentCancerFilter === 'Lung' && currentLungSubtype !== 'all') {
-                if (p.Lung_Subtype !== currentLungSubtype) {
-                    return false;
-                }
+
+            if (lungSubtypeActive && p.Lung_Subtype !== currentLungSubtype) {
+                return false;
             }
             
             // Status filter (Alive/Deceased)

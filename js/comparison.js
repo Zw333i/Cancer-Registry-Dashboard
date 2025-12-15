@@ -208,7 +208,7 @@ function generateSurvivalCurveData(data, maxMonths) {
         const month = i * 10;
         const surviving = data.filter(p => {
             const survival = parseInt(p.Survival_Months) || 0;
-            return survival >= month || p.Status === 'Alive';
+            return survival >= month;
         }).length;
         const percentage = data.length > 0 ? (surviving / data.length) * 100 : 0;
         points.push(percentage);

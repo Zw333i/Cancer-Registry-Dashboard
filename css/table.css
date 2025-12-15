@@ -118,3 +118,37 @@ tbody tr.active {
     color: var(--color-deceased);
     font-weight: 500;
 }
+
+.table-pagination {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+}
+
+.table-pagination button {
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    padding: 6px 14px;
+    border-radius: var(--border-radius-xs);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.table-pagination button:hover:not([disabled]) {
+    border-color: var(--gradient-mid);
+    color: var(--gradient-mid);
+}
+
+.table-pagination button[disabled] {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.table-pagination .page-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}

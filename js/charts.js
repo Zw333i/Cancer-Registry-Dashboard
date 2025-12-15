@@ -79,10 +79,7 @@ function initDoughnutChart() {
                 if (elements.length > 0) {
                     const index = elements[0].index;
                     const cancer = charts.doughnut.data.labels[index];
-                    // Toggle: if already filtered to this cancer, reset to all
-                    if (currentCancerFilter === cancer) {
-                        selectCancerType('all');
-                    } else {
+                    if (cancer) {
                         selectCancerType(cancer);
                     }
                 }
@@ -177,10 +174,10 @@ function initAgeDiagnosisChart() {
     
     // Age group colors matching the legend - with more opacity for stacked effect
     const ageColors = {
-        '10-30': 'rgba(139, 92, 246, 0.7)',   // Purple
-        '31-50': 'rgba(6, 182, 212, 0.7)',    // Cyan
-        '51-70': 'rgba(251, 191, 36, 0.7)',   // Amber
-        '71-90': 'rgba(239, 68, 68, 0.7)'     // Red
+        '10-30': 'rgba(139, 92, 246, 0.9)',   // Purple
+        '31-50': 'rgba(6, 182, 212, 0.9)',    // Cyan
+        '51-70': 'rgba(251, 191, 36, 0.9)',   // Amber
+        '71-90': 'rgba(239, 68, 68, 0.9)'     // Red
     };
     
     charts.ageDiagnosis = new Chart(ctx, {
@@ -198,7 +195,8 @@ function initAgeDiagnosisChart() {
                     tension: 0.4,
                     pointRadius: 3,
                     pointHoverRadius: 5,
-                    pointBackgroundColor: 'rgba(239, 68, 68, 1)'
+                    pointBackgroundColor: 'rgba(239, 68, 68, 1)',
+                    order: AGE_LAYER_ORDER['71-90']
                 },
                 {
                     label: '51-70',
@@ -206,11 +204,12 @@ function initAgeDiagnosisChart() {
                     backgroundColor: ageColors['51-70'],
                     borderColor: 'rgba(251, 191, 36, 1)',
                     borderWidth: 2,
-                    fill: '-1',
+                    fill: 'origin',
                     tension: 0.4,
                     pointRadius: 3,
                     pointHoverRadius: 5,
-                    pointBackgroundColor: 'rgba(251, 191, 36, 1)'
+                    pointBackgroundColor: 'rgba(251, 191, 36, 1)',
+                    order: AGE_LAYER_ORDER['51-70']
                 },
                 {
                     label: '31-50',
@@ -218,11 +217,12 @@ function initAgeDiagnosisChart() {
                     backgroundColor: ageColors['31-50'],
                     borderColor: 'rgba(6, 182, 212, 1)',
                     borderWidth: 2,
-                    fill: '-1',
+                    fill: 'origin',
                     tension: 0.4,
                     pointRadius: 3,
                     pointHoverRadius: 5,
-                    pointBackgroundColor: 'rgba(6, 182, 212, 1)'
+                    pointBackgroundColor: 'rgba(6, 182, 212, 1)',
+                    order: AGE_LAYER_ORDER['31-50']
                 },
                 {
                     label: '10-30',
@@ -230,11 +230,12 @@ function initAgeDiagnosisChart() {
                     backgroundColor: ageColors['10-30'],
                     borderColor: 'rgba(139, 92, 246, 1)',
                     borderWidth: 2,
-                    fill: '-1',
+                    fill: 'origin',
                     tension: 0.4,
                     pointRadius: 3,
                     pointHoverRadius: 5,
-                    pointBackgroundColor: 'rgba(139, 92, 246, 1)'
+                    pointBackgroundColor: 'rgba(139, 92, 246, 1)',
+                    order: AGE_LAYER_ORDER['10-30']
                 }
             ]
         },
@@ -243,6 +244,7 @@ function initAgeDiagnosisChart() {
             maintainAspectRatio: false,
             scales: {
                 x: {
+                    stacked: false,
                     grid: { display: false },
                     ticks: { 
                         font: { size: 11, weight: '500' },
@@ -251,7 +253,7 @@ function initAgeDiagnosisChart() {
                     }
                 },
                 y: {
-                    stacked: true,
+                    stacked: false,
                     beginAtZero: true,
                     grid: { 
                         color: 'rgba(148, 163, 184, 0.1)',
@@ -431,14 +433,15 @@ function initSurvivalCurve() {
     const gradient = ctx.createLinearGradient(0, 0, 0, 200);
     gradient.addColorStop(0, 'rgba(6, 182, 212, 0.3)');
     gradient.addColorStop(1, 'rgba(6, 182, 212, 0)');
+    const survivalLabels = Array.from({ length: Math.floor(SURVIVAL_SLIDER_MAX / 12) + 1 }, (_, index) => String(index * 12));
     
     charts.survival = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ['0', '12', '24', '36', '48', '60', '72', '84', '96', '108', '120'],
+            labels: survivalLabels,
             datasets: [{
                 label: 'Survival Rate',
-                data: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
+                data: Array(survivalLabels.length).fill(100),
                 borderColor: '#06b6d4',
                 backgroundColor: gradient,
                 borderWidth: 3,
@@ -501,6 +504,22 @@ function initSurvivalCurve() {
             interaction: {
                 intersect: false,
                 mode: 'index'
+            },
+            onClick: (event, elements, chart) => {
+                if (!elements || elements.length === 0) return;
+                const point = elements[0];
+                const label = chart?.data?.labels?.[point.index];
+                const months = parseInt(label, 10);
+                if (!Number.isFinite(months)) return;
+                const slider = document.getElementById('survivalSlider');
+                if (!slider) return;
+                slider.value = months;
+                currentSurvivalYearFilter = null;
+                document.querySelectorAll('.curve-stat').forEach(stat => stat.classList.remove('active'));
+                handleSliderChange({ target: slider });
+                setTimeout(() => {
+                    document.querySelector('.table-card')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 400);
             }
         }
     });
@@ -763,7 +782,7 @@ function updateCharts() {
     // Update survival curve - adjust axis to filter range and observed max
     const survivalMonths = filteredPatients.map(p => parseFloat(p.Survival_Months) || 0);
     const observedMax = survivalMonths.length > 0 ? Math.max(...survivalMonths) : 0;
-    const paddedMax = Math.max(120, Math.ceil(observedMax / 12) * 12);
+    const paddedMax = Math.max(SURVIVAL_SLIDER_MAX, Math.ceil(observedMax / 12) * 12);
     const basePoints = [];
     for (let month = 0; month <= paddedMax; month += 12) {
         basePoints.push(month);
@@ -878,25 +897,54 @@ function updateAgeDiagnosisChart() {
         groupTotals[ageGroup]++;
         grandTotal++;
     });
-    
-    // Update chart data
-    charts.ageDiagnosis.data.labels = cancerTypes;
-    
-    // Dataset order: 71-90, 51-70, 31-50, 10-30 (for proper stacking)
-    const reversedAgeGroups = [...ageGroups].reverse();
-    reversedAgeGroups.forEach((group, index) => {
-        charts.ageDiagnosis.data.datasets[index].data = cancerTypes.map(cancer => {
-            return ageData[cancer] ? ageData[cancer][group] : 0;
-        });
-    });
-    
-    // Update legend share badges
+
     const shareElements = {
         '10-30': document.getElementById('ageShare10_30'),
         '31-50': document.getElementById('ageShare31_50'),
         '51-70': document.getElementById('ageShare51_70'),
         '71-90': document.getElementById('ageShare71_90')
     };
+    const emptyState = document.getElementById('ageDiagnosisEmpty');
+    const ageCanvas = document.getElementById('ageDiagnosisChart');
+    const shouldShowEmpty = !hasAgeData || grandTotal === 0;
+
+    if (emptyState && ageCanvas) {
+        if (shouldShowEmpty) {
+            emptyState.textContent = hasAgeData 
+                ? 'No age data is available for the current filters.'
+                : 'Age data is unavailable for this dataset.';
+            emptyState.removeAttribute('hidden');
+            ageCanvas.style.display = 'none';
+        } else {
+            emptyState.setAttribute('hidden', '');
+            ageCanvas.style.display = '';
+        }
+    }
+
+    if (shouldShowEmpty) {
+        charts.ageDiagnosis.data.labels = [];
+        charts.ageDiagnosis.data.datasets.forEach(dataset => dataset.data = []);
+        Object.values(shareElements).forEach(element => {
+            if (element) {
+                element.textContent = '0%';
+                element.setAttribute('title', '0 patients');
+            }
+        });
+        charts.ageDiagnosis.update('none');
+        return;
+    }
+    
+    // Update chart data
+    charts.ageDiagnosis.data.labels = cancerTypes;
+    
+    const reversedAgeGroups = [...ageGroups].reverse();
+    reversedAgeGroups.forEach((group, index) => {
+        const dataset = charts.ageDiagnosis.data.datasets[index];
+        dataset.data = cancerTypes.map(cancer => (ageData[cancer] ? ageData[cancer][group] : 0));
+        dataset.order = AGE_LAYER_ORDER[group] ?? index + 1;
+    });
+    
+    // Update legend share badges
     ageGroups.forEach(group => {
         if (!shareElements[group]) return;
         if (grandTotal === 0) {

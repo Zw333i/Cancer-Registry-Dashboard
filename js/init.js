@@ -108,33 +108,49 @@ async function loadData() {
         if (!csvResponse.ok) {
             throw new Error('Unable to load data.csv');
         }
+
         const text = await csvResponse.text();
+        const parsedPatients = parseCSV(text);
+        if (!parsedPatients.length) {
+            throw new Error('data.csv is empty or invalid.');
+        }
+
         let ageMap = {};
+        hasAgeData = false;
         if (ageResponse && ageResponse.ok) {
             try {
-                ageMap = await ageResponse.json();
+                const parsedAgeMap = await ageResponse.json();
+                if (parsedAgeMap && typeof parsedAgeMap === 'object') {
+                    ageMap = parsedAgeMap;
+                }
             } catch (ageError) {
                 console.warn('Failed to parse age-data.json:', ageError);
             }
         } else {
             console.warn('Age data file not found. Age charts will be limited.');
         }
-        patients = parseCSV(text).map(patient => {
+
+        let ageAssignments = 0;
+        patients = parsedPatients.map(patient => {
             const ageValue = ageMap[patient.ID];
-            if (typeof ageValue === 'number') {
+            if (typeof ageValue === 'number' && Number.isFinite(ageValue)) {
                 patient.Age = ageValue;
                 patient.Age_Group = getAgeGroupFromValue(ageValue);
+                ageAssignments++;
             } else {
                 patient.Age = null;
                 patient.Age_Group = null;
             }
             return patient;
         });
+
+        hasAgeData = ageAssignments > 0;
         filteredPatients = [...patients];
+
         const missingAges = patients.filter(p => p.Age === null).length;
         console.log(`Loaded ${patients.length} patients (${patients.length - missingAges} with age data)`);
-        if (missingAges > 0) {
-            console.warn(`Age data missing for ${missingAges} patients.`);
+        if (!hasAgeData) {
+            console.warn('Age data missing for all patients. Age visualizations will show a placeholder message.');
         }
     } catch (error) {
         console.error('Error loading data:', error);
@@ -143,20 +159,69 @@ async function loadData() {
 }
 
 function parseCSV(text) {
-    const lines = text.trim().split('\n');
-    const headers = lines[0].split(',');
-    
-    return lines.slice(1).map(line => {
-        const values = line.split(',');
-        const obj = {};
-        headers.forEach((header, index) => {
-            let value = values[index]?.trim() || '';
-            // Convert Survival_Months to number
-            if (header.trim() === 'Survival_Months') {
-                value = parseFloat(value) || 0;
+    const rows = [];
+    let field = '';
+    let row = [];
+    let inQuotes = false;
+
+    const pushField = () => {
+        row.push(field);
+        field = '';
+    };
+
+    const pushRow = () => {
+        if (row.length === 0) return;
+        rows.push(row);
+        row = [];
+    };
+
+    for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+
+        if (char === '"') {
+            if (inQuotes && text[i + 1] === '"') {
+                field += '"';
+                i++;
+            } else {
+                inQuotes = !inQuotes;
             }
-            obj[header.trim()] = value;
+        } else if (char === ',' && !inQuotes) {
+            pushField();
+        } else if ((char === '\n' || char === '\r') && !inQuotes) {
+            if (char === '\r' && text[i + 1] === '\n') {
+                i++;
+            }
+            pushField();
+            pushRow();
+        } else {
+            field += char;
+        }
+    }
+
+    if (field.length || row.length) {
+        pushField();
+        pushRow();
+    }
+
+    if (!rows.length) {
+        return [];
+    }
+
+    const headers = rows.shift().map(header => header.replace(/^\ufeff/, '').trim());
+    return rows
+        .filter(columns => columns.some(value => value && value.trim() !== ''))
+        .map(columns => {
+            const record = {};
+            headers.forEach((header, index) => {
+                const key = header;
+                let value = (columns[index] ?? '').trim();
+                if (key === 'Survival_Months') {
+                    const numeric = parseFloat(value);
+                    record[key] = Number.isFinite(numeric) ? numeric : 0;
+                } else {
+                    record[key] = value;
+                }
+            });
+            return record;
         });
-        return obj;
-    });
 }

@@ -136,18 +136,15 @@ function updateSurvivalStats() {
     // Calculate survival rates at different time points
     // Use all patients (ignoring survival duration filter) to show actual survival rates
     // Filter based on current cancer type, status, and stage filters only
+    const hasCancerSelection = selectedCancerTypes.length > 0;
+    const lungSubtypeActive = selectedCancerTypes.length === 1 && selectedCancerTypes[0] === 'Lung' && currentLungSubtype !== 'all';
     const basePatients = patients.filter(p => {
-        // Cancer type filter
-        if (currentCancerFilter !== 'all' && p.Cancer_Type !== currentCancerFilter) {
+        if (hasCancerSelection && !selectedCancerTypes.includes(p.Cancer_Type)) {
             return false;
         }
-        // Lung subtype filter
-        if (currentCancerFilter === 'Lung' && currentLungSubtype !== 'all') {
-            if (p.Lung_Subtype !== currentLungSubtype) {
-                return false;
-            }
+        if (lungSubtypeActive && p.Lung_Subtype !== currentLungSubtype) {
+            return false;
         }
-        // Stage filter
         if (!selectedStages.includes(p.Stage)) {
             return false;
         }

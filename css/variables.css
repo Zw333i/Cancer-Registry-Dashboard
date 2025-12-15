@@ -151,5 +151,28 @@ body {
     color: var(--text-primary);
     min-height: 100vh;
     overflow-x: hidden;
-    transition: background-color 0.4s ease, color 0.4s ease;
+        transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+    transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+html.theme-transition::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(120deg, rgba(124, 77, 255, 0.6), rgba(224, 64, 251, 0.6));
+    z-index: 9999;
+    pointer-events: none;
+    transform: translateX(-100%);
+    animation: themeSlide 0.55s ease forwards;
+}
+
+@keyframes themeSlide {
+    0% { transform: translateX(-100%); opacity: 0.6; }
+    50% { opacity: 0.8; }
+    100% { transform: translateX(100%); opacity: 0; }
 }

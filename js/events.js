@@ -3,6 +3,8 @@
    Event Listeners
    ======================================== */
 
+let themeTransitionTimeout = null;
+
 // ==========================================
 // EVENT LISTENERS
 // ==========================================
@@ -43,6 +45,10 @@ function initEventListeners() {
     document.querySelectorAll('.organ-btn').forEach(btn => {
         btn.addEventListener('click', handleOrganBtnClick);
     });
+    const organResetBtn = document.getElementById('organResetSelection');
+    if (organResetBtn) {
+        organResetBtn.addEventListener('click', resetCancerSelection);
+    }
     
     // Lung subfilter
     document.querySelectorAll('.subfilter-btn').forEach(btn => {
@@ -131,6 +137,11 @@ function initEventListeners() {
     if (closeComparisonBtn) {
         closeComparisonBtn.addEventListener('click', closeComparison);
     }
+
+    const tablePagination = document.getElementById('tablePagination');
+    if (tablePagination) {
+        tablePagination.addEventListener('click', handleTablePaginationClick);
+    }
     
     // Chart card click handlers for interpretations (on header or info icon, not the canvas)
     document.querySelector('.chart-doughnut .chart-header')?.addEventListener('click', showDistributionInterpretation);
@@ -206,7 +217,7 @@ function handleTagClick(e) {
     if (tagId === 'patientCancerTag') {
         const cancer = tag.textContent.split(' (')[0]; // Handle "Lung (Adenocarcinoma)"
         if (cancer && cancer !== '--') {
-            selectCancerType(cancer);
+            selectCancerType(cancer, { replace: true });
         }
     } else if (tagId === 'patientStageTag') {
         const stage = tag.textContent;
@@ -230,9 +241,7 @@ function handleTagClick(e) {
 function handleHeroCardClick(e) {
     const card = e.currentTarget;
     if (card.classList.contains('card-patients')) {
-        // Scroll to patient records table
         document.querySelector('.table-card').scrollIntoView({ behavior: 'smooth' });
-        showToast('info', 'Patient Records', 'Scrolling to patient data table');
     } else if (card.classList.contains('card-survival')) {
         // Open survival rate modal
         openSurvivalRateModal();
@@ -263,8 +272,6 @@ function handleCurveStatClick(e) {
         
         // Remove active state from all curve stats
         document.querySelectorAll('.curve-stat').forEach(s => s.classList.remove('active'));
-        
-        showToast('info', 'Filter Reset', 'Showing all patients');
     } else {
         // Apply filter
         currentSurvivalYearFilter = months;
@@ -309,13 +316,17 @@ function toggleTheme() {
     const currentTheme = html.getAttribute('data-theme');
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
     
+    if (themeTransitionTimeout) {
+        clearTimeout(themeTransitionTimeout);
+    }
+    html.classList.add('theme-transition');
+    themeTransitionTimeout = setTimeout(() => {
+        html.classList.remove('theme-transition');
+        themeTransitionTimeout = null;
+    }, 500);
+
     html.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
-    
-    // Show toast notification
-    const themeName = newTheme === 'light' ? 'Light Mode' : 'Dark Mode';
-    const icon = newTheme === 'light' ? '☀️' : '🌙';
-    showToast('info', `${icon} ${themeName}`, 'Theme switched successfully');
     
     // Update charts to match new theme
     updateChartsTheme();

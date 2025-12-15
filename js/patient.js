@@ -156,7 +156,6 @@ function shufflePatient() {
     
     currentPatientIndex = newIndex;
     displayPatientSpotlight();
-    showToast('info', 'Random Patient', `Viewing patient ${filteredPatients[currentPatientIndex].ID}`);
 }
 
 function highlightPatientRow(patientId) {
