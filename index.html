@@ -27,23 +27,34 @@
     <!-- Intro Animation Overlay -->
     <div class="intro-overlay" id="introOverlay">
         <div class="intro-content">
-            <svg class="intro-heartbeat" viewBox="0 0 400 100" preserveAspectRatio="xMidYMid meet">
-                <path class="heartbeat-line" d="M0,50 L80,50 L100,50 L120,20 L140,80 L160,30 L180,70 L200,50 L220,50 L400,50" 
-                      fill="none" stroke="url(#heartGradient)" stroke-width="3" stroke-linecap="round"/>
-                <defs>
-                    <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" style="stop-color: var(--gradient-start)"/>
-                        <stop offset="50%" style="stop-color: var(--gradient-mid)"/>
-                        <stop offset="100%" style="stop-color: var(--gradient-end)"/>
-                    </linearGradient>
-                </defs>
-            </svg>
-            <h1 class="intro-title">Cancer Registry Dashboard</h1>
-            <p class="intro-subtitle">Survival Rate Analysis</p>
-            <div class="intro-loader">
-                <div class="loader-progress"></div>
+            <div class="intro-emblem" aria-hidden="true">
+                <svg class="intro-symbol" viewBox="0 0 140 140" role="presentation" focusable="false">
+                    <defs>
+                        <linearGradient id="introRingGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="var(--gradient-start)"/>
+                            <stop offset="60%" stop-color="var(--gradient-mid)"/>
+                            <stop offset="100%" stop-color="var(--gradient-end)"/>
+                        </linearGradient>
+                        <radialGradient id="introCoreGradient" cx="50%" cy="50%" r="60%">
+                            <stop offset="0%" stop-color="rgba(255, 255, 255, 0.95)"/>
+                            <stop offset="100%" stop-color="var(--gradient-mid)"/>
+                        </radialGradient>
+                    </defs>
+                    <circle class="intro-ring" cx="70" cy="70" r="55" fill="none" stroke="url(#introRingGradient)"/>
+                    <circle class="intro-ring intro-ring-inner" cx="70" cy="70" r="35" fill="none" stroke="url(#introRingGradient)"/>
+                    <path class="intro-crescent" d="M38 70c0-17 15-32 32-32s32 15 32 32-15 32-32 32" fill="none" stroke="url(#introRingGradient)"/>
+                    <path class="intro-crescent intro-crescent-mirror" d="M102 70c0 17-15 32-32 32s-32-15-32-32 15-32 32-32" fill="none" stroke="url(#introRingGradient)"/>
+                    <path class="intro-thread" d="M36 48c13-26 43 16 68-10" fill="none" stroke="url(#introRingGradient)"/>
+                    <path class="intro-thread intro-thread-reverse" d="M36 92c13 26 43-16 68 10" fill="none" stroke="url(#introRingGradient)"/>
+                    <circle class="intro-node intro-node-top" cx="70" cy="23" r="5"/>
+                    <circle class="intro-node intro-node-right" cx="112" cy="70" r="4"/>
+                    <circle class="intro-node intro-node-left" cx="28" cy="70" r="4"/>
+                    <circle class="intro-core" cx="70" cy="70" r="12" fill="url(#introCoreGradient)"/>
+                </svg>
+                <span class="intro-emblem-halo"></span>
             </div>
-            <p class="intro-message">Loading patient data...</p>
+            <h1 class="intro-title">Cancer Registry Dashboard</h1>
+            <p class="intro-subtitle">Survival Rate Analysis of Cancer Patients</p>
         </div>
     </div>
 
@@ -63,15 +74,25 @@
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="logo">
-                    <svg class="logo-icon" viewBox="0 0 100 40" preserveAspectRatio="xMidYMid meet">
-                        <path class="logo-heartbeat" d="M0,20 L20,20 L30,20 L40,5 L50,35 L60,10 L70,30 L80,20 L100,20" 
-                              fill="none" stroke="url(#logoGradient)" stroke-width="2.5" stroke-linecap="round"/>
+                    <svg class="logo-icon" viewBox="0 0 80 80" role="presentation" focusable="false">
                         <defs>
-                            <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" style="stop-color: var(--gradient-start)"/>
-                                <stop offset="100%" style="stop-color: var(--gradient-mid)"/>
+                            <linearGradient id="logoOrbitGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="var(--gradient-start)"/>
+                                <stop offset="100%" stop-color="var(--gradient-mid)"/>
                             </linearGradient>
+                            <radialGradient id="logoCoreGradient" cx="50%" cy="50%" r="60%">
+                                <stop offset="0%" stop-color="rgba(255, 255, 255, 0.95)"/>
+                                <stop offset="100%" stop-color="var(--gradient-mid)"/>
+                            </radialGradient>
                         </defs>
+                        <circle class="logo-ring" cx="40" cy="40" r="28" fill="none" stroke="url(#logoOrbitGradient)"/>
+                        <circle class="logo-ring logo-ring-inner" cx="40" cy="40" r="18" fill="none" stroke="url(#logoOrbitGradient)"/>
+                        <path class="logo-thread" d="M18 30c8-18 24 12 44-6" fill="none" stroke="url(#logoOrbitGradient)"/>
+                        <path class="logo-thread logo-thread-reverse" d="M18 50c8 18 24-12 44 6" fill="none" stroke="url(#logoOrbitGradient)"/>
+                        <circle class="logo-node" cx="40" cy="14" r="3"/>
+                        <circle class="logo-node" cx="64" cy="40" r="2.5"/>
+                        <circle class="logo-node" cx="16" cy="40" r="2.5"/>
+                        <circle class="logo-core" cx="40" cy="40" r="8" fill="url(#logoCoreGradient)"/>
                     </svg>
                     <div class="logo-text">
                         <h2>Cancer Registry</h2>

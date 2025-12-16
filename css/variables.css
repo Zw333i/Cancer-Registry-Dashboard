@@ -163,16 +163,22 @@ html.theme-transition *::after {
 html.theme-transition::before {
     content: '';
     position: fixed;
-    inset: 0;
-    background: linear-gradient(120deg, rgba(124, 77, 255, 0.6), rgba(224, 64, 251, 0.6));
+    width: 140vmax;
+    height: 140vmax;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0.15);
+    background: radial-gradient(circle, rgba(6, 182, 212, 0.45), rgba(59, 130, 246, 0.25) 45%, rgba(15, 23, 42, 0));
     z-index: 9999;
     pointer-events: none;
-    transform: translateX(-100%);
-    animation: themeSlide 0.55s ease forwards;
+    mix-blend-mode: screen;
+    opacity: 0.9;
+    animation: themePulse 0.7s ease-out forwards;
 }
 
-@keyframes themeSlide {
-    0% { transform: translateX(-100%); opacity: 0.6; }
-    50% { opacity: 0.8; }
-    100% { transform: translateX(100%); opacity: 0; }
+@keyframes themePulse {
+    0% { transform: translate(-50%, -50%) scale(0.15); opacity: 0; }
+    35% { opacity: 0.8; }
+    100% { transform: translate(-50%, -50%) scale(1.1); opacity: 0; }
 }

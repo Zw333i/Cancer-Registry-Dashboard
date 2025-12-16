@@ -38,7 +38,7 @@ function initIntroAnimation() {
         
         // Add stagger animation to main elements
         animateMainContent();
-    }, 3200);
+    }, 2600);
 }
 
 function animateMainContent() {

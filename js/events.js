@@ -323,7 +323,7 @@ function toggleTheme() {
     themeTransitionTimeout = setTimeout(() => {
         html.classList.remove('theme-transition');
         themeTransitionTimeout = null;
-    }, 500);
+    }, 750);
 
     html.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
