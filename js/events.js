@@ -115,6 +115,11 @@ function initEventListeners() {
     if (exportBtn) {
         exportBtn.addEventListener('click', exportToCSV);
     }
+
+    const insightBtn = document.getElementById('footerInsight');
+    if (insightBtn) {
+        insightBtn.addEventListener('click', openStudyInsightModal);
+    }
     
     // Comparison mode toggle
     const comparisonToggle = document.getElementById('comparisonModeToggle');
@@ -316,27 +321,35 @@ function toggleTheme() {
     const currentTheme = html.getAttribute('data-theme');
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
     
-    if (themeTransitionTimeout) {
-        clearTimeout(themeTransitionTimeout);
-    }
-    html.classList.add('theme-transition');
-    themeTransitionTimeout = setTimeout(() => {
-        html.classList.remove('theme-transition');
-        themeTransitionTimeout = null;
-    }, 750);
+    const applyTheme = () => {
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateChartsTheme();
+    };
 
-    html.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-    
-    // Update charts to match new theme
-    updateChartsTheme();
+    html.dataset.style = 'angled';
+
+    if (document.startViewTransition) {
+        document.startViewTransition(applyTheme);
+    } else {
+        if (themeTransitionTimeout) {
+            clearTimeout(themeTransitionTimeout);
+        }
+        html.classList.add('theme-transition');
+        themeTransitionTimeout = setTimeout(() => {
+            html.classList.remove('theme-transition');
+            themeTransitionTimeout = null;
+        }, 950);
+        applyTheme();
+    }
 }
 
 function loadSavedTheme() {
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-        document.documentElement.setAttribute('data-theme', savedTheme);
-    }
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', initialTheme);
+    document.documentElement.dataset.style = 'angled';
 }
 
 function updateChartsTheme() {

@@ -24,11 +24,6 @@
     overflow: hidden;
 }
 
-.chart-card:hover {
-    border-color: var(--glass-border);
-    box-shadow: var(--shadow-soft), var(--shadow-glow);
-}
-
 .chart-header {
     display: flex;
     justify-content: space-between;
@@ -416,30 +411,45 @@
     height: 260px;
     display: flex;
     gap: 8px;
+    align-items: stretch;
 }
 
 .bubble-y-axis {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0 0 28px 0;
-    min-width: 50px;
+    justify-content: flex-start;
+    padding: 18px 0 12px;
+    min-width: 64px;
+    height: 100%;
+    box-sizing: border-box;
+    pointer-events: none;
 }
 
+
 .stage-title {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
     font-size: 0.6rem;
     font-weight: 500;
     color: var(--text-muted);
     letter-spacing: 1px;
-    margin-bottom: 8px;
+    text-align: center;
 }
 
 .stage-label {
-    flex: 1;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
     display: flex;
     align-items: center;
-    font-size: 0.75rem;
-    font-weight: 600;
+    justify-content: center;
+    font-size: 0.78rem;
+    font-weight: 700;
     color: var(--color-cyan);
     text-align: center;
 }
@@ -493,6 +503,8 @@
 /* Bubble Chart Filter Dropdown */
 .bubble-filter-dropdown {
     position: relative;
+    display: flex;
+    align-items: center;
 }
 
 .dropdown-toggle {

@@ -3,6 +3,26 @@
    Modal Functions & Chart Interpretations
    ======================================== */
 
+const MODAL_ICONS = {
+    chart: '<span class="modal-inline-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="10" width="4" height="9" rx="1"/><rect x="10" y="6" width="4" height="13" rx="1"/><rect x="17" y="3" width="4" height="16" rx="1"/></svg></span>',
+    list: '<span class="modal-inline-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></svg></span>',
+    bulb: '<span class="modal-inline-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12c.5.6 1 1.6 1 2.5V17h6v-.5c0-.9.5-1.9 1-2.5A7 7 0 0 0 12 2Z"/></svg></span>',
+    alert: '<span class="modal-inline-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>',
+    pointer: '<span class="modal-inline-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12s4-8 9-8 9 8 9 8-4 8-9 8-9-8-9-8Z"/><circle cx="12" cy="12" r="2.5"/></svg></span>',
+    target: '<span class="modal-inline-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/></svg></span>',
+    trendUp: '<span class="modal-inline-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="14 7 21 7 21 14"/></svg></span>',
+    trendDown: '<span class="modal-inline-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 7 9 13 13 9 21 17"/><polyline points="14 17 21 17 21 10"/></svg></span>',
+    document: '<span class="modal-inline-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M14 3v6h6"/></svg></span>',
+    info: '<span class="modal-inline-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>'
+};
+
+const rankBadge = (index) => {
+    if (index === 0) return '<span class="rank-badge gold" aria-hidden="true">1</span>';
+    if (index === 1) return '<span class="rank-badge silver" aria-hidden="true">2</span>';
+    if (index === 2) return '<span class="rank-badge bronze" aria-hidden="true">3</span>';
+    return '';
+};
+
 // ==========================================
 // MODAL FUNCTIONS
 // ==========================================
@@ -55,25 +75,25 @@ function openSurvivalRateModal() {
     let cancerRows = '';
     cancerData.forEach(data => {
         const rateColor = data.rate >= parseFloat(rate) ? '#34d399' : '#f87171';
-        const indicator = data.rate < parseFloat(rate) ? '↓' : '↑';
+        const indicator = data.rate < parseFloat(rate) ? MODAL_ICONS.trendDown : MODAL_ICONS.trendUp;
         cancerRows += `
             <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
                 <td style="padding: 8px;"><strong>${data.type}</strong></td>
                 <td style="text-align: center; padding: 8px;">${data.alive}/${data.total}</td>
-                <td style="text-align: center; padding: 8px; color: ${rateColor};"><strong>${data.rate}%</strong> ${indicator}</td>
+                <td style="text-align: center; padding: 8px; color: ${rateColor}; display: flex; align-items: center; justify-content: center; gap: 6px;"><strong>${data.rate}%</strong> ${indicator}</td>
             </tr>`;
     });
     
     const content = `
         <div class="interpretation-content">
             <div class="interpretation-highlight">
-                <h4>📊 Overall Survival Rate</h4>
+                <h4>${MODAL_ICONS.chart}Overall Survival Rate</h4>
                 <p style="font-size: 2rem; color: var(--color-alive); font-weight: 700;">${rate}%</p>
                 <p>${alive} alive out of ${total} patients</p>
             </div>
             
             <div class="interpretation-highlight">
-                <h4>📋 Survival Rate by Cancer Type</h4>
+                <h4>${MODAL_ICONS.list}Survival Rate by Cancer Type</h4>
                 <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">Sorted by highest survival rate</p>
                 <table style="width: 100%; border-collapse: collapse;">
                     <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
@@ -86,8 +106,8 @@ function openSurvivalRateModal() {
             </div>
             
             <div class="tip-box">
-                <span class="tip-icon">💡</span>
-                <p>↑ Above average | ↓ Below average survival rate. Click cancer types in the sidebar to filter.</p>
+                <span class="tip-icon">${MODAL_ICONS.bulb}</span>
+                <p>Up icon = above average | Down icon = below average survival rate. Click cancer types in the sidebar to filter.</p>
             </div>
         </div>
     `;
@@ -113,27 +133,26 @@ function openAvgSurvivalModal() {
     }).sort((a, b) => b.avgMonths - a.avgMonths);
     
     // Determine hope level based on average survival
-    let hopeIcon = '🌟';
+    let hopeIcon = MODAL_ICONS.trendUp;
     let hopeText = 'Strong Hope';
     let hopeColor = '#34d399';
     if (avgMonths < 24) {
-        hopeIcon = '💪';
+        hopeIcon = MODAL_ICONS.info;
         hopeText = 'Fighting Spirit';
         hopeColor = '#fbbf24';
     } else if (avgMonths < 12) {
-        hopeIcon = '🙏';
+        hopeIcon = MODAL_ICONS.alert;
         hopeText = 'Courage Required';
         hopeColor = '#f87171';
     }
     
     let cancerRows = '';
     cancerData.forEach((data, index) => {
-        const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '';
         const barWidth = Math.min((data.avgMonths / Math.max(...cancerData.map(d => d.avgMonths))) * 100, 100);
         cancerRows += `
             <div style="margin-bottom: 12px;">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                    <span>${medal} <strong>${data.type}</strong></span>
+                    <span>${rankBadge(index)} <strong>${data.type}</strong></span>
                     <span style="color: var(--text-accent);">${data.avgMonths.toFixed(1)}mo (${data.avgYears}yr)</span>
                 </div>
                 <div style="background: rgba(255,255,255,0.1); border-radius: 4px; height: 8px; overflow: hidden;">
@@ -145,19 +164,19 @@ function openAvgSurvivalModal() {
     const content = `
         <div class="interpretation-content">
             <div class="interpretation-highlight">
-                <h4>${hopeIcon} ${hopeText} Indicator</h4>
+                <h4>${hopeIcon}${hopeText} Indicator</h4>
                 <p style="font-size: 2rem; color: ${hopeColor}; font-weight: 700;">${avgMonths} months</p>
                 <p>Average survival time across ${total} patients (~${avgYears} years)</p>
             </div>
             
             <div class="interpretation-highlight">
-                <h4>📋 Average Survival by Cancer Type</h4>
+                <h4>${MODAL_ICONS.list}Average Survival by Cancer Type</h4>
                 <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Ranked from longest to shortest survival</p>
                 ${cancerRows}
             </div>
             
             <div class="tip-box">
-                <span class="tip-icon">💡</span>
+                <span class="tip-icon">${MODAL_ICONS.bulb}</span>
                 <p>Use the survival slider to filter patients by minimum survival duration.</p>
             </div>
         </div>
@@ -202,7 +221,7 @@ function openCriticalWatchModal() {
         const isBelowAvg = data.rate < overallRate;
         const rateColor = isBelowAvg ? '#f87171' : data.rate > 50 ? '#34d399' : '#fbbf24';
         const rowBg = isBelowAvg ? 'rgba(248, 113, 113, 0.1)' : 'transparent';
-        const warningIcon = isBelowAvg ? '⚠️' : '';
+        const warningIcon = isBelowAvg ? MODAL_ICONS.alert : '';
         tableRows += `
             <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: ${rowBg};">
                 <td style="padding: 8px;"><strong>${data.cancer}</strong></td>
@@ -217,14 +236,14 @@ function openCriticalWatchModal() {
     const content = `
         <div class="interpretation-content">
             <div class="interpretation-highlight">
-                <h4>⚠️ Critical Watch - All Survival Rates</h4>
+                <h4>${MODAL_ICONS.alert}Critical Watch - All Survival Rates</h4>
                 <p>All ${combinations.length} cancer type + stage combinations ranked by survival rate</p>
                 <p style="font-size: 0.85rem; margin-top: 8px;">Overall average: <strong style="color: var(--text-accent);">${overallRate.toFixed(1)}%</strong> | <span style="color: #f87171;">${belowAvgCount} below average</span></p>
             </div>
             
             <div class="interpretation-highlight">
-                <h4>📋 Complete Breakdown</h4>
-                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">⚠️ = Below overall average | Sorted lowest to highest</p>
+                <h4>${MODAL_ICONS.list}Complete Breakdown</h4>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">${MODAL_ICONS.alert}Below overall average | Sorted lowest to highest</p>
                 <table style="width: 100%; border-collapse: collapse;">
                     <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
                         <th style="text-align: left; padding: 8px; color: var(--text-muted);">Cancer</th>
@@ -237,7 +256,7 @@ function openCriticalWatchModal() {
             </div>
             
             <div class="tip-box">
-                <span class="tip-icon">💡</span>
+                <span class="tip-icon">${MODAL_ICONS.bulb}</span>
                 <p>Red highlighted rows are below the overall average survival rate. Later stages typically show lower survival due to disease progression.</p>
             </div>
         </div>
@@ -287,12 +306,12 @@ function showDistributionInterpretation(e) {
     const content = `
         <div class="interpretation-content">
             <div class="interpretation-highlight">
-                <h4>📊 How to read this chart</h4>
+                <h4>${MODAL_ICONS.chart}How to read this chart</h4>
                 <p>This pie chart shows how many patients have each type of cancer. The chart has <strong>${total} patients</strong> total.</p>
             </div>
             
             <div class="interpretation-highlight">
-                <h4>📋 Patient count by cancer type</h4>
+                <h4>${MODAL_ICONS.list}Patient count by cancer type</h4>
                 <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
                     <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
                         <th style="text-align: left; padding: 8px; color: var(--text-muted);">Cancer Type</th>
@@ -304,7 +323,7 @@ function showDistributionInterpretation(e) {
             </div>
             
             <div class="interpretation-highlight">
-                <h4>🔍 What does this mean?</h4>
+                <h4>${MODAL_ICONS.info}What does this mean?</h4>
                 <ul>
                     <li><strong>Bigger slice</strong> = more patients have this cancer type</li>
                     <li><strong>Smaller slice</strong> = fewer patients have this cancer type</li>
@@ -313,7 +332,7 @@ function showDistributionInterpretation(e) {
             </div>
             
             <div class="tip-box">
-                <span class="tip-icon">👆</span>
+                <span class="tip-icon">${MODAL_ICONS.pointer}</span>
                 <p><strong>Try it!</strong> Click on any slice to filter the whole dashboard by that cancer type.</p>
             </div>
         </div>
@@ -352,16 +371,16 @@ function showStageInterpretation(e) {
             </div>
             
             <div class="interpretation-highlight">
-                <h4>📊 How to read this chart</h4>
+                <h4>${MODAL_ICONS.chart}How to read this chart</h4>
                 <p>Each bar represents ALL patients diagnosed at that cancer stage. The bar is split into two colors:</p>
                 <ul>
-                    <li><strong style="color: #34d399;">🟢 GREEN part</strong> = Patients who are <strong>ALIVE</strong></li>
-                    <li><strong style="color: #f87171;">🔴 PINK part</strong> = Patients who are <strong>DECEASED</strong></li>
+                    <li><strong><span class="legend-chip" style="background:#34d399;"></span>Green segment</strong> = Patients who are <strong>ALIVE</strong></li>
+                    <li><strong><span class="legend-chip" style="background:#f87171;"></span>Pink segment</strong> = Patients who are <strong>DECEASED</strong></li>
                 </ul>
             </div>
             
             <div class="interpretation-highlight">
-                <h4>📋 Actual patient counts from this data</h4>
+                <h4>${MODAL_ICONS.list}Actual patient counts from this data</h4>
                 <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
                     <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
                         <th style="text-align: left; padding: 8px; color: var(--text-muted);">Stage</th>
@@ -402,13 +421,13 @@ function showStageInterpretation(e) {
             </div>
             
             <div class="interpretation-highlight">
-                <h4>🧮 How is the percentage calculated?</h4>
-                <p>Survival % = (Alive patients ÷ Total patients) × 100</p>
-                <p><strong>Example for Stage I:</strong> ${aliveCounts['Stage I']} alive ÷ ${stageSurvival['Stage I'].total} total = ${survivalRates['Stage I']}%</p>
+                <h4>${MODAL_ICONS.info}How is the percentage calculated?</h4>
+                <p>Survival % = (Alive patients / Total patients) x 100</p>
+                <p><strong>Example for Stage I:</strong> ${aliveCounts['Stage I']} alive / ${stageSurvival['Stage I'].total} total = ${survivalRates['Stage I']}%</p>
             </div>
             
             <div class="interpretation-highlight">
-                <h4>🏥 What do the stages mean?</h4>
+                <h4>${MODAL_ICONS.document}What do the stages mean?</h4>
                 <ul>
                     <li><strong>Stage I:</strong> Cancer just started, very small, hasn't spread</li>
                     <li><strong>Stage II:</strong> Cancer is bigger, but still in one area</li>
@@ -418,7 +437,7 @@ function showStageInterpretation(e) {
             </div>
             
             <div class="tip-box">
-                <span class="tip-icon">💡</span>
+                <span class="tip-icon">${MODAL_ICONS.bulb}</span>
                 <p><strong>Key insight:</strong> Earlier stages (I & II) generally have higher survival rates because the cancer is caught before it spreads!</p>
             </div>
         </div>
@@ -466,6 +485,10 @@ function showSurvivalAnalysisInterpretation(e) {
         'Stage III': '#fb923c',
         'Stage IV': '#ef4444'
     };
+
+    const bestCombo = sortedByRate[0] || { cancer: 'N/A', stage: '--', rate: 0, alive: 0, total: 0 };
+    const worstCombo = sortedByRate[sortedByRate.length - 1] || bestCombo;
+    const rateGap = (bestCombo.rate - worstCombo.rate).toFixed(1);
     
     const content = `
         <div class="interpretation-content">
@@ -474,7 +497,7 @@ function showSurvivalAnalysisInterpretation(e) {
             </div>
             
             <div class="interpretation-highlight">
-                <h4>How to read this chart</h4>
+                <h4>${MODAL_ICONS.chart}How to read this chart</h4>
                 <p>This chart shows the <strong>survival rate</strong> for each cancer type, broken down by stage at diagnosis. Each group of bars represents a cancer type, with 4 bars showing survival rates for Stages I through IV.</p>
             </div>
             
@@ -518,8 +541,9 @@ function showSurvivalAnalysisInterpretation(e) {
                 </table>
             </div>
             
-            <div class="tip-box">
-                <strong>Key Insight:</strong> Early-stage cancers (Stage I & II) generally have higher survival rates across all cancer types. Stage IV typically shows the lowest survival rates, emphasizing the importance of early detection.
+            <div class="key-insight-box">
+                <div class="key-insight-title">${MODAL_ICONS.bulb}Key insight</div>
+                <div class="key-insight-body">Best outcome: <strong>${bestCombo.cancer} - ${bestCombo.stage}</strong> at ${bestCombo.rate.toFixed(1)}% (alive ${bestCombo.alive}/${bestCombo.total}). Toughest spot: <strong>${worstCombo.cancer} - ${worstCombo.stage}</strong> at ${worstCombo.rate.toFixed(1)}%. The gap of <strong>${rateGap}%</strong> highlights how early-stage detection changes survival odds.</div>
             </div>
         </div>
     `;
@@ -532,25 +556,33 @@ function showSurvivalInterpretation(e) {
     if (e.target.closest('.curve-stat')) return;
     
     // Get the actual survival percentages
-    const s1yr = document.getElementById('survival1yr')?.textContent || '0%';
-    const s3yr = document.getElementById('survival3yr')?.textContent || '0%';
-    const s5yr = document.getElementById('survival5yr')?.textContent || '0%';
-    
-    // Count patients by survival period
+    // Count patients by survival period (derive percentages directly for accuracy)
     const totalPatients = filteredPatients.length;
     const alive1yr = filteredPatients.filter(p => p.Survival_Months >= 12).length;
     const alive3yr = filteredPatients.filter(p => p.Survival_Months >= 36).length;
     const alive5yr = filteredPatients.filter(p => p.Survival_Months >= 60).length;
+
+    const pct = (count) => totalPatients ? ((count / totalPatients) * 100).toFixed(1) : '0.0';
+    const s1yr = `${pct(alive1yr)}%`;
+    const s3yr = `${pct(alive3yr)}%`;
+    const s5yr = `${pct(alive5yr)}%`;
+
+    const s1Value = parseFloat(s1yr) || 0;
+    const s3Value = parseFloat(s3yr) || 0;
+    const s5Value = parseFloat(s5yr) || 0;
+    const earlyDrop = Math.max(0, 100 - s1Value).toFixed(1);
+    const midDrop = Math.max(0, s1Value - s3Value).toFixed(1);
+    const lateDrop = Math.max(0, s3Value - s5Value).toFixed(1);
     
     const content = `
         <div class="interpretation-content">
             <div class="interpretation-highlight">
-                <h4>📊 How to read this chart</h4>
+                <h4>${MODAL_ICONS.chart}How to read this chart</h4>
                 <p>This line shows how many patients are still alive as time passes. It starts at 100% (everyone) and goes down as months go by.</p>
             </div>
             
             <div class="interpretation-highlight">
-                <h4>📋 Survival rates from this data</h4>
+                <h4>${MODAL_ICONS.list}Survival rates from this data</h4>
                 <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
                     <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
                         <th style="text-align: left; padding: 8px; color: var(--text-muted);">Time Period</th>
@@ -580,17 +612,22 @@ function showSurvivalInterpretation(e) {
             </div>
             
             <div class="interpretation-highlight">
-                <h4>🔍 How to read the curve</h4>
+                <h4>${MODAL_ICONS.info}How to read the curve</h4>
                 <ul>
-                    <li><strong>Left to right (→):</strong> Time passing in months</li>
-                    <li><strong>Top to bottom (↓):</strong> Percentage of patients still alive</li>
+                    <li><strong>Left to right (->):</strong> Time passing in months</li>
+                    <li><strong>Top to bottom (down):</strong> Percentage of patients still alive</li>
                     <li><strong>Flat line:</strong> Good! Patients are surviving longer</li>
                     <li><strong>Steep drop:</strong> Many patients didn't make it past this point</li>
                 </ul>
             </div>
             
+            <div class="key-insight-box">
+                <div class="key-insight-title">${MODAL_ICONS.bulb}Key insight</div>
+                <div class="key-insight-body">Most of the drop happens in the first year (about ${earlyDrop}% fewer still with us). After that the curve eases: only ${midDrop}% more drop from years 1 to 3, and ${lateDrop}% from years 3 to 5. People who make it past the first year tend to stay steady longer.</div>
+            </div>
+            
             <div class="tip-box">
-                <span class="tip-icon">👆</span>
+                <span class="tip-icon">${MODAL_ICONS.pointer}</span>
                 <p><strong>Try clicking</strong> on 1-Year, 3-Year, or 5-Year buttons above the chart to filter patients by how long they survived!</p>
             </div>
         </div>
@@ -701,6 +738,11 @@ function showAgeDiagnosisInterpretation(e) {
                     `).join('')}
                 </div>
             </div>
+
+            <div class="key-insight-box">
+                <div class="key-insight-title">${MODAL_ICONS.bulb}Key insight</div>
+                <div class="key-insight-body">Most diagnoses cluster between ages 31-70, covering ${midBandShare}% of patients. Younger-onset cancers show up in ${youngestPeak.length > 0 ? youngestPeak.map(c => c.cancer).join(', ') : 'few types here'}, while ${oldestPeak.length > 0 ? oldestPeak.map(c => c.cancer).join(', ') : 'no strong older-skew types in this view'} lean older (71-90). Screening efforts aimed at 31-70 catch the bulk of cases.</div>
+            </div>
         </div>
     `;
     
@@ -729,8 +771,8 @@ function showBubbleInterpretation(e) {
     );
     
     sortedTypes.forEach(([type, stats]) => {
-        const avgSurvival = (stats.survivalSum / stats.total).toFixed(1);
-        const survivalRate = ((stats.alive / stats.total) * 100).toFixed(0);
+        const avgSurvival = stats.total ? (stats.survivalSum / stats.total).toFixed(1) : '0.0';
+        const survivalRate = stats.total ? ((stats.alive / stats.total) * 100).toFixed(0) : '0';
         tableRows += `
             <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
                 <td style="padding: 8px;"><strong>${type}</strong></td>
@@ -739,16 +781,25 @@ function showBubbleInterpretation(e) {
                 <td style="text-align: center; padding: 8px; color: #34d399;">${survivalRate}%</td>
             </tr>`;
     });
+
+    const byAvg = [...sortedTypes].sort((a, b) => (b[1].survivalSum / b[1].total) - (a[1].survivalSum / a[1].total));
+    const byRate = [...sortedTypes].sort((a, b) => ((b[1].alive / b[1].total) - (a[1].alive / a[1].total)));
+    const bestAvgEntry = byAvg[0] || ['N/A', { total: 0, survivalSum: 0, alive: 0 }];
+    const worstAvgEntry = byAvg[byAvg.length - 1] || bestAvgEntry;
+    const bestRateEntry = byRate[0] || bestAvgEntry;
+    const bestAvgMonths = bestAvgEntry[1].total ? (bestAvgEntry[1].survivalSum / bestAvgEntry[1].total).toFixed(1) : '0.0';
+    const worstAvgMonths = worstAvgEntry[1].total ? (worstAvgEntry[1].survivalSum / worstAvgEntry[1].total).toFixed(1) : '0.0';
+    const bestRatePct = bestRateEntry[1].total ? ((bestRateEntry[1].alive / bestRateEntry[1].total) * 100).toFixed(0) : '0';
     
     const content = `
         <div class="interpretation-content">
             <div class="interpretation-highlight">
-                <h4>📊 How to read this chart</h4>
+                <h4>${MODAL_ICONS.chart}How to read this chart</h4>
                 <p>Each icon represents one cancer type. The position shows the <strong>stage</strong> (up/down) and <strong>average survival time</strong> (left/right).</p>
             </div>
             
             <div class="interpretation-highlight">
-                <h4>📋 Average survival by cancer type</h4>
+                <h4>${MODAL_ICONS.list}Average survival by cancer type</h4>
                 <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
                     <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
                         <th style="text-align: left; padding: 8px; color: var(--text-muted);">Cancer Type</th>
@@ -761,7 +812,7 @@ function showBubbleInterpretation(e) {
             </div>
             
             <div class="interpretation-highlight">
-                <h4>🔍 What to look for</h4>
+                <h4>${MODAL_ICONS.info}What to look for</h4>
                 <ul>
                     <li><strong>Icons on the right:</strong> Longer survival time (better outcomes)</li>
                     <li><strong>Icons on the left:</strong> Shorter survival time</li>
@@ -769,13 +820,51 @@ function showBubbleInterpretation(e) {
                     <li><strong>Icons at the bottom:</strong> Stage I (earliest stage)</li>
                 </ul>
             </div>
+
+            <div class="key-insight-box">
+                <div class="key-insight-title">${MODAL_ICONS.bulb}Key insight</div>
+                <div class="key-insight-body">Bubbles farther to the right mean longer average survival; bubbles to the left mean shorter survival. Lower rows are earlier stages (Stage I at the bottom), higher rows are later stages (Stage IV at the top). Use right vs. left for time, and bottom vs. top for stage severity when reading the plot.</div>
+            </div>
             
             <div class="tip-box">
-                <span class="tip-icon">💡</span>
+                <span class="tip-icon">${MODAL_ICONS.bulb}</span>
                 <p><strong>Use the dropdown</strong> in the top-right corner to show/hide specific cancer types and compare them!</p>
             </div>
         </div>
     `;
     
     openModal('Stage vs Survival', content);
+}
+
+function openStudyInsightModal() {
+    const content = `
+        <div class="interpretation-content">
+            <div class="interpretation-highlight">
+                <h4>${MODAL_ICONS.document}Study overview</h4>
+                <p>A comprehensive survival dashboard built on The Cancer Genome Atlas (TCGA) clinical data, showing how cancer type and stage at diagnosis shape survival outcomes.</p>
+            </div>
+
+            <div class="interpretation-highlight">
+                <h4>${MODAL_ICONS.list}Data lineage</h4>
+                <ul>
+                    <li>Source: TCGA Pan-Cancer Atlas clinical dataset.</li>
+                    <li>Original: 11,160 patients across 33 cancer types.</li>
+                    <li>Filtered: 4,670 patients across 8 focus cancers (BRCA, LUAD, LUSC, COAD, PRAD, STAD, BLCA, LIHC).</li>
+                    <li>Working sample: 356 patients retained for this dashboard.</li>
+                </ul>
+            </div>
+
+            <div class="interpretation-highlight">
+                <h4>${MODAL_ICONS.info}Why 356 samples?</h4>
+                <p>The sample size was computed for 95% confidence, 5% margin of error, 50% proportion, and a 4,670 population base. This keeps results statistically reliable while staying responsive for the UI.</p>
+            </div>
+
+            <div class="key-insight-box">
+                <div class="key-insight-title">${MODAL_ICONS.bulb}Overall takeaway</div>
+                <div class="key-insight-body">This slice of TCGA data spotlights how early-stage detection widens the survival gap across all eight cancers. Use the filters and comparisons to see how type, stage, and time-to-survival interact for the 356-patient cohort.</div>
+            </div>
+        </div>
+    `;
+
+    openModal('Dataset and Method Summary', content);
 }

@@ -686,6 +686,8 @@ function initBubbleChart() {
     
     // Initialize dropdown handlers
     initBubbleFilterDropdown();
+    requestAnimationFrame(syncBubbleStageLabels);
+    window.addEventListener('resize', () => requestAnimationFrame(syncBubbleStageLabels));
 }
 
 function initBubbleFilterDropdown() {
@@ -730,6 +732,30 @@ function initBubbleFilterDropdown() {
             
             updateBubbleChart();
         });
+    });
+}
+
+function syncBubbleStageLabels() {
+    if (!charts?.bubble) return;
+    const axis = document.querySelector('.bubble-y-axis');
+    const labels = axis?.querySelectorAll('.stage-label');
+    const canvas = document.getElementById('bubbleChart');
+    const yScale = charts.bubble.scales?.y;
+    const chartArea = charts.bubble.chartArea;
+    if (!axis || !labels?.length || !canvas || !yScale || !chartArea) return;
+
+    const axisRect = axis.getBoundingClientRect();
+    const canvasRect = canvas.getBoundingClientRect();
+    const offsetTop = canvasRect.top - axisRect.top;
+    const stageValues = [4, 3, 2, 1];
+
+    stageValues.forEach((value, index) => {
+        const label = labels[index];
+        if (!label) return;
+        const pixel = yScale.getPixelForValue(value);
+        if (Number.isFinite(pixel)) {
+            label.style.top = `${offsetTop + pixel}px`;
+        }
     });
 }
 
@@ -1012,4 +1038,5 @@ function updateBubbleChart() {
     }
     
     charts.bubble.update();
+    requestAnimationFrame(syncBubbleStageLabels);
 }
